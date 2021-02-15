@@ -17,24 +17,140 @@
     <title>Mi Perfil</title>
   </head>
   <body>
-
-	
-		<nav class="navbar navbar-dark bg-dark justify-content-end" >
+<div>
+		<nav class="navbar navbar-dark bg-dark justify-content-end">
 			<div class="dropdown">
 				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 					<b><script>document.write(sessionStorage.getItem("usuario_activo"));</script></b>
 				</a>
-				<ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+				<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
+					<!-- En la página de Ver Perfil no se tiene que visualizar el enlace de Ver Perfil porque ya estas en el
 				 	<li><a class="dropdown-item" onclick="VerPerfil()">Ver Perfil</a></li>
+				 	-->
 				 	<li><a class="dropdown-item" onclick="CerrarSesion()">Cerrar Sesión</a></li>
+				 	
 				</ul>
 	        </div>
 		</nav>
+	</div>
+		
+		<div style="width:150px; float:left; position: absolute; top:50px; bottom: 0; background-color:#212529;">
+			<nav class="navbar navbar-dark bg-dark">
+	            <ul class="navbar-nav">
+	                <li class="nav-item" >
+	                    <a class="nav-link active" style="padding-left:10px;" href="#">Ovejas</a>
+	                </li>
+	                <li class="nav-item">
+	                    <a class="nav-link active" style="padding-left:10px;" href="#">Leche</a>
+	                </li>
+	                <li class="nav-item">
+	                    <a class="nav-link active" style="padding-left:10px;" href="#">Venta Ovejas</a>
+	                </li>
+	                <li class="nav-item">
+	                    <a class="nav-link active" style="padding-left:10px;" href="#">Venta Corderos</a>
+	                </li>
+	                <li class="nav-item">
+	                    <a class="nav-link active" style="padding-left:10px;" href="#">Muerte Ovejas</a>
+	                </li>
+	                <li class="nav-item">
+	                    <a class="nav-link active" style="padding-left:10px;" href="#">Medicamentos</a>
+	                </li>
+	                <li class="nav-item">
+	                    <a class="nav-link active" style="padding-left:10px;" href="#">Piensos</a>
+	                </li>
+	                <li class="nav-item">
+	                    <a class="nav-link active" style="padding-left:10px;" href="#">Piensos Medicamentosos</a>
+	                </li>
+	                <li class="nav-item">
+	                    <a class="nav-link active" style="padding-left:10px;" href="#">Enfermedades</a>
+	                </li>
+	            </ul>
+	        </nav>
+        </div>
+        
+        <h1 style="text-align:center;"> MI PERFIL</h1>
+        
+        <br>
+        <br>
+        
+     <div class="row">
+	  <div class="col-sm-6">
+	    <div class="card"  style="text-align:center;margin-left: 155px;">
+	      <div class="card-body" style="text-align:left;">
+	        <h5 class="card-title">Datos Personales <img src="./lapiz.png" height="20" size="20" alt="Johnson Pond" onclick="Editar()"> </h5>   
+	        
+			
+	        <div class="input-group input-group-sm mb-3 w-50 p-3">
+			  <span class="input-group-text" id="inputGroup-sizing-sm">Nombre</span>
+			  <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" id="Nombre" name="Nombre" disabled>
+			</div>
+  
+			<div class="input-group input-group-sm mb-3 w-50 p-3">
+			  <span class="input-group-text" id="inputGroup-sizing-sm">Primer Apellido</span>
+			  <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" id="PApellido" disabled>
+			</div>
+			
+			<div class="input-group input-group-sm mb-3 w-50 p-3">
+			  <span class="input-group-text" id="inputGroup-sizing-sm">Segundo Apellido</span>
+			  <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" id="SApellido" disabled>
+			</div>
+			
+			<div class="input-group input-group-sm mb-3 w-75 p-3">
+			  <span class="input-group-text" id="inputGroup-sizing-sm">DNI/NIF</span>
+			  <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" id="DNINIF" disabled>
+			</div>
+			
+			<div class="input-group input-group-sm mb-3 w-75 p-3">
+			  <span class="input-group-text" id="inputGroup-sizing-sm">Número de Explotación</span>
+			  <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" disabled>
+			</div>
+			
+			<div class="input-group input-group-sm mb-3 w-75 p-3">
+			  <span class="input-group-text" id="inputGroup-sizing-sm">Correo Electrónico</span>
+			  <input type="email" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" id="CElectronico" disabled>
+			</div>
+			
+			<script>
+				$("#Nombre").val(sessionStorage.getItem("Nombre"));
+				$("#PApellido").val(sessionStorage.getItem("PApellido"));
+				$("#SApellido").val(sessionStorage.getItem("SApellido"));
+				$("#DNINIF").val(sessionStorage.getItem("DNINIF"));
+				$("#CElectronico").val(sessionStorage.getItem("CElectronico"));
+			</script>
+			
+			<button type="button" class="btn btn-primary" style="width:25%;">Guardar Información</button>
+	      </div>
+	    </div>
+	  </div>
+	  <div class="col-sm-6">
+	    <div class="card" style="text-align:center;">
+	      <div class="card-body" style="text-align:left;">
+	        <h5 class="card-title">Cambiar contraseña</h5>
+	        <div class="input-group input-group-sm mb-3 w-50 p-3">
+	        	<label for="PassActual" class="form-label">Contraseña actual: &nbsp; </label>
+			  	<input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+			</div>
+			
+			<div class="input-group input-group-sm mb-3 w-50 p-3">
+	        	<label for="PassActual" class="form-label">Nueva contraseña: &nbsp; </label>
+			  	<input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+			</div>
+			
+			<div class="input-group input-group-sm mb-3 w-50 p-3">
+	        	<label for="PassActual" class="form-label">Confirmar contraseña: &nbsp; </label>
+			  	<input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+			</div>
+			<button type="button" class="btn btn-primary" style="width:20%;">Guardar Contraseña</button>
+	      </div>
+	      
+	    </div>
+	  </div>
+	</div>   
 	
 	</br>
 	</br>
 	
-	<h1 style="text-align:center;"> MI PERFIL</h1>
+	
 	
     <!-- Optional JavaScript; choose one of the two! -->
 
@@ -54,6 +170,16 @@ function CerrarSesion(){
 	sessionStorage.clear();
 	var url = "./IniciarSesion.html";
     window.location.href = url;
+}
+</script>
+
+<script>
+function Editar(){
+	document.getElementById('Nombre').disabled=false;
+	document.getElementById('PApellido').disabled=false;
+	document.getElementById('SApellido').disabled=false;
+	document.getElementById('DNINIF').disabled=false;
+	document.getElementById('CElectronico').disabled=false;
 }
 </script>
 

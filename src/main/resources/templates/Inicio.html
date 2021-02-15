@@ -18,12 +18,12 @@
   </head>
   <body>
 	<div>
-		<nav class="navbar navbar-dark bg-dark">
+		<nav class="navbar navbar-dark bg-dark justify-content-end">
 			<div class="dropdown">
 				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 					<b><script>document.write(sessionStorage.getItem("usuario_activo"));</script></b>
 				</a>
-				<ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+				<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
 				 	<li><a class="dropdown-item" onclick="VerPerfil()">Ver Perfil</a></li>
 				 	<li><a class="dropdown-item" onclick="CerrarSesion()">Cerrar Sesión</a></li>
 				</ul>
@@ -68,9 +68,11 @@
 	<div class="card" style="text-align:center;">
 	  <div class="card-body" style="margin-left: 150px;position: absolute; text-align:left;">
 	    <h5 class="card-title">¡BIENVENIDO <script>document.write(sessionStorage.getItem("usuario_activo"));</script>! </h5>
-	    <p class="card-text">Bienvenido a la versión 0.0.1 de esta nuestra aplicación</p>
-	    <p class="card-text">Espero que con sudor y lagrimas consiga sacar este puto trabajo sin problemas</p>
-	    <p class="card-text">Disfuten</p>
+	    <p class="card-text">VERSION 1.0.0</p>
+	    <p class="card-text">En esta versión se ha creado el proyecto con las siguientes páginas:</p>
+	    <p class="card-text">Pagina de Iniciar Sesión</p>
+	    <p class="card-text">Pagina de Inicio</p>
+	    <p class="card-text">Pagina de Ver Perfil (Incompleta)</p>
 	  </div>
 	</div>
 	
@@ -97,7 +99,45 @@ function CerrarSesion(){
 
 <script>
 function VerPerfil(){
-	var url = "./VerPerfil.html";
-    window.location.href = url;
+	//Primero hay que sacar los datos de base de datos de el usuario que se encuentra conectado
+	var usuario = sessionStorage.getItem("usuario_activo");
+	
+	var usuarioDatos= {
+		'usuario' : usuario,
+	};
+
+	var usuarioLoginJSON = JSON.stringify(usuarioDatos);
+
+	var url = './sacardatos';
+
+	$.ajax({
+		type : 'post',
+		url : url,
+		contentType : 'application/json',
+		dataType : 'json',
+		data : usuarioLoginJSON,
+		success : function(data, textStatus, jqXHR) {
+			//Guardar las variables globales para mostrarlas en los input de Ver Perfil
+			sessionStorage.setItem('Nombre', data.Nombre);
+			sessionStorage.setItem('PApellido', data.PApellido);
+			sessionStorage.setItem('SApellido', data.SApellido);
+			sessionStorage.setItem('DNINIF', data.DNINIF);
+			sessionStorage.setItem('CElectronico', data.CElectronico);
+			
+			//Luego redirigir a la página
+			var url = "./VerPerfil.html";
+		    window.location.href = url;
+		},
+		error : function(jqXHR, exception) {
+			// mostrarPantallaError(url, jqXHR);
+		},
+		statuscode : {
+			404 : function() {
+				//mostrarPantallaError(url);
+			}
+		}
+	});
+	
+	
 }
 </script>
