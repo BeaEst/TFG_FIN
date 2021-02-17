@@ -38,7 +38,7 @@
 			<nav class="navbar navbar-dark bg-dark">
 	            <ul class="navbar-nav">
 	                <li class="nav-item" >
-	                    <a class="nav-link active" style="padding-left:10px;" href="#">Ovejas</a>
+	                    <a class="nav-link active" style="padding-left:10px;" href="./Ovejas.html">Ovejas</a>
 	                </li>
 	                <li class="nav-item">
 	                    <a class="nav-link active" style="padding-left:10px;" href="#">Leche</a>
@@ -77,7 +77,7 @@
 	  <div class="col-sm-6">
 	    <div class="card"  style="text-align:center;margin-left: 155px;">
 	      <div class="card-body" style="text-align:left;">
-	        <h5 class="card-title">Datos Personales <img src="./lapiz.png" height="20" size="20" alt="Johnson Pond" onclick="Editar()"> </h5>   
+	        <h5 class="card-title">Datos Personales &nbsp; &nbsp;<img src="./lapiz.png" style="cursor:pointer;" height="20" size="20" onclick="Editar()"> </h5>   
 	        
 			
 	        <div class="input-group input-group-sm mb-3 w-50 p-3">
@@ -102,7 +102,7 @@
 			
 			<div class="input-group input-group-sm mb-3 w-75 p-3">
 			  <span class="input-group-text" id="inputGroup-sizing-sm">Número de Explotación</span>
-			  <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" disabled>
+			  <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" id="NumExplotacion" disabled>
 			</div>
 			
 			<div class="input-group input-group-sm mb-3 w-75 p-3">
@@ -116,31 +116,46 @@
 				$("#SApellido").val(sessionStorage.getItem("SApellido"));
 				$("#DNINIF").val(sessionStorage.getItem("DNINIF"));
 				$("#CElectronico").val(sessionStorage.getItem("CElectronico"));
+				$("#NumExplotacion").val(sessionStorage.getItem("NumExplotacion"));
 			</script>
-			
-			<button type="button" class="btn btn-primary" style="width:25%;">Guardar Información</button>
+			<div>
+				<button type="button"  id="editar" class="btn btn-primary" style="display:none;width:25%;float:left;margin-right:10px;" onClick="GuardarInformacion()">Guardar Información</button> 
+				<img src="./QueryOK.png" height="40" size="40" id="QueryOK" style="display:none;">
+				<img src="./QueryKO.png" height="40" size="40" id="QueryKO" style="display:none;">
+			</div>
 	      </div>
 	    </div>
 	  </div>
 	  <div class="col-sm-6">
 	    <div class="card" style="text-align:center;">
 	      <div class="card-body" style="text-align:left;">
-	        <h5 class="card-title">Cambiar contraseña</h5>
+	        <h5 class="card-title">Cambiar contraseña &nbsp; &nbsp;<img src="./lapiz.png" style="cursor:pointer;" height="20" size="20" onclick="EditarPass()"></h5>
 	        <div class="input-group input-group-sm mb-3 w-50 p-3">
 	        	<label for="PassActual" class="form-label">Contraseña actual: &nbsp; </label>
-			  	<input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+			  	<input type="password" id="PassActual" class="form-control" aria-label="Sizing example input" onblur="ComprobarPassActual()" aria-describedby="inputGroup-sizing-sm" disabled>
+			  	<img src="./Check.png" height="30" size="30" id="Check" style="display:none;">
+			  	<img src="./CheckKO.png" height="30" size="30" id="CheckKO" style="display:none;">
 			</div>
 			
 			<div class="input-group input-group-sm mb-3 w-50 p-3">
 	        	<label for="PassActual" class="form-label">Nueva contraseña: &nbsp; </label>
-			  	<input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+			  	<input type="password" id="PassNew" class="form-control" aria-label="Sizing example input" onblur="ComprobarCoincidencias()" aria-describedby="inputGroup-sizing-sm" disabled>
+			  	<img src="./Check.png" height="30" size="30" id="CheckPass" style="display:none;">
+			  	<img src="./CheckKO.png" height="30" size="30" id="CheckPassKO" style="display:none;">
 			</div>
 			
 			<div class="input-group input-group-sm mb-3 w-50 p-3">
 	        	<label for="PassActual" class="form-label">Confirmar contraseña: &nbsp; </label>
-			  	<input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+			  	<input type="password" id="ConfrimPassNew" class="form-control" aria-label="Sizing example input" onblur="ComprobarCoincidencias()" aria-describedby="inputGroup-sizing-sm" disabled>
+			  	<img src="./Check.png" height="30" size="30" id="CheckConfirmPass" style="display:none;">
+			  	<img src="./CheckKO.png" height="30" size="30" id="CheckConfirmPassKO" style="display:none;">
 			</div>
-			<button type="button" class="btn btn-primary" style="width:20%;">Guardar Contraseña</button>
+			
+			<div>
+				<button type="button"  id="editarpass" class="btn btn-primary" style="display:none;width:25%;float:left;margin-right:10px;" onClick="GuardarPassword()" disabled>Guardar Contraseña</button> 
+				<img src="./QueryOKPass.png" height="40" size="40" id="QueryOKPass" style="display:none;">
+				<img src="./QueryKOPass.png" height="40" size="40" id="QueryKOPass" style="display:none;">
+			</div>
 	      </div>
 	      
 	    </div>
@@ -180,12 +195,193 @@ function Editar(){
 	document.getElementById('SApellido').disabled=false;
 	document.getElementById('DNINIF').disabled=false;
 	document.getElementById('CElectronico').disabled=false;
+	document.getElementById('editar').style.display='block';
 }
 </script>
 
 <script>
-function VerPerfil(){
-	var url = "./VerPerfil.html";
-    window.location.href = url;
+function EditarPass(){
+	document.getElementById('PassActual').disabled=false;
+}
+</script>
+
+<script>
+function ComprobarPassActual(){
+	var usuario = sessionStorage.getItem("usuario_activo");
+	var pass = document.getElementById("PassActual").value;
+	
+	var DatosContraseña= {
+		'Usuario' : usuario,
+		'Contrasena' : pass,
+	};
+	
+	var DatosContraseñaJSON = JSON.stringify(DatosContraseña);
+
+	var url = './comprobarpass';
+	
+	$.ajax({
+		type : 'post',
+		url : url,
+		contentType : 'application/json',
+		dataType : 'json',
+		data : DatosContraseñaJSON,
+		success : function(data, textStatus, jqXHR) {
+			var comp_pass = data.comp_pass;
+			
+			if(comp_pass == "correcto"){
+				document.getElementById('Check').style.display='block';
+				document.getElementById('CheckKO').style.display='none';
+				document.getElementById('PassNew').disabled=false;
+				document.getElementById('ConfrimPassNew').disabled=false;
+				
+				document.getElementById('editarpass').style.display='block';
+				
+			}else{
+				document.getElementById('CheckKO').style.display='block';
+				document.getElementById('Check').style.display='none';
+				document.getElementById('PassNew').disabled=true;
+				document.getElementById('ConfrimPassNew').disabled=true;
+			}
+		},
+		error : function(jqXHR, exception) {
+			// mostrarPantallaError(url, jqXHR);
+		},
+		statuscode : {
+			404 : function() {
+				//mostrarPantallaError(url);
+			}
+		}
+	});
+}
+</script>
+
+<script>
+function ComprobarCoincidencias(){
+	var pass1 = document.getElementById("PassNew").value;
+	var pass2 = document.getElementById("ConfrimPassNew").value;
+	
+	if(pass1 == pass2){
+		document.getElementById('CheckPass').style.display='block';
+		document.getElementById('CheckPassKO').style.display='none';
+		document.getElementById('CheckConfirmPass').style.display='block';
+		document.getElementById('CheckConfirmPassKO').style.display='none';
+		
+		document.getElementById('editarpass').disabled=false;
+	}else{
+		document.getElementById('CheckPassKO').style.display='block';
+		document.getElementById('CheckPass').style.display='none';
+		document.getElementById('CheckConfirmPassKO').style.display='block';
+		document.getElementById('CheckConfirmPass').style.display='none';
+		document.getElementById('editarpass').disabled=true;
+	}
+}
+</script>
+
+<script>
+function GuardarInformacion(){
+	//Guardar los datos del perfil que vamos a modificar.
+	var Nombre = document.getElementById("Nombre").value;
+	var PApellido = document.getElementById('PApellido').value;
+	var SApellido = document.getElementById('SApellido').value;
+	var DNINIF = document.getElementById('DNINIF').value;
+	var CElectronico = document.getElementById('CElectronico').value;
+	var usuario = sessionStorage.getItem("usuario_activo");
+	
+	var DatosPerfil= {
+		'Usuario' : usuario,
+		'Nombre' : Nombre,
+		'PrimerApellido' : PApellido,
+		'SegundoApellido' : SApellido,
+		'DNINIF' : DNINIF,
+		'CorreoElectronico' : CElectronico,
+	};
+
+	var DatosPerfilJSON = JSON.stringify(DatosPerfil);
+
+	var url = './guardarperfil';
+
+	$.ajax({
+		type : 'post',
+		url : url,
+		contentType : 'application/json',
+		dataType : 'json',
+		data : DatosPerfilJSON,
+		success : function(data, textStatus, jqXHR) {
+			var QueryOK = data.QueryOk;
+			
+			if(QueryOK == 'correcto'){
+				document.getElementById('QueryOK').style.display='block';
+				
+				document.getElementById('Nombre').disabled=true;
+				document.getElementById('PApellido').disabled=true;
+				document.getElementById('SApellido').disabled=true;
+				document.getElementById('DNINIF').disabled=true;
+				document.getElementById('CElectronico').disabled=true;
+			}else{
+				document.getElementById('QueryKO').style.display='block';
+			}
+		},
+		error : function(jqXHR, exception) {
+			// mostrarPantallaError(url, jqXHR);
+		},
+		statuscode : {
+			404 : function() {
+				//mostrarPantallaError(url);
+			}
+		}
+	});
+	
+	
+}
+</script>
+
+<script>
+function GuardarPassword(){
+	//Guardar la nueva contraseña en base de datos
+	var usuario = sessionStorage.getItem("usuario_activo");
+	var PassNew = document.getElementById('PassNew').value;
+	var ConfirmPassNew = document.getElementById('ConfrimPassNew').value;
+	
+	var DatosPass= {
+		'Usuario' : usuario,
+		'Contrasena' : PassNew,
+	};
+
+	var DatosPassJSON = JSON.stringify(DatosPass);
+
+	var url = './guardarpass';
+
+	$.ajax({
+		type : 'post',
+		url : url,
+		contentType : 'application/json',
+		dataType : 'json',
+		data : DatosPassJSON,
+		success : function(data, textStatus, jqXHR) {
+			var QueryOK = data.QueryOk;
+			
+			if(QueryOK == 'correcto'){
+				document.getElementById('QueryOKPass').style.display='block';
+				document.getElementById('editarpass').disabled=true;
+				
+				document.getElementById('PassNew').disabled=true;
+				document.getElementById('ConfrimPassNew').disabled=true;
+				document.getElementById('PassActual').disabled=true;
+				document.getElementById('PassActual').value="";
+				document.getElementById('PassNew').value="";
+				document.getElementById('ConfrimPassNew').value="";
+			}else{
+				document.getElementById('QueryKOPass').style.display='block';
+			}
+		},
+		error : function(jqXHR, exception) {
+			// mostrarPantallaError(url, jqXHR);
+		},
+		statuscode : {
+			404 : function() {
+				//mostrarPantallaError(url);
+			}
+		}
+	});
 }
 </script>

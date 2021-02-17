@@ -181,7 +181,17 @@ public class OperationsController {
 							}
 							
 						//Sacar los resultados del número de explotación del usuario
-						
+							System.out.println("SELECT NumExplotacion FROM usuarios_explotaciones WHERE Usuario='"+user+"'");
+							ResultSet numexplotacion = s.executeQuery("SELECT NumExplotacion FROM usuarios_explotaciones WHERE Usuario='"+user+"'");
+							
+							//Para obtener el resultado del número de la explotacion
+							if(numexplotacion.next()){
+								String NumExplotacion = numexplotacion.getString("NumExplotacion");
+								
+								System.out.println("NumExplotacion: " + NumExplotacion);
+								result.put("NumExplotacion", NumExplotacion);
+								
+							}
 							
 						responseEntity = new ResponseEntity<>(result, HttpStatus.OK);
 					} catch (SQLException e) {
@@ -213,6 +223,248 @@ public class OperationsController {
 		}
 		
 		System.out.println("FIN de sacar datos del usuario para Ver Perfil");
+		return responseEntity;
+		
+	}
+	
+	@RequestMapping(value="/guardarperfil", method=RequestMethod.POST)
+	public ResponseEntity<Map<String,String>> GuardarDatos(@RequestBody Usuario usuario) {
+		
+		System.out.println("INICIO modificación de datos de perfil");
+		
+		ResponseEntity<Map<String,String>> responseEntity = null;
+		Map<String,String> result = new HashMap<>();
+		
+		//Consulta a base de datos para comprobar si existe en la tabla usuarios.
+		Connection conexion = null;
+		
+		String user = usuario.getUsuario();
+		String Nombre = usuario.getNombre();
+		String PApellido = usuario.getPrimerApellido();
+		String SApellido = usuario.getSegundoApellido();
+		String DNINIF = usuario.getDNINIF();
+		String CElectronico = usuario.getCorreoElectronico();
+		
+		// Cargar el driver
+        try {
+			Class.forName("com.mysql.jdbc.Driver");
+			
+			try {
+				conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/tfg_v1", "root", "");
+				
+				Statement s = null;
+				try {
+					s = conexion.createStatement();
+					
+					try {
+			        	//Guardamos los datos en la tabla usuarios
+						System.out.println("UPDATE `usuarios` SET `Nombre`='"+Nombre+"',`PrimerApellido`='"+PApellido
+								+"',`SegundoApellido`='"+SApellido+"',`DNINIF`='"+DNINIF+"',`CorreoElectronico`='"+CElectronico+"' WHERE Usuario = '"+user+"'");
+						
+						int resultado = s.executeUpdate("UPDATE `usuarios` SET `Nombre`='"+Nombre+"',`PrimerApellido`='"+PApellido
+								+"',`SegundoApellido`='"+SApellido+"',`DNINIF`='"+DNINIF+"',`CorreoElectronico`='"+CElectronico+"' WHERE Usuario = '"+user+"'");
+						
+						//Comprobar si se ha insertado correctamente el update.
+						if(resultado == 1) {
+							System.out.println("Se han modificado los datos correctamente");
+							result.put("QueryOk", "correcto");
+							
+						}else {
+							System.out.println("ERROR al modificar los datos");
+							result.put("QueryOk", "incorrecto");
+						}
+						
+						responseEntity = new ResponseEntity<>(result, HttpStatus.OK);
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+						responseEntity = new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+						result.put("QueryOk", "incorrecto");
+						System.out.println("ERROR al hacer las consultas SQL");
+					}
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+					result.put("QueryOk", "incorrecto");
+					responseEntity = new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+					System.out.println("ERROR al crear el estamento de la consulta sql");
+				}
+			} catch (SQLException e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+				result.put("QueryOk", "incorrecto");
+				responseEntity = new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+				System.out.println("ERROR al hacer la conexión a la base de datos");
+			} 
+			
+		} catch (ClassNotFoundException e3) {
+			// TODO Auto-generated catch block
+			e3.printStackTrace();
+			result.put("QueryOk", "incorrecto");
+			responseEntity = new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+			System.out.println("ERROR al cargar el driver de sql");
+		}
+		
+        System.out.println("FIN modificación de datos de perfil");
+		return responseEntity;
+		
+	}
+	
+	@RequestMapping(value="/comprobarpass", method=RequestMethod.POST)
+	public ResponseEntity<Map<String,String>> ComprobarPass(@RequestBody Usuario usuario) {
+		
+		System.out.println("INICIO comprobación contraseña actual");
+		
+		ResponseEntity<Map<String,String>> responseEntity = null;
+		Map<String,String> result = new HashMap<>();
+		
+		//Consulta a base de datos para comprobar si existe en la tabla usuarios.
+		Connection conexion = null;
+		
+		String user = usuario.getUsuario();
+		String pass = usuario.getContrasena();
+		
+		// Cargar el driver
+        try {
+			Class.forName("com.mysql.jdbc.Driver");
+			
+			try {
+				conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/tfg_v1", "root", "");
+				
+				Statement s = null;
+				try {
+					s = conexion.createStatement();
+					
+					try {
+						ResultSet cont_act = s.executeQuery("SELECT Contrasena FROM usuarios WHERE Usuario='"+user+"'");
+						
+						System.out.println("SELECT Contrasena FROM usuarios WHERE Usuario='"+user+"'");
+						
+						if(cont_act.next()){
+							String pass_tabla = cont_act.getString(1);
+							
+							if(pass_tabla.equals(pass)) {
+								System.out.println("La contraseña del usuario " + user + " corresponde con la añadida");
+								
+								result.put("comp_pass", "correcto");
+							}else {
+								System.out.println("La contraseña del usuario " + user + " NO corresponde con la añadida");
+								result.put("comp_pass", "incorrecto");
+							}
+						}else {
+							System.out.println("La contraseña del usuario " + user + " NO corresponde con la añadida");
+							result.put("comp_pass", "incorrecto");
+						}
+						
+						responseEntity = new ResponseEntity<>(result, HttpStatus.OK);
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+						responseEntity = new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+						result.put("QueryOk", "incorrecto");
+						System.out.println("ERROR al hacer las consultas SQL");
+					}
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+					result.put("QueryOk", "incorrecto");
+					responseEntity = new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+					System.out.println("ERROR al crear el estamento de la consulta sql");
+				}
+			} catch (SQLException e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+				result.put("QueryOk", "incorrecto");
+				responseEntity = new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+				System.out.println("ERROR al hacer la conexión a la base de datos");
+			} 
+			
+		} catch (ClassNotFoundException e3) {
+			// TODO Auto-generated catch block
+			e3.printStackTrace();
+			result.put("QueryOk", "incorrecto");
+			responseEntity = new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+			System.out.println("ERROR al cargar el driver de sql");
+		}
+		
+        System.out.println("FIN comprobación contraseña actual");
+		return responseEntity;
+		
+	}
+
+	@RequestMapping(value="/guardarpass", method=RequestMethod.POST)
+	public ResponseEntity<Map<String,String>> GuardarPass(@RequestBody Usuario usuario) {
+		
+		System.out.println("INICIO modificación de la contraseña");
+		
+		ResponseEntity<Map<String,String>> responseEntity = null;
+		Map<String,String> result = new HashMap<>();
+		
+		//Consulta a base de datos para comprobar si existe en la tabla usuarios.
+		Connection conexion = null;
+		
+		String user = usuario.getUsuario();
+		String pass = usuario.getContrasena();
+		
+		// Cargar el driver
+        try {
+			Class.forName("com.mysql.jdbc.Driver");
+			
+			try {
+				conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/tfg_v1", "root", "");
+				
+				Statement s = null;
+				try {
+					s = conexion.createStatement();
+					
+					try {
+			        	//Guardamos los datos en la tabla usuarios
+						System.out.println("UPDATE `usuarios` SET `Contrasena`='"+pass+"' WHERE Usuario = '"+user+"'");
+						
+						int resultado = s.executeUpdate("UPDATE `usuarios` SET `Contrasena`='"+pass+"' WHERE Usuario = '"+user+"'");
+						
+						//Comprobar si se ha insertado correctamente el update.
+						if(resultado == 1) {
+							System.out.println("Se han modificado los datos correctamente");
+							result.put("QueryOk", "correcto");
+							
+						}else {
+							System.out.println("ERROR al modificar los datos");
+							result.put("QueryOk", "incorrecto");
+						}
+						
+						responseEntity = new ResponseEntity<>(result, HttpStatus.OK);
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+						responseEntity = new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+						result.put("QueryOk", "incorrecto");
+						System.out.println("ERROR al hacer las consultas SQL");
+					}
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+					result.put("QueryOk", "incorrecto");
+					responseEntity = new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+					System.out.println("ERROR al crear el estamento de la consulta sql");
+				}
+			} catch (SQLException e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+				result.put("QueryOk", "incorrecto");
+				responseEntity = new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+				System.out.println("ERROR al hacer la conexión a la base de datos");
+			} 
+			
+		} catch (ClassNotFoundException e3) {
+			// TODO Auto-generated catch block
+			e3.printStackTrace();
+			result.put("QueryOk", "incorrecto");
+			responseEntity = new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+			System.out.println("ERROR al cargar el driver de sql");
+		}
+		
+        System.out.println("INICIO modificación de la contraseña");
 		return responseEntity;
 		
 	}
