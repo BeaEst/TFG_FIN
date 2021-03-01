@@ -3,9 +3,12 @@ package com.TfgBeaEst.Controller;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.http.HttpStatus;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.TfgBeaEst.Animales;
 import com.TfgBeaEst.Usuario;
 
 @Controller
@@ -159,7 +163,7 @@ public class OperationsController {
 					
 					try {
 			        	//Sacamos todos los datos del usuario conectado
-							ResultSet comp_user = s.executeQuery("SELECT Nombre, PrimerApellido, SegundoApellido, DNINIF, CorreoElectronico FROM usuarios WHERE Usuario='"+user+"'");
+							ResultSet comp_user = s.executeQuery("SELECT Nombre, PrimerApellido, SegundoApellido, DNINIF, CorreoElectronico, NumExplotacion FROM usuarios WHERE Usuario='"+user+"'");
 							
 							System.out.println("SELECT * FROM usuarios WHERE Usuario='"+user+"'");
 							
@@ -170,27 +174,17 @@ public class OperationsController {
 								String SApellido = comp_user.getString("SegundoApellido");
 								String DNINIF = comp_user.getString("DNINIF");
 								String CElectronico = comp_user.getString("CorreoElectronico");
+								String NumExplotacion = comp_user.getString("NumExplotacion");
 								
-								System.out.println("Nombre: " + nombre + "Apellidos: " + PApellido + " " + SApellido + "DNI: " + DNINIF + "Correo Electrónico: " + CElectronico);
+								System.out.println("Nombre: " + nombre + " Apellidos: " + PApellido + " " + SApellido + " DNI: " + DNINIF + " Correo Electrónico: " + CElectronico
+										+ " NumExplotacion: " + NumExplotacion);
 								
 								result.put("Nombre", nombre);
 								result.put("PApellido", PApellido);
 								result.put("SApellido", SApellido);
 								result.put("DNINIF", DNINIF);
 								result.put("CElectronico", CElectronico);
-							}
-							
-						//Sacar los resultados del número de explotación del usuario
-							System.out.println("SELECT NumExplotacion FROM usuarios_explotaciones WHERE Usuario='"+user+"'");
-							ResultSet numexplotacion = s.executeQuery("SELECT NumExplotacion FROM usuarios_explotaciones WHERE Usuario='"+user+"'");
-							
-							//Para obtener el resultado del número de la explotacion
-							if(numexplotacion.next()){
-								String NumExplotacion = numexplotacion.getString("NumExplotacion");
-								
-								System.out.println("NumExplotacion: " + NumExplotacion);
 								result.put("NumExplotacion", NumExplotacion);
-								
 							}
 							
 						responseEntity = new ResponseEntity<>(result, HttpStatus.OK);
@@ -465,6 +459,186 @@ public class OperationsController {
 		}
 		
         System.out.println("INICIO modificación de la contraseña");
+		return responseEntity;
+		
+	}
+	
+	@RequestMapping(value="/cargarovejas", method=RequestMethod.POST)
+	public ResponseEntity<Map<String,ArrayList<String>>> CargarOvejas(@RequestBody Usuario usuario) {
+		
+		System.out.println("INICIO sacar ovejar pertenecientes al usuario");
+		
+		ResponseEntity<Map<String,ArrayList<String>>> responseEntity = null;
+		Map<String,ArrayList<String>> result = new HashMap<>();
+		
+		//Consulta a base de datos para comprobar si existe en la tabla usuarios.
+		Connection conexion = null;
+		
+		String user = usuario.getUsuario();
+		String pass = usuario.getContrasena();
+		
+		// Cargar el driver
+        try {
+			Class.forName("com.mysql.jdbc.Driver");
+			
+			try {
+				conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/tfg_v1", "root", "");
+				
+				Statement s = null;
+				try {
+					s = conexion.createStatement();
+					
+					try {
+						List<String> datos = new ArrayList<String>();
+						 
+						ResultSet cont_act = s.executeQuery("SELECT NumIdentificacion FROM ovejas WHERE Usuario='"+user+"'");
+						
+						System.out.println("SELECT NumIdentificacion FROM usuarios WHERE Usuario='"+user+"'");
+						
+						Statement st;
+				        ResultSet rs;
+				        ResultSetMetaData md;
+				        //st = cn.createStatement();              
+				        //rs = st.executeQuery(s_sql);
+				        md = cont_act.getMetaData();
+				        int columnas = md.getColumnCount();
+				        ArrayList<String> ListaOvejas = new ArrayList<>();
+				        //List<String> ListaOvejas = new List();
+				        while(cont_act.next()){
+				        	String dato; 
+				            /*for (int i = 1; i <= columnas; i++) {                      
+				            	dato = cont_act.getObject(i);
+				            }*/
+				        	dato = cont_act.getString("NumIdentificacion");
+				        	ListaOvejas.add(dato);
+				        }
+				        result.put("ListaOvejas", ListaOvejas);
+				        
+						responseEntity = new ResponseEntity<>(result, HttpStatus.OK);
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+						responseEntity = new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+						//result.put("QueryOk", "incorrecto");
+						System.out.println("ERROR al hacer las consultas SQL");
+					}
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+					//result.put("QueryOk", "incorrecto");
+					responseEntity = new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+					System.out.println("ERROR al crear el estamento de la consulta sql");
+				}
+			} catch (SQLException e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+				//result.put("QueryOk", "incorrecto");
+				responseEntity = new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+				System.out.println("ERROR al hacer la conexión a la base de datos");
+			} 
+			
+		} catch (ClassNotFoundException e3) {
+			// TODO Auto-generated catch block
+			e3.printStackTrace();
+			//result.put("QueryOk", "incorrecto");
+			responseEntity = new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+			System.out.println("ERROR al cargar el driver de sql");
+		}
+		
+        System.out.println("FIN sacar ovejar pertenecientes al usuario");
+		return responseEntity;
+		
+	}
+	
+	@RequestMapping(value="/visualizaroveja", method=RequestMethod.POST)
+	public ResponseEntity<Map<String, String>> VisualizarOveja(@RequestBody Animales oveja) {
+		
+		System.out.println("INICIO sacar datos perteneciente a la oveja");
+		
+		ResponseEntity<Map<String,String>> responseEntity = null;
+		Map<String,String> result = new HashMap<>();
+		
+		//Consulta a base de datos para comprobar si existe en la tabla usuarios.
+		Connection conexion = null;
+		
+		String NumIdentificacion = oveja.getNumIdentificacion();
+		
+		// Cargar el driver
+        try {
+			Class.forName("com.mysql.jdbc.Driver");
+			
+			try {
+				conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/tfg_v1", "root", "");
+				
+				Statement s = null;
+				try {
+					s = conexion.createStatement();
+					
+					try {
+						List<String> datos = new ArrayList<String>();
+						 
+						ResultSet datosoveja = s.executeQuery("SELECT Sexo, AnoNacimiento, Muerta, FechaMuerte, Venta, FechaVenta, TieneBolo, TieneCrotal, NumExplotacion FROM ovejas WHERE NumIdentificacion='"+NumIdentificacion+"'");
+						
+						System.out.println("SELECT Sexo, AnoNacimiento, Muerta, FechaMuerte, Venta, FechaVenta, TieneBolo, TieneCrotal, NumExplotacion FROM ovejas WHERE NumIdentificacion='"+NumIdentificacion+"'");
+				        
+						//Para obtener los resultados del usuario conectado
+						if(datosoveja.next()){
+							String Sexo = datosoveja.getString("Sexo");
+							String AnoNacimiento = datosoveja.getString("AnoNacimiento");
+							String Muerta = datosoveja.getString("Muerta");
+							String FechaMuerte = datosoveja.getString("FechaMuerte");
+							String Venta = datosoveja.getString("Venta");
+							String FechaVenta = datosoveja.getString("FechaVenta");
+							String TieneBolo = datosoveja.getString("TieneBolo");
+							String TieneCrotal = datosoveja.getString("TieneCrotal");
+							String NumExplotacion = datosoveja.getString("NumExplotacion");
+							
+							/*System.out.println("Nombre: " + nombre + " Apellidos: " + PApellido + " " + SApellido + " DNI: " + DNINIF + " Correo Electrónico: " + CElectronico
+									+ " NumExplotacion: " + NumExplotacion);*/
+							
+							result.put("Sexo", Sexo);
+							result.put("AnoNacimiento", AnoNacimiento);
+							result.put("Muerta", Muerta);
+							result.put("FechaMuerte", FechaMuerte);
+							result.put("Venta", Venta);
+							result.put("FechaVenta", FechaVenta);
+							result.put("TieneBolo", TieneBolo);
+							result.put("TieneCrotal", TieneCrotal);
+							result.put("NumExplotacion", NumExplotacion);
+						}
+						
+						responseEntity = new ResponseEntity<>(result, HttpStatus.OK);
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+						responseEntity = new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+						//result.put("QueryOk", "incorrecto");
+						System.out.println("ERROR al hacer las consultas SQL");
+					}
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+					//result.put("QueryOk", "incorrecto");
+					responseEntity = new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+					System.out.println("ERROR al crear el estamento de la consulta sql");
+				}
+			} catch (SQLException e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+				//result.put("QueryOk", "incorrecto");
+				responseEntity = new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+				System.out.println("ERROR al hacer la conexión a la base de datos");
+			} 
+			
+		} catch (ClassNotFoundException e3) {
+			// TODO Auto-generated catch block
+			e3.printStackTrace();
+			//result.put("QueryOk", "incorrecto");
+			responseEntity = new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+			System.out.println("ERROR al cargar el driver de sql");
+		}
+		
+        System.out.println("INICIO sacar datos perteneciente a la oveja");
 		return responseEntity;
 		
 	}

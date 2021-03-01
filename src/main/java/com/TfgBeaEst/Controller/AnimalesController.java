@@ -5,11 +5,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class OvejasController {
+public class AnimalesController {
 
-	@GetMapping("/Ovejas.html")
+	@GetMapping("/Animales.html")
 	public String IniciarSesion() {
 		//model.addAttribute("usuario", new Usuario());
-		return "Ovejas";
+		return "Animales";
 	}
 }

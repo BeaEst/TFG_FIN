@@ -13,8 +13,9 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous"> 
 	
 	<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+	<script src="../js/bootbox.min.js"></script>
 	
-    <title>Inicio</title>
+    <title>Animales</title>
   </head>
   <body>
 	<div>
@@ -65,15 +66,13 @@
 	        </nav>
         </div>
 
-	<div class="card" style="text-align:center;">
-	  <div class="card-body" style="margin-left: 150px;position: absolute; text-align:left;">
-	    <h5 class="card-title">¡BIENVENIDO <script>document.write(sessionStorage.getItem("usuario_activo"));</script>! </h5>
-	    <p class="card-text">VERSION 1.0.1</p>
-	    <p class="card-text">En esta versión se ha creado el proyecto con las siguientes páginas:</p>
-	    <p class="card-text">Creación de la páigna Ovejas.html</p>
-	  </div>
-	</div>
-	
+		<h1 style="text-align:center;"> Animales</h1>
+        
+        <br>
+        <br>
+        
+        <div  id="card"></div>
+      
     <!-- Optional JavaScript; choose one of the two! -->
 
     <!-- Option 1: Bootstrap Bundle with Popper -->
@@ -96,9 +95,8 @@ function CerrarSesion(){
 </script>
 
 <script>
-/*function CargarOvejas(){
-
-	//Primero hay que sacar los datos de base de datos de el usuario que se encuentra conectado
+$(function() {
+  //Primero hay que sacar los datos de base de datos de el usuario que se encuentra conectado
 	var usuario = sessionStorage.getItem("usuario_activo");
 	
 	var usuarioDatos= {
@@ -116,10 +114,19 @@ function CerrarSesion(){
 		dataType : 'json',
 		data : usuarioLoginJSON,
 		success : function(data, textStatus, jqXHR) {
-			sessionStorage.setItem('ListaOvejas', data.ListaOvejas);
-			
-			var url = "./Ovejas.html";
-    		window.location.href = url;
+			var ovejas = data.ListaOvejas;
+			var size = Object.keys(ovejas).length;
+
+			txt = document.getElementById("card");
+			var doc = "";
+			for(var i=0; i<size; i++){
+				doc= doc + '<div class="card text-white bg-primary mb-3" style="max-width: 18rem;margin-left: 155px;cursor:pointer;">'
+				+'<div class="card-header" style="margin-top:5px;">'+ovejas[i]+' '
+				+'<h5 class="card-title"><img src="./basura.png" height="30" size="30" id="" style="float:right;">'
+				+'&nbsp;<img src="./ver.png" height="30" size="30" id="" style="float:right;cursor:pointer;"  onClick="VisualizarOveja('+ovejas[i]+')"> </h5></div></div>';
+				
+			}
+			txt.innerHTML = doc;
 		},
 		error : function(jqXHR, exception) {
 			// mostrarPantallaError(url, jqXHR);
@@ -130,9 +137,7 @@ function CerrarSesion(){
 			}
 		}
 	});
-	
-	
-}*/
+});
 </script>
 
 <script>
@@ -166,6 +171,133 @@ function VerPerfil(){
 			//Luego redirigir a la página
 			var url = "./VerPerfil.html";
 		    window.location.href = url;
+		},
+		error : function(jqXHR, exception) {
+			// mostrarPantallaError(url, jqXHR);
+		},
+		statuscode : {
+			404 : function() {
+				//mostrarPantallaError(url);
+			}
+		}
+	});
+	
+	
+}
+</script>
+
+<script>
+function VisualizarOveja(NumIdentificacion){
+
+	/**/
+	
+	var usuarioDatos= {
+		'NumIdentificacion' : NumIdentificacion,
+	};
+
+	var usuarioLoginJSON = JSON.stringify(usuarioDatos);
+
+	var url = './visualizaroveja';
+
+	$.ajax({
+		type : 'post',
+		url : url,
+		contentType : 'application/json',
+		dataType : 'json',
+		data : usuarioLoginJSON,
+		success : function(data, textStatus, jqXHR) {
+			
+			//Comprobar si es hembra o macho
+			var sexo;
+			if(data.Sexo == "H"){
+				sexo = "Hembra";
+			}else if(data.Sexo == "M"){
+				sexo == "Macho";
+			}
+			
+			var mensaje = "";
+			
+			if(data.Muerta == "1"){
+				mensaje = "<div class='card text-white bg-danger mb-3'>"+
+							"<div class='card-body'>"+
+								"<h5 class='card-title'>MUERTA</h5>"+
+								"<p class='card-text'>La oveja falleció el día: " + data.FechaMuerte + "</p>"+
+							"</div>"+
+						  "</div>";
+			}
+			
+			if(data.Venta == "1"){
+				mensaje = "<div class='card text-dark bg-warning mb-3'>"+
+							"<div class='card-body'>"+
+								"<h5 class='card-title'>VENDIDA</h5>"+
+								"<p class='card-text'>La oveja se vendió el día: " + data.FevhaVenta + "</p>"+
+							"</div>"+
+						  "</div>";
+			}
+			
+			mensaje = mensaje + "<table>";
+			
+			mensaje = mensaje + "<tr>";
+			mensaje = mensaje + "<td>Sexo:</td>";
+			mensaje = mensaje + "<td><input id='Sexo' disabled value=" + sexo + "></td>";
+			mensaje = mensaje + "</tr>";
+			
+			mensaje = mensaje + "<tr>";
+			mensaje = mensaje + "<td>Año nacimiento:</td>";
+			mensaje = mensaje + "<td><input id='AnoNacimiento' disabled value=" + data.AnoNacimiento + "></td>";
+			mensaje = mensaje + "</tr>";
+			
+			if(data.TieneBolo == "1"){
+				mensaje = mensaje + "<tr>";
+				mensaje = mensaje + "<td>Tiene bolo:</td>";
+				mensaje = mensaje + "<td><input type='checkbox' id='TieneBolo' name='TieneBolo' value='TieneBolo' checked disabled></td>";
+				mensaje = mensaje + "</tr>";
+			}else{
+				mensaje = mensaje + "<tr>";
+				mensaje = mensaje + "<td>Tiene bolo:</td>";
+				mensaje = mensaje + "<td><input type='checkbox' id='TieneBolo' name='TieneBolo' value='TieneBolo' disabled></td>";
+				mensaje = mensaje + "</tr>";
+			}
+			
+			if(data.TieneCrotal == "1"){
+				mensaje = mensaje + "<tr>";
+				mensaje = mensaje + "<td>Tiene crotal:</td>";
+				mensaje = mensaje + "<td><input type='checkbox' id='TieneCrotal' name='TieneCrotal' value='TieneCrotal' checked disabled></td>";
+				mensaje = mensaje + "</tr>";
+			}else{
+				mensaje = mensaje + "<tr>";
+				mensaje = mensaje + "<td>Tiene crotal:</td>";
+				mensaje = mensaje + "<td><input type='checkbox' id='TieneCrotal' name='TieneCrotal' value='TieneCrotal' disabled></td>";
+				mensaje = mensaje + "</tr>"; 
+			}
+			
+			mensaje = mensaje + "<tr>";
+			mensaje = mensaje + "<td>Número de explotación:</td>";
+			mensaje = mensaje + "<td><input id='NumExplotacion' disabled value=" + data.NumExplotacion + "></td>";
+			mensaje = mensaje + "</tr>";
+			
+			mensaje = mensaje + "</table>";
+			
+			if(data.Venta == "0" && data.Muerta == "0"){
+				mensaje = mensaje + "<div class='d-grid gap-2 d-md-flex justify-content-md-end'>"+
+  										"<img src='./lapiz.png' style='cursor:pointer;' height='40' size='40' onclick='Editar()'>"+
+									"</div>";
+									
+				mensaje = mensaje + "<div class='d-grid gap-2 d-md-flex justify-content-md-end'>"+
+	  									"<button class='btn btn-primary me-md-2' type='button' style='display:none;'>Guardar Información</button>"+
+									"</div>";
+			}
+			
+			
+			
+			
+			bootbox.dialog({
+				title:NumIdentificacion, 
+				message: mensaje,
+				closeButton: true,
+				onEscape: true
+			});
+
 		},
 		error : function(jqXHR, exception) {
 			// mostrarPantallaError(url, jqXHR);
