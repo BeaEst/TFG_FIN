@@ -24,40 +24,77 @@
 	<br>
 	<br>
 
-	<div style="display:inline;">
-		<div align="center">
-			<img src="./Icon.jpg" width="250" height="150" style="display:inline; text-align:center;">
+	<div id="NoMovil" style="display:none;">
+		<div style="display:inline;">
+			<div align="center">
+				<img src="./Icon.jpg" width="250" height="150" style="display:inline; text-align:center;">
+			</div>
+		</div>
+		
+		<br>
+		<br>
+		
+		<div class="alert alert-danger alert-dismissible" role="alert" id="noLoginNoMovil" style="display:none;width: 24rem;text-align:center;margin:0% 40%;padding-left:48px;">
+			<strong id="salida-error" style="text-align:center;">¡ERROR! El usuario o la contraseña son erroneos</strong>
+		</div>
+			
+		<div style="width: 18rem; display: inline;">
+			
+			<div class="card" style="margin:0% 40%">
+				<form style="text-align: center;">
+					<div class="mb-3">
+					    <label for="UsuarioNoMovil" class="form-label">Usuario</label>
+					    <br>
+					    <input type="text" name="UsuarioNoMovil" id="UsuarioNoMovil" placeholder="Usuario"></input>
+					</div>
+					<div class="mb-3">
+					    <label for="ContrasenaNoMovil" class="form-label">Contraseña</label>
+					    <br>
+					    <input type="password" name="ContrasenaNoMovil" id="ContrasenaNoMovil" placeholder="Contraseña"></input>
+					</div>
+					<div class="mb-3">
+					    <button onclick="IniciarSesion()" class="btn btn-primary">Iniciar Sesión</button>
+					</div>
+				</form>
+			</div>
 		</div>
 	</div>
 	
-	<br>
-	<br>
-	
-	<div class="alert alert-danger alert-dismissible" role="alert" id="noLogin" style="display:none;width: 24rem;text-align:center;margin:0% 40%;padding-left:48px;">
-		<strong id="salida-error" style="text-align:center;">¡ERROR! El usuario o la contraseña son erroneos</strong>
-	</div>
+	<div id="Movil" style="display:none;">
+		<div style="display:inline;">
+			<div align="center">
+				<img src="./Icon.jpg" width="250" height="150" style="display:inline; text-align:center;">
+			</div>
+		</div>
 		
-	<div style="width: 18rem; display: inline;">
+		<br>
+		<br>
 		
-		<div class="card" style="margin:0% 40%">
-			<form style="text-align: center;">
-				<div class="mb-3">
-				    <label for="Usuario" class="form-label">Usuario</label>
-				    <br>
-				    <input type="text" name="Usuario" id="Usuario" placeholder="Usuario"></input>
-				</div>
-				<div class="mb-3">
-				    <label for="Contrasena" class="form-label">Contraseña</label>
-				    <br>
-				    <input type="password" name="Contrasena" id="Contrasena" placeholder="Contraseña"></input>
-				</div>
-				<div class="mb-3">
-				    <button onclick="IniciarSesion()" class="btn btn-primary">Iniciar Sesión</button>
-				</div>
-			</form>
+		<div class="alert alert-danger alert-dismissible" role="alert" id="noLoginMovil" style="display:none;width: 24rem;text-align:center;padding-left:48px;">
+			<strong id="salida-error" style="text-align:center;">¡ERROR! El usuario o la contraseña son erroneos</strong>
+		</div>
+			
+		<div style="width: 18rem; display: inline;">
+			
+			<div class="card">
+				<form style="text-align: center;">
+					<div class="mb-3">
+					    <label for="UsuarioMovil" class="form-label">Usuario</label>
+					    <br>
+					    <input type="text" name="UsuarioMovil" id="UsuarioMovil" placeholder="Usuario"></input>
+					</div>
+					<div class="mb-3">
+					    <label for="ContrasenaMovil" class="form-label">Contraseña</label>
+					    <br>
+					    <input type="password" name="ContrasenaMovil" id="ContrasenaMovil" placeholder="Contraseña"></input>
+					</div>
+					<div class="mb-3">
+					    <button onclick="IniciarSesion()" class="btn btn-primary">Iniciar Sesión</button>
+					</div>
+				</form>
+			</div>
 		</div>
 	</div>
-	
 	
     <!-- Optional JavaScript; choose one of the two! -->
 
@@ -72,9 +109,41 @@
 </html>
 
 <script>
+$(function() {
+  //Comprobar si es telefono u ordenador
+	
+	    try{ 
+	        document.createEvent("TouchEvent"); 
+	        document.getElementById('Movil').style.display='block';
+	        var parar;
+	        parar = 1;
+	        return true; 
+	    }
+	    catch(e){ 
+	    	document.getElementById('NoMovil').style.display='block';
+	        return false;
+	    }
+	
+  
+});
+</script>
+
+<script>
 function IniciarSesion(){
-	var usuario = document.getElementById("Usuario").value;
-	var contrasena = document.getElementById("Contrasena").value;
+	
+	var usuario;
+	if(document.getElementById("UsuarioNoMovil").value != ""){
+		usuario = document.getElementById("UsuarioNoMovil").value;
+	}else{
+		usuario = document.getElementById("UsuarioMovil").value;
+	}
+	
+	var contrasena;
+	if(document.getElementById("UsuarioNoMovil").value != ""){
+		contrasena = document.getElementById("ContrasenaNoMovil").value;
+	}else{
+		contrasena = document.getElementById("ContrasenaMovil").value;
+	}
 	
 	var usuarioLogin = {
 		'usuario' : usuario,
@@ -122,9 +191,11 @@ $(function(){
 	 $('body').css('display','block');
 	 var show = sessionStorage.getItem("noLog");
 	 if ( show == "incorrecto" ){
-		 $("#noLogin").show();
+		 $("#noLoginNoMovil").show();
+		 $("#noLoginMovil").show();
 	 }else{
-		 $("#noLogin").hide();
+		 $("#noLoginMovil").hide();
+		 $("#noLoginNoMovil").hide();
 	 }
 });
 </script>

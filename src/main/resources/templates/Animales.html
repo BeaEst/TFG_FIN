@@ -31,13 +31,15 @@
 	        </div>
 		</nav>
 	</div>
-		
+	
+	<div id="NoMovil" style="display:none;">		
 		<div style="width:150px; float:left; position: absolute; top:50px; bottom: 0; background-color:#212529;">
 			<nav class="navbar navbar-dark bg-dark">
 	            <ul class="navbar-nav">
 	                <li class="nav-item" >
-	                    <a class="nav-link active" style="padding-left:10px;" href="./Animales.html">Animales</a>
+	                    <a class="nav-link active" style="padding-left:10px; background-color:#e3e4e5;width:150px;color:black" href="./Animales.html"><b>ANIMALES</b></a>
 	                </li>
+	                <!-- 
 	                <li class="nav-item">
 	                    <a class="nav-link active" style="padding-left:10px;" href="#">Leche</a>
 	                </li>
@@ -62,17 +64,68 @@
 	                <li class="nav-item">
 	                    <a class="nav-link active" style="padding-left:10px;" href="#">Enfermedades</a>
 	                </li>
+	                -->
 	            </ul>
 	        </nav>
         </div>
-
+	
+	
 		<h1 style="text-align:center;"> Animales</h1>
         
         <br>
         <br>
         
         <div  id="card"></div>
+      </div>
       
+      <div id="Movil" style="display:none;">		
+		<div style="width:90px; float:left; position: absolute; top:50px; bottom: 0; background-color:#212529;">
+			<nav class="navbar navbar-dark bg-dark">
+	            <ul class="navbar-nav">
+	                <li class="nav-item" >
+	                    <a class="nav-link active" style="padding-left:10px;" href="./Animales.html">
+	                    	<img src="./oveja.png" width="30" height="30" style="display:inline;">
+	                    	<img src="./cabra.png" width="30" height="30" style="display:inline;">
+	                    </a>
+	                </li>
+	                <!-- 
+	                <li class="nav-item">
+	                    <a class="nav-link active" style="padding-left:10px;" href="#">Leche</a>
+	                </li>
+	                <li class="nav-item">
+	                    <a class="nav-link active" style="padding-left:10px;" href="#">Venta Ovejas</a>
+	                </li>
+	                <li class="nav-item">
+	                    <a class="nav-link active" style="padding-left:10px;" href="#">Venta Corderos</a>
+	                </li>
+	                <li class="nav-item">
+	                    <a class="nav-link active" style="padding-left:10px;" href="#">Muerte Ovejas</a>
+	                </li>
+	                <li class="nav-item">
+	                    <a class="nav-link active" style="padding-left:10px;" href="#">Medicamentos</a>
+	                </li>
+	                <li class="nav-item">
+	                    <a class="nav-link active" style="padding-left:10px;" href="#">Piensos</a>
+	                </li>
+	                <li class="nav-item">
+	                    <a class="nav-link active" style="padding-left:10px;" href="#">Piensos Medicamentosos</a>
+	                </li>
+	                <li class="nav-item">
+	                    <a class="nav-link active" style="padding-left:10px;" href="#">Enfermedades</a>
+	                </li>
+	                -->
+	            </ul>
+	        </nav>
+        </div>
+	
+	
+		<h1 style="text-align:center;"> Animales</h1>
+        
+        <br>
+        <br>
+        
+        <div  id="card"></div>
+      </div>
     <!-- Optional JavaScript; choose one of the two! -->
 
     <!-- Option 1: Bootstrap Bundle with Popper -->
@@ -85,6 +138,28 @@
     -->
   </body>
 </html>
+
+<script>
+$(function() {
+  //Comprobar si es telefono u ordenador
+	
+	    try{ 
+	        document.createEvent("TouchEvent"); 
+	        document.getElementById('Movil').style.display='block';
+	        sessionStorage.setItem('Movil', "true");
+	        var parar;
+	        parar = 1;
+	        return true; 
+	    }
+	    catch(e){ 
+	    	document.getElementById('NoMovil').style.display='block';
+	    	sessionStorage.setItem('Movil', "false");
+	        return false;
+	    }
+	
+  
+});
+</script>
 
 <script>
 function CerrarSesion(){
@@ -122,7 +197,8 @@ $(function() {
 			for(var i=0; i<size; i++){
 				doc= doc + '<div class="card text-white bg-primary mb-3" style="max-width: 18rem;margin-left: 155px;cursor:pointer;">'
 				+'<div class="card-header" style="margin-top:5px;">'+ovejas[i]+' '
-				+'<h5 class="card-title"><img src="./basura.png" height="30" size="30" id="" style="float:right;">'
+				+'<h5 class="card-title"><img src="./muerte.png" height="30" size="30" id="" style="float:right;cursor:pointer;" onClick="OvejaMuerta('+ovejas[i]+')">&nbsp;'
+				+ '<img src="./venta.png" height="30" size="30" id="" style="float:right;cursor:pointer;" onClick="OvejaVendida('+ovejas[i]+')">&nbsp;'
 				+'&nbsp;<img src="./ver.png" height="30" size="30" id="" style="float:right;cursor:pointer;"  onClick="VisualizarOveja('+ovejas[i]+')"> </h5></div></div>';
 				
 			}
@@ -141,56 +217,8 @@ $(function() {
 </script>
 
 <script>
-function VerPerfil(){
-	//Primero hay que sacar los datos de base de datos de el usuario que se encuentra conectado
-	var usuario = sessionStorage.getItem("usuario_activo");
-	
-	var usuarioDatos= {
-		'usuario' : usuario,
-	};
-
-	var usuarioLoginJSON = JSON.stringify(usuarioDatos);
-
-	var url = './sacardatos';
-
-	$.ajax({
-		type : 'post',
-		url : url,
-		contentType : 'application/json',
-		dataType : 'json',
-		data : usuarioLoginJSON,
-		success : function(data, textStatus, jqXHR) {
-			//Guardar las variables globales para mostrarlas en los input de Ver Perfil
-			sessionStorage.setItem('Nombre', data.Nombre);
-			sessionStorage.setItem('PApellido', data.PApellido);
-			sessionStorage.setItem('SApellido', data.SApellido);
-			sessionStorage.setItem('DNINIF', data.DNINIF);
-			sessionStorage.setItem('CElectronico', data.CElectronico);
-			sessionStorage.setItem('NumExplotacion', data.NumExplotacion);
-			
-			//Luego redirigir a la página
-			var url = "./VerPerfil.html";
-		    window.location.href = url;
-		},
-		error : function(jqXHR, exception) {
-			// mostrarPantallaError(url, jqXHR);
-		},
-		statuscode : {
-			404 : function() {
-				//mostrarPantallaError(url);
-			}
-		}
-	});
-	
-	
-}
-</script>
-
-<script>
 function VisualizarOveja(NumIdentificacion){
 
-	/**/
-	
 	var usuarioDatos= {
 		'NumIdentificacion' : NumIdentificacion,
 	};
@@ -230,7 +258,7 @@ function VisualizarOveja(NumIdentificacion){
 				mensaje = "<div class='card text-dark bg-warning mb-3'>"+
 							"<div class='card-body'>"+
 								"<h5 class='card-title'>VENDIDA</h5>"+
-								"<p class='card-text'>La oveja se vendió el día: " + data.FevhaVenta + "</p>"+
+								"<p class='card-text'>La oveja se vendió el día: " + data.FechaVenta + "</p>"+
 							"</div>"+
 						  "</div>";
 			}
@@ -309,6 +337,76 @@ function VisualizarOveja(NumIdentificacion){
 		}
 	});
 	
+	
+}
+</script>
+
+<script>
+function OvejaMuerta(NumIdentificacion){
+
+	var mensaje = "¿Desea marcar como <b style='color:red;'> MUERTA </b> la oveja <b>" + NumIdentificacion + "</b>? </br></br>";
+	
+	mensaje = mensaje + "Por favor, indique la fecha de muerte: ";
+	
+	mensaje = mensaje + "<input id='FechaMuerte' type='date'>";
+	
+	
+	bootbox.confirm({
+		title:NumIdentificacion, 
+		message: mensaje,
+		closeButton: true,
+		onEscape: true,
+		buttons: {
+	        confirm: {
+	            label: 'MUERTA',
+	            className: 'btn-danger'
+	        }
+	    },
+	    callback: function (result) {
+	        if (result) {
+	        		var FechaMuerte = document.getElementById("FechaMuerte").value;
+                    MarcarMuerta(NumIdentificacion, FechaMuerte);
+                } else {
+                    alert("confirm cancel");
+                }
+	    }
+	});
+	
+	
+}
+</script>
+
+<script>
+function MarcarMuerta(NumIdentificacion, FechaMuerte){
+
+	var datosOvejaMuerta= {
+		'NumIdentificacion' : NumIdentificacion,
+		'FechaMuerte': FechaMuerte,
+	};
+
+	var datosOvejaMuertaJSON = JSON.stringify(datosOvejaMuerta);
+
+	var url = './marcarmuerta';
+
+	$.ajax({
+		type : 'post',
+		url : url,
+		contentType : 'application/json',
+		dataType : 'json',
+		data : datosOvejaMuertaJSON,
+		success : function(data, textStatus, jqXHR) {
+			var parar;
+			parar = 1;
+		},
+		error : function(jqXHR, exception) {
+			// mostrarPantallaError(url, jqXHR);
+		},
+		statuscode : {
+			404 : function() {
+				//mostrarPantallaError(url);
+			}
+		}
+	});
 	
 }
 </script>

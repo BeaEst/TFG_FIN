@@ -6,7 +6,10 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -491,9 +494,9 @@ public class OperationsController {
 					try {
 						List<String> datos = new ArrayList<String>();
 						 
-						ResultSet cont_act = s.executeQuery("SELECT NumIdentificacion FROM ovejas WHERE Usuario='"+user+"'");
+						ResultSet cont_act = s.executeQuery("SELECT NumIdentificacion FROM animales WHERE Usuario='"+user+"' AND Muerta='0' AND Venta='0'");
 						
-						System.out.println("SELECT NumIdentificacion FROM usuarios WHERE Usuario='"+user+"'");
+						System.out.println("SELECT NumIdentificacion FROM animales WHERE Usuario='"+user+"'");
 						
 						Statement st;
 				        ResultSet rs;
@@ -577,9 +580,9 @@ public class OperationsController {
 					try {
 						List<String> datos = new ArrayList<String>();
 						 
-						ResultSet datosoveja = s.executeQuery("SELECT Sexo, AnoNacimiento, Muerta, FechaMuerte, Venta, FechaVenta, TieneBolo, TieneCrotal, NumExplotacion FROM ovejas WHERE NumIdentificacion='"+NumIdentificacion+"'");
+						ResultSet datosoveja = s.executeQuery("SELECT Sexo, AnoNacimiento, Muerta, FechaMuerte, Venta, FechaVenta, TieneBolo, TieneCrotal, NumExplotacion FROM animales WHERE NumIdentificacion='"+NumIdentificacion+"'");
 						
-						System.out.println("SELECT Sexo, AnoNacimiento, Muerta, FechaMuerte, Venta, FechaVenta, TieneBolo, TieneCrotal, NumExplotacion FROM ovejas WHERE NumIdentificacion='"+NumIdentificacion+"'");
+						System.out.println("SELECT Sexo, AnoNacimiento, Muerta, FechaMuerte, Venta, FechaVenta, TieneBolo, TieneCrotal, NumExplotacion FROM animales WHERE NumIdentificacion='"+NumIdentificacion+"'");
 				        
 						//Para obtener los resultados del usuario conectado
 						if(datosoveja.next()){
@@ -639,6 +642,86 @@ public class OperationsController {
 		}
 		
         System.out.println("INICIO sacar datos perteneciente a la oveja");
+		return responseEntity;
+		
+	}
+	
+	@RequestMapping(value="/marcarmuerta", method=RequestMethod.POST)
+	public ResponseEntity<Map<String,String>> MarcarMuerta(@RequestBody Animales animal) {
+		
+		System.out.println("INICIO marcar oveja como muerta");
+		
+		ResponseEntity<Map<String,String>> responseEntity = null;
+		Map<String,String> result = new HashMap<>();
+		
+		//Consulta a base de datos para comprobar si existe en la tabla usuarios.
+		Connection conexion = null;
+		
+		Date fechaMuerte = animal.getFechaMuerte();
+		String NumIdentificacion = animal.getNumIdentificacion();
+		
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		String date = dateFormat.format(fechaMuerte);
+		
+		// Cargar el driver
+        try {
+			Class.forName("com.mysql.jdbc.Driver");
+			
+			try {
+				conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/tfg_v1", "root", "");
+				
+				Statement s = null;
+				try {
+					s = conexion.createStatement();
+					
+					try {
+			        	//Guardamos los datos en la tabla usuarios
+						System.out.println("UPDATE `animales` SET `Muerta`='1' AND `FechaMuerte`='"+fechaMuerte+"' WHERE NumIdentificacion = '"+NumIdentificacion+"'");
+						
+						int resultado = s.executeUpdate("UPDATE `animales` SET `Muerta`=1, `FechaMuerte`='"+date+"' WHERE NumIdentificacion = '"+NumIdentificacion+"'");
+						
+						//Comprobar si se ha insertado correctamente el update.
+						if(resultado == 1) {
+							System.out.println("Se han modificado los datos correctamente");
+							result.put("QueryOk", "correcto");
+							
+						}else {
+							System.out.println("ERROR al modificar los datos");
+							result.put("QueryOk", "incorrecto");
+						}
+						
+						responseEntity = new ResponseEntity<>(result, HttpStatus.OK);
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+						responseEntity = new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+						result.put("QueryOk", "incorrecto");
+						System.out.println("ERROR al hacer las consultas SQL");
+					}
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+					result.put("QueryOk", "incorrecto");
+					responseEntity = new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+					System.out.println("ERROR al crear el estamento de la consulta sql");
+				}
+			} catch (SQLException e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+				result.put("QueryOk", "incorrecto");
+				responseEntity = new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+				System.out.println("ERROR al hacer la conexión a la base de datos");
+			} 
+			
+		} catch (ClassNotFoundException e3) {
+			// TODO Auto-generated catch block
+			e3.printStackTrace();
+			result.put("QueryOk", "incorrecto");
+			responseEntity = new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+			System.out.println("ERROR al cargar el driver de sql");
+		}
+		
+        System.out.println("INICIO marcar oveja como muerta");
 		return responseEntity;
 		
 	}
