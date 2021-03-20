@@ -71,11 +71,116 @@
 	
 	
 		<h1 style="text-align:center;"> Animales</h1>
+		
+		<nav class="navbar navbar-dark bg-dark" style="margin-left: 155px">
+		  <div class="container-fluid">
+		    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+		      <span><img src="./desplegable.png" width="20" height="20"></span>
+		    </button>
+		  </div>
+		</nav>
+		<div class="collapse" id="navbarToggleExternalContent" style="margin-left: 155px">
+		  <div style="background-color:#A9D0F5">
+	        <div class="card">
+			  <div class="card-body" style="background-color:#A9D0F5">
+			  	<table>
+			  		<tr>
+			  			<!--
+			  			<td style="width:25%;">
+			  				<div id="FiltroAnoNoMovil">
+						  		<label style="float:left;">Hasta año de vida:</label>
+							    <select class="form-select" aria-label="Default select example" id="FiltroAnoVivasNoMovil" style="width:30%;float:left;">
+								  <option selected>-----</option>
+								  <option value="1">2021</option>
+								  <option value="2">2022</option>
+								  <option value="3">2023</option>
+								</select>
+						  	</div>
+						  	
+						  	<br>
+						  	<br>
+						  	 
+						  	<button type="button" class="btn btn-outline-light">Buscar</button>
+			  			</td>
+			  			-->
+			  			<td style="width:25%;">
+			  				<div>
+						  		<label style="float:left;">Año de nacimiento:</label>
+							    <select class="form-select" aria-label="Default select example" id="FiltroAnoNacNoMovil" style="width:30%;float:left;">
+								  <option selected>-----</option>
+								  <option value="2021">2021</option>
+								  <option value="2022">2022</option>
+								  <option value="2023">2023</option>
+								</select>
+						  	</div>
+						  	
+						  	<br>
+						  	<br>
+						  	
+						  	<button type="button" class="btn btn-outline-light" onClick="BuscarFiltro2()">Buscar</button>
+			  			</td>
+			  			
+			  			<td style="width:25%;">
+			  				<div>
+						  		<label style="margin-left:1%;float:left;">Buscar por referencia:</label>
+							    <input type="number" class="form-control" style="width:50%;" id="FiltroNumRefNoMovil">
+						  	</div>
+						  	
+						  	<button type="button" class="btn btn-outline-light" onClick="BuscarFiltro3()">Buscar</button>
+			  			</td>
+			  			
+			  			<td style="width:25%;">
+			  				<div class="form-check" >
+							  <input class="form-check-input" type="checkbox" value="" id="CheckMuertas" style="float:left;">
+							  <label class="form-check-label" for="flexCheckIndeterminate">Ovejas muertas</label>
+							</div>
+							
+							<div class="form-check" >
+							  <input class="form-check-input" type="checkbox" value="" id="CheckVendidas">
+							  <label class="form-check-label" for="flexCheckIndeterminate">Ovejas vendidas</label>
+							</div>
+						  	
+						  	<div>
+						  		<label style="float:left;">Año:</label>
+							    <select name="FiltroAnoMVNoMovil" class="form-select" aria-label="Default select example" id="FiltroAnoMVNoMovil" style="width:25%;float:left;">
+								  <option selected>-----</option>
+								  <option value="2021">2021</option>
+								  <option value="2022">2022</option>
+								  <option value="2023">2023</option>
+								</select>
+						  	</div>
+						  	
+						  	<button type="button" class="btn btn-outline-light" onClick="BuscarFiltro4()">Buscar</button>
+			  			</td>
+			  			
+			  			<td style="width:25%;">
+			  				<div class="form-check" >
+							  <img src="./anadir.png" title="Añadir animal" height="30" size="30" id="" style="float:left;cursor:pointer;" onClick="AnadirAnimal()">
+							  <label style="float:left;">&nbsp; Añadir animal</label>
+							</div>
+			  			</td>
+			  		</tr>
+			  	</table>
+			  </div>
+			</div>
+		</div>
+		</div>
+		
         
-        <br>
-        <br>
+        
+        <hr>
         
         <div  id="card"></div>
+        
+        <nav aria-label="Page navigation example">
+		  <ul class="pagination justify-content-center" id="paginacion">
+		    <!-- 
+		    <li class="page-item"><a class="page-link" href="#">1</a></li>
+		    <li class="page-item"><a class="page-link" href="#">2</a></li>
+		    <li class="page-item"><a class="page-link" href="#">3</a></li>
+		     -->
+		  </ul>
+		</nav>
       </div>
       
       <div id="Movil" style="display:none;">		
@@ -120,11 +225,14 @@
 	
 	
 		<h1 style="text-align:center;"> Animales</h1>
-        
+
         <br>
         <br>
         
         <div  id="card"></div>
+        
+        
+		
       </div>
     <!-- Optional JavaScript; choose one of the two! -->
 
@@ -194,15 +302,73 @@ $(function() {
 
 			txt = document.getElementById("card");
 			var doc = "";
-			for(var i=0; i<size; i++){
-				doc= doc + '<div class="card text-white bg-primary mb-3" style="max-width: 18rem;margin-left: 155px;cursor:pointer;">'
-				+'<div class="card-header" style="margin-top:5px;">'+ovejas[i]+' '
-				+'<h5 class="card-title"><img src="./muerte.png" height="30" size="30" id="" style="float:right;cursor:pointer;" onClick="OvejaMuerta('+ovejas[i]+')">&nbsp;'
-				+ '<img src="./venta.png" height="30" size="30" id="" style="float:right;cursor:pointer;" onClick="OvejaVendida('+ovejas[i]+')">&nbsp;'
-				+'&nbsp;<img src="./ver.png" height="30" size="30" id="" style="float:right;cursor:pointer;"  onClick="VisualizarOveja('+ovejas[i]+')"> </h5></div></div>';
-				
+			
+			//Sacar el número de paginaciones que va a haber de animales.
+			var paginacion = size / 25;
+			
+			if(Number.isInteger(paginacion)){
+				paginacion = paginacion;
+			}else{
+				paginacion = parseInt(paginacion, 10);
+				paginacion = paginacion + 1;
 			}
+			
+			var valor = -1;		
+			
+			doc = doc + '<p style="margin-left: 155px;"><em>Página 1 de '+paginacion+'</em></p>';
+			//for(var i=1; i<=paginacion; i++){
+				doc = doc + '<table style="margin-left: 155px;">';
+					for(var j=0; j<5; j++){
+						doc = doc + '<tr style="width: 100%">';
+							for(var x=0; x<5; x++){
+								
+								if(x==0){
+									var par = 1;
+								}else{
+									if(x % 2 == 0) {
+										var par = 1;
+									}else{
+										var par = 0;
+									}
+								}
+								
+								valor = valor + 1;
+								doc = doc + '<td style="width: 500px;">';
+									if(par == 0){
+										if(valor < 25 && valor < size){
+											doc= doc + '<div class="card text-white bg-info mb-3" style="cursor:pointer;">'
+											+'<div class="card-header" style="text-align:center;margin-top:5px;"><h5>'+ovejas[valor].substring(8,15)+' '
+											+'</h5><h5 class="card-title"><img src="./muerte.png" title="Marcar como muerta" height="30" size="30" id="" style="float:right;cursor:pointer;" onClick="OvejaMuerta('+ovejas[valor]+')">&nbsp;'
+											+ '<img src="./venta.png" title="Marcar como vendida" height="30" size="30" id="" style="cursor:pointer;" onClick="OvejaVendida('+ovejas[valor]+')">&nbsp;'
+											+'&nbsp;<img src="./ver.png" title="Ver animal" height="30" size="30" id="" style="float:left;cursor:pointer;"  onClick="VisualizarOveja('+ovejas[valor]+')"> </h5></div></div>';
+										}
+									}else{
+										if(valor < 25 && valor < size){
+											doc= doc + '<div class="card text-white bg-primary mb-3" style="cursor:pointer;">'
+											+'<div class="card-header" style="text-align:center;margin-top:5px;"><h5>'+ovejas[valor].substring(8,15)+' '
+											+'</h5><h5 class="card-title"><img src="./muerte.png" title="Marcar como muerta" height="30" size="30" id="" style="float:right;cursor:pointer;" onClick="OvejaMuerta('+ovejas[valor]+')">&nbsp;'
+											+ '<img src="./venta.png" title="Marcar como vendida" height="30" size="30" id="" style="cursor:pointer;" onClick="OvejaVendida('+ovejas[valor]+')">&nbsp;'
+											+'&nbsp;<img src="./ver.png" title="Ver animal" height="30" size="30" id="" style="float:left;cursor:pointer;"  onClick="VisualizarOveja('+ovejas[valor]+')"> </h5></div></div>';
+										}
+									}
+								doc = doc + '</td>';
+							}
+						doc = doc + '</tr>';
+					}
+				doc = doc + '</table>';
+			//}
+			
 			txt.innerHTML = doc;
+			
+			txt2 = document.getElementById("paginacion");
+			
+			doc2 = "";
+			
+			for(var z=1; z<=paginacion; z++){
+				doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+z+')">' + z + '</a></li>';
+			}
+			
+			txt2.innerHTML = doc2;
 		},
 		error : function(jqXHR, exception) {
 			// mostrarPantallaError(url, jqXHR);
@@ -214,6 +380,116 @@ $(function() {
 		}
 	});
 });
+</script>
+
+<script>
+function paginacion(NumPaginacion){
+  //Primero hay que sacar los datos de base de datos de el usuario que se encuentra conectado
+	var usuario = sessionStorage.getItem("usuario_activo");
+	
+	var usuarioDatos= {
+		'usuario' : usuario,
+	};
+
+	var usuarioLoginJSON = JSON.stringify(usuarioDatos);
+
+	var url = './cargarovejas';
+
+	$.ajax({
+		type : 'post',
+		url : url,
+		contentType : 'application/json',
+		dataType : 'json',
+		data : usuarioLoginJSON,
+		success : function(data, textStatus, jqXHR) {
+			var ovejas = data.ListaOvejas;
+			var size = Object.keys(ovejas).length;
+
+			txt = document.getElementById("card");
+			var doc = "";
+			
+			//Sacar el número de paginaciones que va a haber de animales.
+			var paginacion = size / 25;
+			
+			if(Number.isInteger(paginacion)){
+				paginacion = paginacion;
+			}else{
+				paginacion = parseInt(paginacion, 10);
+				paginacion = paginacion + 1;
+			}
+			
+			if(NumPaginacion == 1){
+				var valor = 0;	
+			}else{
+				var valor = (NumPaginacion - 1) * 25;	
+			}
+				
+			var total = (NumPaginacion * 25) + 25;
+			doc = doc + '<p style="margin-left: 155px;"><em>Página '+NumPaginacion+' de '+paginacion+'</em></p>';
+			//for(var i=1; i<=paginacion; i++){
+				doc = doc + '<table style="margin-left: 155px;">';
+					for(var j=0; j<5; j++){
+						doc = doc + '<tr style="width: 100%">';
+							for(var x=0; x<5; x++){
+								if(x==0){
+									var par = 1;
+								}else{
+									if(x % 2 == 0) {
+										var par = 1;
+									}else{
+										var par = 0;
+									}
+								}
+							
+								
+								doc = doc + '<td style="width: 500px;">';
+									if(par == 0){
+										if(valor < total && valor < size){
+											doc= doc + '<div class="card text-white bg-info mb-3" style="cursor:pointer;">'
+											+'<div class="card-header" style="text-align:center;margin-top:5px;"><h5>'+ovejas[valor].substring(8,15)+' '
+											+'</h5><h5 class="card-title"><img src="./muerte.png" height="30" size="30" id="" style="float:right;cursor:pointer;" onClick="OvejaMuerta('+ovejas[valor]+')">&nbsp;'
+											+ '<img src="./venta.png" height="30" size="30" id="" style="cursor:pointer;" onClick="OvejaVendida('+ovejas[valor]+')">&nbsp;'
+											+'&nbsp;<img src="./ver.png" height="30" size="30" id="" style="float:left;cursor:pointer;"  onClick="VisualizarOveja('+ovejas[valor]+')"> </h5></div></div>';
+										}
+									}else{
+										if(valor < total && valor < size){
+											doc= doc + '<div class="card text-white bg-primary mb-3" style="cursor:pointer;">'
+											+'<div class="card-header" style="text-align:center;margin-top:5px;"><h5>'+ovejas[valor].substring(8,15)+' '
+											+'</h5><h5 class="card-title"><img src="./muerte.png" height="30" size="30" id="" style="float:right;cursor:pointer;" onClick="OvejaMuerta('+ovejas[valor]+')">&nbsp;'
+											+ '<img src="./venta.png" height="30" size="30" id="" style="cursor:pointer;" onClick="OvejaVendida('+ovejas[valor]+')">&nbsp;'
+											+'&nbsp;<img src="./ver.png" height="30" size="30" id="" style="float:left;cursor:pointer;"  onClick="VisualizarOveja('+ovejas[valor]+')"> </h5></div></div>';
+										}
+									}
+									valor = valor + 1;
+								doc = doc + '</td>';
+							}
+						doc = doc + '</tr>';
+					}
+				doc = doc + '</table>';
+			//}
+			
+			txt.innerHTML = doc;
+			
+			txt2 = document.getElementById("paginacion");
+			
+			doc2 = "";
+			
+			for(var z=1; z<=paginacion; z++){
+				doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+z+')">' + z + '</a></li>';
+			}
+			
+			txt2.innerHTML = doc2;
+		},
+		error : function(jqXHR, exception) {
+			// mostrarPantallaError(url, jqXHR);
+		},
+		statuscode : {
+			404 : function() {
+				//mostrarPantallaError(url);
+			}
+		}
+	});
+}
 </script>
 
 <script>
@@ -249,7 +525,7 @@ function VisualizarOveja(NumIdentificacion){
 				mensaje = "<div class='card text-white bg-danger mb-3'>"+
 							"<div class='card-body'>"+
 								"<h5 class='card-title'>MUERTA</h5>"+
-								"<p class='card-text'>La oveja falleció el día: " + data.FechaMuerte + "</p>"+
+								"<p class='card-text'>La oveja falleció el día: " + data.FechaBaja + "</p>"+
 							"</div>"+
 						  "</div>";
 			}
@@ -258,7 +534,7 @@ function VisualizarOveja(NumIdentificacion){
 				mensaje = "<div class='card text-dark bg-warning mb-3'>"+
 							"<div class='card-body'>"+
 								"<h5 class='card-title'>VENDIDA</h5>"+
-								"<p class='card-text'>La oveja se vendió el día: " + data.FechaVenta + "</p>"+
+								"<p class='card-text'>La oveja se vendió el día: " + data.FechaBaja + "</p>"+
 							"</div>"+
 						  "</div>";
 			}
@@ -354,7 +630,6 @@ function OvejaMuerta(NumIdentificacion){
 	bootbox.confirm({
 		title:NumIdentificacion, 
 		message: mensaje,
-		closeButton: true,
 		onEscape: true,
 		buttons: {
 	        confirm: {
@@ -367,7 +642,41 @@ function OvejaMuerta(NumIdentificacion){
 	        		var FechaMuerte = document.getElementById("FechaMuerte").value;
                     MarcarMuerta(NumIdentificacion, FechaMuerte);
                 } else {
-                    alert("confirm cancel");
+                    
+                }
+	    }
+	});
+	
+	
+}
+</script>
+
+<script>
+function OvejaVendida(NumIdentificacion){
+
+	var mensaje = "¿Desea marcar como <b style='color:red;'> VENDIDA </b> la oveja <b>" + NumIdentificacion + "</b>? </br></br>";
+	
+	mensaje = mensaje + "Por favor, indique la fecha de venta: ";
+	
+	mensaje = mensaje + "<input id='FechaVenta' type='date'>";
+	
+	
+	bootbox.confirm({
+		title:NumIdentificacion, 
+		message: mensaje,
+		onEscape: true,
+		buttons: {
+	        confirm: {
+	            label: 'VENDIDA',
+	            className: 'btn-danger'
+	        }
+	    },
+	    callback: function (result) {
+	        if (result) {
+	        		var FechaMuerte = document.getElementById("FechaVenta").value;
+                    MarcarVenta(NumIdentificacion, FechaMuerte);
+                } else {
+                    
                 }
 	    }
 	});
@@ -395,8 +704,39 @@ function MarcarMuerta(NumIdentificacion, FechaMuerte){
 		dataType : 'json',
 		data : datosOvejaMuertaJSON,
 		success : function(data, textStatus, jqXHR) {
-			var parar;
-			parar = 1;
+			var resultado = data.QueryOk;
+			
+			if(resultado == 'correcto'){
+				bootbox.confirm({
+					title: NumIdentificacion, 
+					message: 'Se ha marcado la oveja como MUERTA con la fecha' + FechaMuerte,
+					onEscape: true,
+					buttons: {
+				        confirm: {
+				            label: 'Aceptar',
+				            className: 'btn-success'
+				        }
+				    },
+				    callback: function (result) {
+				        
+				    }
+				});
+			}else{
+				bootbox.confirm({
+					title: NumIdentificacion, 
+					message: 'ERROR al marcar la oveja como MUERTA, por favor, vuelva a intentarlo.',
+					onEscape: true,
+					buttons: {
+				        confirm: {
+				            label: 'Aceptar',
+				            className: 'btn-danger'
+				        }
+				    },
+				    callback: function (result) {
+				        
+				    }
+				});
+			}
 		},
 		error : function(jqXHR, exception) {
 			// mostrarPantallaError(url, jqXHR);
@@ -408,5 +748,850 @@ function MarcarMuerta(NumIdentificacion, FechaMuerte){
 		}
 	});
 	
+}
+</script>
+
+<script>
+function MarcarVenta(NumIdentificacion, FechaVenta){
+
+	var datosOvejaVenta= {
+		'NumIdentificacion' : NumIdentificacion,
+		'FechaVenta': FechaVenta,
+	};
+
+	var datosOvejaVentaJSON = JSON.stringify(datosOvejaVenta);
+
+	var url = './marcarventa';
+
+	$.ajax({
+		type : 'post',
+		url : url,
+		contentType : 'application/json',
+		dataType : 'json',
+		data : datosOvejaVentaJSON,
+		success : function(data, textStatus, jqXHR) {
+			var resultado = data.QueryOk;
+			
+			if(resultado == 'correcto'){
+				bootbox.confirm({
+					title: NumIdentificacion, 
+					message: 'Se ha marcado la oveja como VENDIDA con la fecha' + FechaVenta,
+					onEscape: true,
+					buttons: {
+				        confirm: {
+				            label: 'Aceptar',
+				            className: 'btn-success'
+				        }
+				    },
+				    callback: function (result) {
+				        
+				    }
+				});
+			}else{
+				bootbox.confirm({
+					title: NumIdentificacion, 
+					message: 'ERROR al marcar la oveja como VENDIDA, por favor, vuelva a intentarlo.',
+					onEscape: true,
+					buttons: {
+				        confirm: {
+				            label: 'Aceptar',
+				            className: 'btn-danger'
+				        }
+				    },
+				    callback: function (result) {
+				        
+				    }
+				});
+			}
+		},
+		error : function(jqXHR, exception) {
+			// mostrarPantallaError(url, jqXHR);
+		},
+		statuscode : {
+			404 : function() {
+				//mostrarPantallaError(url);
+			}
+		}
+	});
+	
+}
+</script>
+
+
+<script>
+function BuscarFiltro4(){
+	//Buscar apartado 4 (ovejas muertas, ovejas vivas, año)
+	var checkVendida = document.getElementById("CheckVendidas");
+	var checkMuerta = document.getElementById("CheckMuertas");
+	var ano = $('#FiltroAnoMVNoMovil').find('option:selected').val();
+	var usuario = sessionStorage.getItem("usuario_activo");
+	
+	if(ano == "-----" && checkVendida.checked == false && checkMuerta.checked == false){
+		bootbox.dialog({
+				title:'ERROR', 
+				message: 'Añade un año de búsqueda y al menos un check',
+				closeButton: true,
+				onEscape: true
+			});
+	}else if(ano == "-----"){
+		bootbox.dialog({
+				title:'ERROR', 
+				message: 'Añade un año de búsqueda y vuelve a intentarlo.',
+				closeButton: true,
+				onEscape: true
+			});
+	}else if(checkVendida.checked == false && checkMuerta.checked == false){
+		bootbox.dialog({
+				title:'ERROR', 
+				message: 'Indica al menos un check.',
+				closeButton: true,
+				onEscape: true
+			});
+	}else{
+		ano = ano + '-01-01';
+	}
+	
+	if(checkVendida.checked == true){
+		var vendida = 1;
+	}else{
+		var vendida = 0;
+	}
+	
+	if(checkMuerta.checked == true){
+		var muerta = 1;
+	}else{
+		var muerta = 0;
+	}
+	
+	//FechaMuerte se utiliza para el filtro del año, tanto para vendidas como para muertas
+	var datosFiltro4= {
+		'Usuario' : usuario,
+		'Muerta' : muerta,
+		'Venta': vendida,
+		'FechaMuerte' : ano,
+	};
+
+	var datosFiltro4JSON = JSON.stringify(datosFiltro4);
+
+	var url = './filtro4';
+
+	$.ajax({
+		type : 'post',
+		url : url,
+		contentType : 'application/json',
+		dataType : 'json',
+		data : datosFiltro4JSON,
+		success : function(data, textStatus, jqXHR) {
+			var ovejas = data.ListaOvejas;
+			var size = Object.keys(ovejas).length;
+			
+			txt = document.getElementById("card");
+			var doc = "";
+			
+			//Sacar el número de paginaciones que va a haber de animales.
+			var paginacion = size / 25;
+			
+			if(Number.isInteger(paginacion)){
+				paginacion = paginacion;
+			}else{
+				paginacion = parseInt(paginacion, 10);
+				paginacion = paginacion + 1;
+			}
+			
+			var valor = -1;		
+			
+			doc = doc + '<p style="margin-left: 155px;"><em>Página 1 de '+paginacion+'</em></p>';
+			//for(var i=1; i<=paginacion; i++){
+				doc = doc + '<table style="margin-left: 155px;">';
+					for(var j=0; j<5; j++){
+						doc = doc + '<tr style="width: 100%">';
+							for(var x=0; x<5; x++){
+								
+								if(x==0){
+									var par = 1;
+								}else{
+									if(x % 2 == 0) {
+										var par = 1;
+									}else{
+										var par = 0;
+									}
+								}
+								
+								valor = valor + 1;
+								doc = doc + '<td style="width: 500px;">';
+									if(par == 0){
+										if(valor < 25 && valor < size){
+											doc= doc + '<div class="card text-white bg-info mb-3" style="cursor:pointer;">'
+											+'<div class="card-header" style="text-align:center;margin-top:5px;"><h5>'+ovejas[valor].substring(8,15)+' '
+											+'</h5><h5 class="card-title">'
+											+'&nbsp;<img src="./ver.png" height="30" size="30" id="" style="cursor:pointer;"  onClick="VisualizarOveja('+ovejas[valor]+')"> </h5></div></div>';
+										}
+									}else{
+										if(valor < 25 && valor < size){
+											doc= doc + '<div class="card text-white bg-primary mb-3" style="cursor:pointer;">'
+											+'<div class="card-header" style="text-align:center;margin-top:5px;"><h5>'+ovejas[valor].substring(8,15)+' '
+											+'</h5><h5 class="card-title">'
+											+'&nbsp;<img src="./ver.png" height="30" size="30" id="" style="cursor:pointer;"  onClick="VisualizarOveja('+ovejas[valor]+')"> </h5></div></div>';
+										}
+									}
+								doc = doc + '</td>';
+							}
+						doc = doc + '</tr>';
+					}
+				doc = doc + '</table>';
+			//}
+			
+			txt.innerHTML = doc;
+			
+			txt2 = document.getElementById("paginacion");
+			
+			doc2 = "";
+			
+			for(var z=1; z<=paginacion; z++){
+				doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro4('+z+')">' + z + '</a></li>';
+			}
+			
+			txt2.innerHTML = doc2;
+		},
+		error : function(jqXHR, exception) {
+			// mostrarPantallaError(url, jqXHR);
+		},
+		statuscode : {
+			404 : function() {
+				//mostrarPantallaError(url);
+			}
+		}
+	});
+	
+}
+</script>
+
+<script>
+function paginacionFiltro4(NumPaginacion){
+  ///Buscar apartado 4 (ovejas muertas, ovejas vivas, año)
+	var checkVendida = document.getElementById("CheckVendidas");
+	var checkMuerta = document.getElementById("CheckMuertas");
+	var ano = $('#FiltroAnoMVNoMovil').find('option:selected').val();
+	var usuario = sessionStorage.getItem("usuario_activo");
+	
+	ano = ano + '-01-01';
+
+	
+	
+	if(checkVendida.checked == true){
+		var vendida = 1;
+	}else{
+		var vendida = 0;
+	}
+	
+	if(checkMuerta.checked == true){
+		var muerta = 1;
+	}else{
+		var muerta = 0;
+	}
+	
+	//FechaMuerte se utiliza para el filtro del año, tanto para vendidas como para muertas
+	var datosFiltro4= {
+		'Usuario' : usuario,
+		'Muerta' : muerta,
+		'Venta': vendida,
+		'FechaMuerte' : ano,
+	};
+
+	var datosFiltro4JSON = JSON.stringify(datosFiltro4);
+
+	var url = './filtro4';
+
+	$.ajax({
+		type : 'post',
+		url : url,
+		contentType : 'application/json',
+		dataType : 'json',
+		data : datosFiltro4JSON,
+		success : function(data, textStatus, jqXHR) {
+			var ovejas = data.ListaOvejas;
+			var size = Object.keys(ovejas).length;
+
+			txt = document.getElementById("card");
+			var doc = "";
+			
+			//Sacar el número de paginaciones que va a haber de animales.
+			var paginacion = size / 25;
+			
+			if(Number.isInteger(paginacion)){
+				paginacion = paginacion;
+			}else{
+				paginacion = parseInt(paginacion, 10);
+				paginacion = paginacion + 1;
+			}
+			
+			if(NumPaginacion == 1){
+				var valor = 0;	
+			}else{
+				var valor = (NumPaginacion - 1) * 25;	
+			}
+				
+			var total = (NumPaginacion * 25) + 25;
+			doc = doc + '<p style="margin-left: 155px;"><em>Página '+NumPaginacion+' de '+paginacion+'</em></p>';
+			//for(var i=1; i<=paginacion; i++){
+				doc = doc + '<table style="margin-left: 155px;">';
+					for(var j=0; j<5; j++){
+						doc = doc + '<tr style="width: 100%">';
+							for(var x=0; x<5; x++){
+								if(x==0){
+									var par = 1;
+								}else{
+									if(x % 2 == 0) {
+										var par = 1;
+									}else{
+										var par = 0;
+									}
+								}
+							
+								
+								doc = doc + '<td style="width: 500px;">';
+									if(par == 0){
+										if(valor < total && valor < size){
+											doc= doc + '<div class="card text-white bg-info mb-3" style="cursor:pointer;">'
+											+'<div class="card-header" style="text-align:center;margin-top:5px;"><h5>'+ovejas[valor].substring(8,15)+' '
+											+'</h5><h5 class="card-title">'
+											+'&nbsp;<img src="./ver.png" height="30" size="30" id="" style="cursor:pointer;"  onClick="VisualizarOveja('+ovejas[valor]+')"> </h5></div></div>';
+										}
+									}else{
+										if(valor < total && valor < size){
+											doc= doc + '<div class="card text-white bg-primary mb-3" style="cursor:pointer;">'
+											+'<div class="card-header" style="text-align:center;margin-top:5px;"><h5>'+ovejas[valor].substring(8,15)+' '
+											+'</h5><h5 class="card-title">'
+											+'&nbsp;<img src="./ver.png" height="30" size="30" id="" style="cursor:pointer;"  onClick="VisualizarOveja('+ovejas[valor]+')"> </h5></div></div>';
+										}
+									}
+									
+								doc = doc + '</td>';
+							}
+						doc = doc + '</tr>';
+					}
+				doc = doc + '</table>';
+			//}
+			
+			txt.innerHTML = doc;
+			
+			txt2 = document.getElementById("paginacion");
+			
+			doc2 = "";
+			
+			for(var z=1; z<=paginacion; z++){
+				doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro4('+z+')">' + z + '</a></li>';
+			}
+			
+			txt2.innerHTML = doc2;
+		},
+		error : function(jqXHR, exception) {
+			// mostrarPantallaError(url, jqXHR);
+		},
+		statuscode : {
+			404 : function() {
+				//mostrarPantallaError(url);
+			}
+		}
+	});
+}
+</script>
+
+<script>
+function BuscarFiltro2(){
+	//Buscar apartado 2 (año de nacimiento)
+	var ano = $('#FiltroAnoNacNoMovil').find('option:selected').val();
+	var usuario = sessionStorage.getItem("usuario_activo");
+	
+	var datosFiltro2= {
+		'Usuario' : usuario,
+		'AnoNacimiento' : ano,
+	};
+
+	var datosFiltro2JSON = JSON.stringify(datosFiltro2);
+
+	var url = './filtro2';
+
+	$.ajax({
+		type : 'post',
+		url : url,
+		contentType : 'application/json',
+		dataType : 'json',
+		data : datosFiltro2JSON,
+		success : function(data, textStatus, jqXHR) {
+			var ovejas = data.ListaOvejas;
+			var size = Object.keys(ovejas).length;
+			
+			txt = document.getElementById("card");
+			var doc = "";
+			
+			//Sacar el número de paginaciones que va a haber de animales.
+			var paginacion = size / 25;
+			
+			if(Number.isInteger(paginacion)){
+				paginacion = paginacion;
+			}else{
+				paginacion = parseInt(paginacion, 10);
+				paginacion = paginacion + 1;
+			}
+			
+			var valor = -1;		
+			
+			doc = doc + '<p style="margin-left: 155px;"><em>Página 1 de '+paginacion+'</em></p>';
+			//for(var i=1; i<=paginacion; i++){
+				doc = doc + '<table style="margin-left: 155px;">';
+					for(var j=0; j<5; j++){
+						doc = doc + '<tr style="width: 100%">';
+							for(var x=0; x<5; x++){
+								
+								if(x==0){
+									var par = 1;
+								}else{
+									if(x % 2 == 0) {
+										var par = 1;
+									}else{
+										var par = 0;
+									}
+								}
+								
+								valor = valor + 1;
+								doc = doc + '<td style="width: 500px;">';
+									if(par == 0){
+										if(data.ListaOvejas2[valor] == "1" || data.ListaOvejas3[valor] == "1"){
+											if(valor < 25 && valor < size){
+												doc= doc + '<div class="card text-white bg-info mb-3" style="cursor:pointer;">'
+												+'<div class="card-header" style="text-align:center;margin-top:5px;"><h5>'+ovejas[valor].substring(8,15)+' '
+												+'</h5><h5 class="card-title">'
+												+'&nbsp;<img src="./ver.png" height="30" size="30" id="" style="cursor:pointer;"  onClick="VisualizarOveja('+ovejas[valor]+')"> </h5></div></div>';
+											}
+										}else{
+											if(valor < 25 && valor < size){
+												doc= doc + '<div class="card text-white bg-info mb-3" style="cursor:pointer;">'
+												+'<div class="card-header" style="text-align:center;margin-top:5px;"><h5>'+ovejas[valor].substring(8,15)+' '
+												+'</h5><h5 class="card-title"><img src="./muerte.png" title="Marcar como muerta" height="30" size="30" id="" style="float:right;cursor:pointer;" onClick="OvejaMuerta('+ovejas[valor]+')">&nbsp;'
+												+ '<img src="./venta.png" title="Marcar como vendida" height="30" size="30" id="" style="cursor:pointer;" onClick="OvejaVendida('+ovejas[valor]+')">&nbsp;'
+												+'&nbsp;<img src="./ver.png" title="Ver animal" height="30" size="30" id="" style="float:left;cursor:pointer;"  onClick="VisualizarOveja('+ovejas[valor]+')"> </h5></div></div>';
+											}
+										}
+									}else{
+										if(data.ListaOvejas2[valor] == "1"  || data.ListaOvejas3[valor] == "1"){
+											if(valor < 25 && valor < size){
+												doc= doc + '<div class="card text-white bg-primary mb-3" style="cursor:pointer;">'
+												+'<div class="card-header" style="text-align:center;margin-top:5px;"><h5>'+ovejas[valor].substring(8,15)+' '
+												+'</h5><h5 class="card-title">'
+												+'&nbsp;<img src="./ver.png" height="30" size="30" id="" style="cursor:pointer;"  onClick="VisualizarOveja('+ovejas[valor]+')"> </h5></div></div>';
+											}
+										}else{
+											if(valor < 25 && valor < size){
+												doc= doc + '<div class="card text-white bg-primary mb-3" style="cursor:pointer;">'
+												+'<div class="card-header" style="text-align:center;margin-top:5px;"><h5>'+ovejas[valor].substring(8,15)+' '
+												+'</h5><h5 class="card-title"><img src="./muerte.png" title="Marcar como muerta" height="30" size="30" id="" style="float:right;cursor:pointer;" onClick="OvejaMuerta('+ovejas[valor]+')">&nbsp;'
+												+ '<img src="./venta.png" title="Marcar como vendida" height="30" size="30" id="" style="cursor:pointer;" onClick="OvejaVendida('+ovejas[valor]+')">&nbsp;'
+												+'&nbsp;<img src="./ver.png" title="Ver animal" height="30" size="30" id="" style="float:left;cursor:pointer;"  onClick="VisualizarOveja('+ovejas[valor]+')"> </h5></div></div>';
+											}
+										}
+										
+									}
+								doc = doc + '</td>';
+							}
+						doc = doc + '</tr>';
+					}
+				doc = doc + '</table>';
+			//}
+			
+			txt.innerHTML = doc;
+			
+			txt2 = document.getElementById("paginacion");
+			
+			doc2 = "";
+			
+			for(var z=1; z<=paginacion; z++){
+				doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro2('+z+')">' + z + '</a></li>';
+			}
+			
+			txt2.innerHTML = doc2;
+		},
+		error : function(jqXHR, exception) {
+			// mostrarPantallaError(url, jqXHR);
+		},
+		statuscode : {
+			404 : function() {
+				//mostrarPantallaError(url);
+			}
+		}
+	});
+	
+}
+</script>
+
+<script>
+function paginacionFiltro2(NumPaginacion){
+  //Buscar apartado 2 (año de nacimiento)
+	var ano = $('#FiltroAnoNacNoMovil').find('option:selected').val();
+	var usuario = sessionStorage.getItem("usuario_activo");
+	
+	var datosFiltro2= {
+		'Usuario' : usuario,
+		'AnoNacimiento' : ano,
+	};
+
+	var datosFiltro2JSON = JSON.stringify(datosFiltro2);
+
+	var url = './filtro2';
+
+	$.ajax({
+		type : 'post',
+		url : url,
+		contentType : 'application/json',
+		dataType : 'json',
+		data : datosFiltro2JSON,
+		success : function(data, textStatus, jqXHR) {
+			var ovejas = data.ListaOvejas;
+			var size = Object.keys(ovejas).length;
+
+			txt = document.getElementById("card");
+			var doc = "";
+			
+			//Sacar el número de paginaciones que va a haber de animales.
+			var paginacion = size / 25;
+			
+			if(Number.isInteger(paginacion)){
+				paginacion = paginacion;
+			}else{
+				paginacion = parseInt(paginacion, 10);
+				paginacion = paginacion + 1;
+			}
+			
+			if(NumPaginacion == 1){
+				var valor = 0;	
+			}else{
+				var valor = (NumPaginacion - 1) * 25;	
+			}
+				
+			var total = (NumPaginacion * 25) + 25;
+			doc = doc + '<p style="margin-left: 155px;"><em>Página '+NumPaginacion+' de '+paginacion+'</em></p>';
+			//for(var i=1; i<=paginacion; i++){
+				doc = doc + '<table style="margin-left: 155px;">';
+					for(var j=0; j<5; j++){
+						doc = doc + '<tr style="width: 100%">';
+							for(var x=0; x<5; x++){
+								if(x==0){
+									var par = 1;
+								}else{
+									if(x % 2 == 0) {
+										var par = 1;
+									}else{
+										var par = 0;
+									}
+								}
+							
+								
+								doc = doc + '<td style="width: 500px;">';
+								if(par == 0){
+										if(data.ListaOvejas2[valor] == "1" || data.ListaOvejas3[valor] == "1"){
+											if(valor < total && valor < size){
+												doc= doc + '<div class="card text-white bg-info mb-3" style="cursor:pointer;">'
+												+'<div class="card-header" style="text-align:center;margin-top:5px;"><h5>'+ovejas[valor].substring(8,15)+' '
+												+'</h5><h5 class="card-title">'
+												+'&nbsp;<img src="./ver.png" height="30" size="30" id="" style="cursor:pointer;"  onClick="VisualizarOveja('+ovejas[valor]+')"> </h5></div></div>';
+											}
+										}else{
+											if(valor < total && valor < size){
+												doc= doc + '<div class="card text-white bg-info mb-3" style="cursor:pointer;">'
+												+'<div class="card-header" style="text-align:center;margin-top:5px;"><h5>'+ovejas[valor].substring(8,15)+' '
+												+'</h5><h5 class="card-title"><img src="./muerte.png" title="Marcar como muerta" height="30" size="30" id="" style="float:right;cursor:pointer;" onClick="OvejaMuerta('+ovejas[valor]+')">&nbsp;'
+												+ '<img src="./venta.png" title="Marcar como vendida" height="30" size="30" id="" style="cursor:pointer;" onClick="OvejaVendida('+ovejas[valor]+')">&nbsp;'
+												+'&nbsp;<img src="./ver.png" title="Ver animal" height="30" size="30" id="" style="float:left;cursor:pointer;"  onClick="VisualizarOveja('+ovejas[valor]+')"> </h5></div></div>';
+											}
+										}
+									}else{
+										if(data.ListaOvejas2[valor] == "1"  || data.ListaOvejas3[valor] == "1"){
+											if(valor < total && valor < size){
+												doc= doc + '<div class="card text-white bg-primary mb-3" style="cursor:pointer;">'
+												+'<div class="card-header" style="text-align:center;margin-top:5px;"><h5>'+ovejas[valor].substring(8,15)+' '
+												+'</h5><h5 class="card-title">'
+												+'&nbsp;<img src="./ver.png" height="30" size="30" id="" style="cursor:pointer;"  onClick="VisualizarOveja('+ovejas[valor]+')"> </h5></div></div>';
+											}
+										}else{
+											if(valor < total && valor < size){
+												doc= doc + '<div class="card text-white bg-primary mb-3" style="cursor:pointer;">'
+												+'<div class="card-header" style="text-align:center;margin-top:5px;"><h5>'+ovejas[valor].substring(8,15)+' '
+												+'</h5><h5 class="card-title"><img src="./muerte.png" title="Marcar como muerta" height="30" size="30" id="" style="float:right;cursor:pointer;" onClick="OvejaMuerta('+ovejas[valor]+')">&nbsp;'
+												+ '<img src="./venta.png" title="Marcar como vendida" height="30" size="30" id="" style="cursor:pointer;" onClick="OvejaVendida('+ovejas[valor]+')">&nbsp;'
+												+'&nbsp;<img src="./ver.png" title="Ver animal" height="30" size="30" id="" style="float:left;cursor:pointer;"  onClick="VisualizarOveja('+ovejas[valor]+')"> </h5></div></div>';
+											}
+										}
+										
+									}
+									valor = valor + 1;
+								doc = doc + '</td>';
+							}
+						doc = doc + '</tr>';
+					}
+				doc = doc + '</table>';
+			//}
+			
+			txt.innerHTML = doc;
+			
+			txt2 = document.getElementById("paginacion");
+			
+			doc2 = "";
+			
+			for(var z=1; z<=paginacion; z++){
+				doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro2('+z+')">' + z + '</a></li>';
+			}
+			
+			txt2.innerHTML = doc2;
+		},
+		error : function(jqXHR, exception) {
+			// mostrarPantallaError(url, jqXHR);
+		},
+		statuscode : {
+			404 : function() {
+				//mostrarPantallaError(url);
+			}
+		}
+	});
+}
+</script>
+
+<script>
+function BuscarFiltro3(){
+	//Buscar apartado 3 (número de referencia)
+	var NumReferencia = document.getElementById("FiltroNumRefNoMovil").value;
+	var usuario = sessionStorage.getItem("usuario_activo");
+	
+	NumReferencia = '72408000' + NumReferencia;
+	
+	var datosFiltro3= {
+		'Usuario' : usuario,
+		'NumIdentificacion' : NumReferencia,
+	};
+
+	var datosFiltro3JSON = JSON.stringify(datosFiltro3);
+
+	var url = './filtro3';
+
+	$.ajax({
+		type : 'post',
+		url : url,
+		contentType : 'application/json',
+		dataType : 'json',
+		data : datosFiltro3JSON,
+		success : function(data, textStatus, jqXHR) {
+			//Comprobar si es hembra o macho
+			var sexo;
+			if(data.Sexo == "H"){
+				sexo = "Hembra";
+			}else if(data.Sexo == "M"){
+				sexo == "Macho";
+			}
+			
+			var mensaje = "";
+			
+			if(data.Muerta == "1"){
+				mensaje = "<div class='card text-white bg-danger mb-3'>"+
+							"<div class='card-body'>"+
+								"<h5 class='card-title'>MUERTA</h5>"+
+								"<p class='card-text'>La oveja falleció el día: " + data.FechaBaja + "</p>"+
+							"</div>"+
+						  "</div>";
+			}
+			
+			if(data.Venta == "1"){
+				mensaje = "<div class='card text-dark bg-warning mb-3'>"+
+							"<div class='card-body'>"+
+								"<h5 class='card-title'>VENDIDA</h5>"+
+								"<p class='card-text'>La oveja se vendió el día: " + data.FechaBaja + "</p>"+
+							"</div>"+
+						  "</div>";
+			}
+			
+			mensaje = mensaje + "<table>";
+			
+			mensaje = mensaje + "<tr>";
+			mensaje = mensaje + "<td>Sexo:</td>";
+			mensaje = mensaje + "<td><input id='Sexo' disabled value=" + sexo + "></td>";
+			mensaje = mensaje + "</tr>";
+			
+			mensaje = mensaje + "<tr>";
+			mensaje = mensaje + "<td>Año nacimiento:</td>";
+			mensaje = mensaje + "<td><input id='AnoNacimiento' disabled value=" + data.AnoNacimiento + "></td>";
+			mensaje = mensaje + "</tr>";
+			
+			if(data.TieneBolo == "1"){
+				mensaje = mensaje + "<tr>";
+				mensaje = mensaje + "<td>Tiene bolo:</td>";
+				mensaje = mensaje + "<td><input type='checkbox' id='TieneBolo' name='TieneBolo' value='TieneBolo' checked disabled></td>";
+				mensaje = mensaje + "</tr>";
+			}else{
+				mensaje = mensaje + "<tr>";
+				mensaje = mensaje + "<td>Tiene bolo:</td>";
+				mensaje = mensaje + "<td><input type='checkbox' id='TieneBolo' name='TieneBolo' value='TieneBolo' disabled></td>";
+				mensaje = mensaje + "</tr>";
+			}
+			
+			if(data.TieneCrotal == "1"){
+				mensaje = mensaje + "<tr>";
+				mensaje = mensaje + "<td>Tiene crotal:</td>";
+				mensaje = mensaje + "<td><input type='checkbox' id='TieneCrotal' name='TieneCrotal' value='TieneCrotal' checked disabled></td>";
+				mensaje = mensaje + "</tr>";
+			}else{
+				mensaje = mensaje + "<tr>";
+				mensaje = mensaje + "<td>Tiene crotal:</td>";
+				mensaje = mensaje + "<td><input type='checkbox' id='TieneCrotal' name='TieneCrotal' value='TieneCrotal' disabled></td>";
+				mensaje = mensaje + "</tr>"; 
+			}
+			
+			mensaje = mensaje + "<tr>";
+			mensaje = mensaje + "<td>Número de explotación:</td>";
+			mensaje = mensaje + "<td><input id='NumExplotacion' disabled value=" + data.NumExplotacion + "></td>";
+			mensaje = mensaje + "</tr>";
+			
+			mensaje = mensaje + "</table>";
+			
+			if(data.Venta == "0" && data.Muerta == "0"){
+				mensaje = mensaje + "<div class='d-grid gap-2 d-md-flex justify-content-md-end'>"+
+  										"<img src='./lapiz.png' style='cursor:pointer;' height='40' size='40' onclick='Editar()'>"+
+									"</div>";
+									
+				mensaje = mensaje + "<div class='d-grid gap-2 d-md-flex justify-content-md-end'>"+
+	  									"<button class='btn btn-primary me-md-2' type='button' style='display:none;'>Guardar Información</button>"+
+									"</div>";
+			}
+			
+			
+			
+			
+			bootbox.dialog({
+				title:NumReferencia, 
+				message: mensaje,
+				closeButton: true,
+				onEscape: true
+			});
+		},
+		error : function(jqXHR, exception) {
+			// mostrarPantallaError(url, jqXHR);
+		},
+		statuscode : {
+			404 : function() {
+				//mostrarPantallaError(url);
+			}
+		}
+	});
+	
+}
+</script>
+
+<script>
+function AnadirAnimal(){
+
+	var mensaje = "";
+	
+	mensaje = mensaje + "<table>";
+	
+	mensaje = mensaje + "<tr>";
+	mensaje = mensaje + "<td>Número identificación:</td>";
+	mensaje = mensaje + "<td><input id='NumIdentificacion'><p style='font-size:12px;color:red;'>Últimos 7 dígitos</p></td>";
+	mensaje = mensaje + "</tr>";
+	
+	mensaje = mensaje + "<tr>";
+	mensaje = mensaje + "<td>Sexo:</td>";
+	mensaje = mensaje + "<td><select id='Sexo'>" +
+						"<option value='H' selected>Hembra</option>" +
+						"<option value='M'>Macho</option></select></td>";
+	mensaje = mensaje + "</tr>";
+	
+	mensaje = mensaje + "<tr>";
+	mensaje = mensaje + "<td>Año nacimiento:</td>";
+	mensaje = mensaje + "<td><select id='AnoNacimiento'>" +
+						"<option value='2021' selected>2021</option>" +
+						"<option value='2022'>2022</option>" +
+						"<option value='2023'>2023</option> </select></td>";
+	mensaje = mensaje + "</tr>";
+	
+
+	mensaje = mensaje + "<tr>";
+	mensaje = mensaje + "<td>Tiene bolo:</td>";
+	mensaje = mensaje + "<td><input type='checkbox' id='TieneBolo' name='TieneBolo' value='TieneBolo' ></td>";
+	mensaje = mensaje + "</tr>";
+
+	mensaje = mensaje + "<tr>";
+	mensaje = mensaje + "<td>Tiene crotal:</td>";
+	mensaje = mensaje + "<td><input type='checkbox' id='TieneCrotal' name='TieneCrotal' value='TieneCrotal'></td>";
+	mensaje = mensaje + "</tr>"; 
+	
+	/*mensaje = mensaje + "<tr>";
+	mensaje = mensaje + "<td>Número de explotación:</td>";
+	mensaje = mensaje + "<td><input id='NumExplotacion'></td>";
+	mensaje = mensaje + "</tr>";*/
+	
+	mensaje = mensaje + "</table>";
+	
+	bootbox.confirm({
+		title:"Nuevo animal", 
+		message: mensaje,
+		onEscape: true,
+		buttons: {
+	        confirm: {
+	            label: 'CONFIRMAR',
+	            className: 'btn-success'
+	        }
+	    },
+	    callback: function (result) {
+	        if (result) {
+	        	var numidentificacion = document.getElementById("NumIdentificacion").value;
+	        	numidentificacion = '72408000' + numidentificacion;
+            	var sexo = document.getElementById("Sexo").value;
+            	var anonacimiento = document.getElementById("AnoNacimiento").value;
+            	var tienebolo = document.getElementById("TieneBolo");
+            	var valor_tienebolo = tienebolo.checked;
+            	var tienecrotal = document.getElementById("TieneCrotal");
+            	var valor_tienecrotal = tienecrotal.checked;
+            	GuardarAnimal(numidentificacion, sexo, anonacimiento, valor_tienebolo, valor_tienecrotal);
+            } else {
+                
+            }
+	    }
+	});
+	
+}
+</script>
+
+<script>
+function GuardarAnimal(numidentificacion, sexo, anonacimiento, valor_tienebolo, valor_tienecrotal){
+	var usuario = sessionStorage.getItem("usuario_activo");
+	
+	var datosNuevoAnimal= {
+		'Usuario' : usuario,
+		'NumIdentificacion' : numidentificacion,
+		'Sexo' : sexo, 
+		'AnoNacimiento' : anonacimiento,
+		'TieneBolo' : valor_tienebolo,
+		'TieneCrotal': valor_tienecrotal,
+	};
+
+	var datosNuevoAnimalJSON = JSON.stringify(datosNuevoAnimal);
+
+	var url = './nuevoanimal';
+
+	$.ajax({
+		type : 'post',
+		url : url,
+		contentType : 'application/json',
+		dataType : 'json',
+		data : datosNuevoAnimalJSON,
+		success : function(data, textStatus, jqXHR) {
+			
+		},
+		error : function(jqXHR, exception) {
+			// mostrarPantallaError(url, jqXHR);
+		},
+		statuscode : {
+			404 : function() {
+				//mostrarPantallaError(url);
+			}
+		}
+	});
 }
 </script>

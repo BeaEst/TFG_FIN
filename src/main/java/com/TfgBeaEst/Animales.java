@@ -15,7 +15,16 @@ public class Animales {
 	public Boolean TieneBolo;
 	public Boolean TieneCrotal;
 	public String NumExplotacion;
+	public Date FechaBaja;
 	
+	public Date getFechaBaja() {
+		return FechaBaja;
+	}
+
+	public void setFechaBaja(Date fechaBaja) {
+		FechaBaja = fechaBaja;
+	}
+
 	public String getNumIdentificacion() {
 		return NumIdentificacion;
 	}
