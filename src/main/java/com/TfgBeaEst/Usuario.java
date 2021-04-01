@@ -9,7 +9,16 @@ public class Usuario {
 	public String SegundoApellido;
 	public String DNINIF;
 	public String CorreoElectronico;
-	
+	public String NumExplotacion;
+
+	public String getNumExplotacion() {
+		return NumExplotacion;
+	}
+
+	public void setNumExplotacion(String numExplotacion) {
+		NumExplotacion = numExplotacion;
+	}
+
 	public String getUsuario() {
 		return Usuario;
 	}

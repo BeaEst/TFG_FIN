@@ -1,5 +1,20 @@
 package com.TfgBeaEst.Controller;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.net.URL;
+import java.net.URLConnection;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -9,14 +24,40 @@ import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JTextArea;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFRichTextString;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.util.WorkbookUtil;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,6 +66,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.TfgBeaEst.Animales;
 import com.TfgBeaEst.Usuario;
+import com.fasterxml.jackson.core.util.ByteArrayBuilder;
 
 @Controller
 public class OperationsController {
@@ -87,7 +129,8 @@ public class OperationsController {
 										System.out.println(
 												"La contraseña del usuario " + user + " corresponde con la añadida");
 
-										System.out.println("SELECT Contrasena FROM usuarios WHERE Usuario='" + user + "'");
+										System.out.println(
+												"SELECT Contrasena FROM usuarios WHERE Usuario='" + user + "'");
 										result.put("login", "correcto");
 									} else {
 										System.out.println(
@@ -229,6 +272,100 @@ public class OperationsController {
 		}
 
 		System.out.println("FIN de sacar datos del usuario para Ver Perfil");
+		return responseEntity;
+
+	}
+
+	@RequestMapping(value = "/recogerExplotaciones", method = RequestMethod.POST)
+	public ResponseEntity<Map<String, ArrayList<String>>> RecogerExplotaciones(@RequestBody Animales animal) {
+
+		System.out.println("INICIO recoger datos explotacion");
+
+		ResponseEntity<Map<String, ArrayList<String>>> responseEntity = null;
+		Map<String, ArrayList<String>> result = new HashMap<>();
+
+		// Consulta a base de datos para comprobar si existe en la tabla usuarios.
+		Connection conexion = null;
+
+		Integer AnoNacimiento = animal.getAnoNacimiento();
+		String user = animal.getUsuario();
+
+		// Cargar el driver
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+
+			try {
+				conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/tfg_v1", "root", "");
+
+				Statement s = null;
+				try {
+					s = conexion.createStatement();
+
+					try {
+						// Si se marca la opcion de año de nacimiento
+						List<String> datos = new ArrayList<String>();
+
+						// Seleccionar todos los registros
+						ResultSet datosexplotaciones = s.executeQuery(
+								"SELECT NumExplotacion, TipoAnimal FROM explotaciones WHERE Usuario='" + user + "'");
+
+						System.out.println(
+								"SELECT NumExplotacion, TipoAnimal FROM explotaciones WHERE Usuario='" + user + "'");
+
+						Statement st;
+						ResultSet rs;
+						ResultSetMetaData md;
+						// st = cn.createStatement();
+						// rs = st.executeQuery(s_sql);
+						md = datosexplotaciones.getMetaData();
+						int columnas = md.getColumnCount();
+						ArrayList<String> ListaExplotaciones = new ArrayList<>();
+						ArrayList<String> ListaTipoAnimal = new ArrayList<>();
+						// List<String> ListaOvejas = new List();
+						while (datosexplotaciones.next()) {
+							String dato;
+							String dato2;
+							/*
+							 * for (int i = 1; i <= columnas; i++) { dato = cont_act.getObject(i); }
+							 */
+							dato = datosexplotaciones.getString("NumExplotacion");
+							dato2 = datosexplotaciones.getString("TipoAnimal");
+							ListaExplotaciones.add(dato);
+							ListaTipoAnimal.add(dato2);
+						}
+						result.put("ListaExplotaciones", ListaExplotaciones);
+						result.put("ListaTipoAnimal", ListaTipoAnimal);
+
+						responseEntity = new ResponseEntity<>(result, HttpStatus.OK);
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+						responseEntity = new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+
+						System.out.println("ERROR al hacer las consultas SQL");
+					}
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+					responseEntity = new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+
+					System.out.println("ERROR al crear el estamento de la consulta sql");
+				}
+			} catch (SQLException e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+				responseEntity = new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+				System.out.println("ERROR al hacer la conexión a la base de datos");
+			}
+
+		} catch (ClassNotFoundException e3) {
+			// TODO Auto-generated catch block
+			e3.printStackTrace();
+			responseEntity = new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+			System.out.println("ERROR al cargar el driver de sql");
+		}
+
+		System.out.println("FIN recoger datos explotacion");
 		return responseEntity;
 
 	}
@@ -495,6 +632,7 @@ public class OperationsController {
 
 		String user = usuario.getUsuario();
 		String pass = usuario.getContrasena();
+		String numexplotacion = usuario.getNumExplotacion();
 
 		// Cargar el driver
 		try {
@@ -510,11 +648,21 @@ public class OperationsController {
 					try {
 						List<String> datos = new ArrayList<String>();
 
-						ResultSet cont_act = s.executeQuery("SELECT NumIdentificacion FROM animales WHERE Usuario='"
-								+ user + "' AND Muerta='0' AND Venta='0'");
+						/*
+						 * ResultSet cont_act =
+						 * s.executeQuery("SELECT NumIdentificacion FROM animales WHERE Usuario='" +
+						 * user + "' AND Muerta='0' AND Venta='0'");
+						 * 
+						 * System.out.println("SELECT NumIdentificacion FROM animales WHERE Usuario='" +
+						 * user + "' AND Muerta='0' AND Venta='0'");
+						 */
 
-						System.out.println("SELECT NumIdentificacion FROM animales WHERE Usuario='" + user
-								+ "' AND Muerta='0' AND Venta='0'");
+						ResultSet cont_act = s
+								.executeQuery("SELECT NumIdentificacion FROM animales WHERE NumExplotacion='"
+										+ numexplotacion + "' AND Muerta='0' AND Venta='0'");
+
+						System.out.println("SELECT NumIdentificacion FROM animales WHERE NumExplotacion='"
+								+ numexplotacion + "' AND Muerta='0' AND Venta='0'");
 
 						Statement st;
 						ResultSet rs;
@@ -877,9 +1025,18 @@ public class OperationsController {
 		Connection conexion = null;
 
 		Date fechaMuerteFiltro = animal.getFechaMuerte();
+		Calendar calendar = Calendar.getInstance();
+	      calendar.setTime(fechaMuerteFiltro); 
+	      calendar.add(calendar.YEAR, 1);
+	    Date fechaMuerte2Filtro = calendar.getTime();
 		Boolean MuertaFiltro = animal.getMuerta();
 		Boolean VentaFiltro = animal.getVenta();
 		String user = animal.getUsuario();
+		String numexplotacion = animal.getNumExplotacion();
+		
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
+		String strDate = dateFormat.format(fechaMuerteFiltro);
+		String strDate2 = dateFormat.format(fechaMuerte2Filtro);
 
 		// Cargar el driver
 		try {
@@ -898,13 +1055,26 @@ public class OperationsController {
 							List<String> datos = new ArrayList<String>();
 
 							// Seleccionar todos los registros
-							ResultSet datosovejaMuertas = s
-									.executeQuery("SELECT NumIdentificacion FROM animales WHERE Usuario='" + user
-											+ "' AND Muerta='1' AND FechaBaja>='" + fechaMuerteFiltro
-											+ "' ORDER BY FechaBaja");
+							/*
+							 * ResultSet datosovejaMuertas = s
+							 * .executeQuery("SELECT NumIdentificacion FROM animales WHERE Usuario='" + user
+							 * + "' AND Muerta='1' AND FechaBaja>='" + fechaMuerteFiltro +
+							 * "' ORDER BY FechaBaja");
+							 * 
+							 * System.out.println("SELECT NumIdentificacion FROM animales WHERE Usuario='" +
+							 * user + "' AND Muerta='1' AND FechaBaja>='" + fechaMuerteFiltro + "'");
+							 */
 
-							System.out.println("SELECT NumIdentificacion FROM animales WHERE Usuario='" + user
-									+ "' AND Muerta='1' AND FechaBaja>='" + fechaMuerteFiltro + "'");
+							ResultSet datosovejaMuertas = s
+									.executeQuery("SELECT NumIdentificacion FROM animales WHERE (FechaBaja "
+											+ "BETWEEN '" + strDate +"' AND '" + strDate2 +"') AND NumExplotacion='"
+											+ numexplotacion + "' AND Muerta='1'"
+											+ " ORDER BY FechaBaja");
+
+							System.out.println("SELECT NumIdentificacion FROM animales WHERE (FechaBaja "
+									+ "BETWEEN '" + strDate +"' AND '" + strDate2 +"') AND NumExplotacion='"
+									+ numexplotacion + "' AND Muerta='1'"
+									+ " ORDER BY FechaBaja");
 
 							Statement st;
 							ResultSet rs;
@@ -931,13 +1101,27 @@ public class OperationsController {
 							List<String> datos = new ArrayList<String>();
 
 							// Seleccionar todos los registros
-							ResultSet datosovejaMuertas = s
-									.executeQuery("SELECT NumIdentificacion FROM animales WHERE Usuario='" + user
-											+ "' AND Venta='1' AND FechaBaja>='" + fechaMuerteFiltro
-											+ "' ORDER BY FechaBaja");
+							/*
+							 * ResultSet datosovejaMuertas = s
+							 * .executeQuery("SELECT NumIdentificacion FROM animales WHERE Usuario='" + user
+							 * + "' AND Venta='1' AND FechaBaja>='" + fechaMuerteFiltro +
+							 * "' ORDER BY FechaBaja");
+							 * 
+							 * System.out.println("SELECT NumIdentificacion FROM animales WHERE Usuario='" +
+							 * user + "' AND Venta='1' AND FechaBaja>='" + fechaMuerteFiltro +
+							 * "' ORDER BY FechaBaja");
+							 */
 
-							System.out.println("SELECT NumIdentificacion FROM animales WHERE Usuario='" + user
-									+ "' AND Venta='1' AND FechaBaja>='" + fechaMuerteFiltro + "' ORDER BY FechaBaja");
+							ResultSet datosovejaMuertas = s
+									.executeQuery("SELECT NumIdentificacion FROM animales WHERE (FechaBaja "
+											+ "BETWEEN '" + strDate +"' AND '" + strDate2 +"') AND NumExplotacion='"
+											+ numexplotacion + "' AND Venta='1'"
+											+ " ORDER BY FechaBaja");
+
+							System.out.println("SELECT NumIdentificacion FROM animales WHERE (FechaBaja "
+									+ "BETWEEN '" + strDate +"' AND '" + strDate2 +"') AND NumExplotacion='"
+									+ numexplotacion + "' AND Venta='1'"
+									+ " ORDER BY FechaBaja");
 
 							Statement st;
 							ResultSet rs;
@@ -964,14 +1148,22 @@ public class OperationsController {
 							List<String> datos = new ArrayList<String>();
 
 							// Seleccionar todos los registros
-							ResultSet datosovejaMuertas = s
-									.executeQuery("SELECT NumIdentificacion FROM animales WHERE Usuario='" + user
-											+ "' AND FechaBaja>='" + fechaMuerteFiltro
-											+ "' AND (Muerta='1' OR Venta='1') ORDER BY FechaBaja");
+							/*
+							 * ResultSet datosovejaMuertas = s
+							 * .executeQuery("SELECT NumIdentificacion FROM animales WHERE Usuario='" + user
+							 * + "' AND FechaBaja>='" + fechaMuerteFiltro +
+							 * "' AND (Muerta='1' OR Venta='1') ORDER BY FechaBaja");
+							 * 
+							 * System.out.println("SELECT NumIdentificacion FROM animales WHERE Usuario='" +
+							 * user + "' AND FechaBaja>='" + fechaMuerteFiltro +
+							 * "' AND (Muerta='1' OR Venta='1') ORDER BY FechaBaja");
+							 */
 
-							System.out.println("SELECT NumIdentificacion FROM animales WHERE Usuario='" + user
-									+ "' AND FechaBaja>='" + fechaMuerteFiltro
-									+ "' AND (Muerta='1' OR Venta='1') ORDER BY FechaBaja");
+							ResultSet datosovejaMuertas = s
+									.executeQuery("SELECT NumIdentificacion FROM animales WHERE (FechaBaja "
+											+ "BETWEEN '" + strDate +"' AND '" + strDate2 +"') AND NumExplotacion='"
+											+ numexplotacion + "' AND (Muerta='1' OR Venta='1')"
+											+ " ORDER BY FechaBaja");
 
 							Statement st;
 							ResultSet rs;
@@ -1042,6 +1234,7 @@ public class OperationsController {
 
 		Integer AnoNacimiento = animal.getAnoNacimiento();
 		String user = animal.getUsuario();
+		String NumExplotacion = animal.getNumExplotacion();
 
 		// Cargar el driver
 		try {
@@ -1059,12 +1252,22 @@ public class OperationsController {
 						List<String> datos = new ArrayList<String>();
 
 						// Seleccionar todos los registros
-						ResultSet datosovejaMuertas = s
-								.executeQuery("SELECT NumIdentificacion, Muerta, Venta FROM animales WHERE Usuario='"
-										+ user + "' AND AnoNacimiento='" + AnoNacimiento + "'");
+						/*
+						 * ResultSet datosovejaMuertas = s
+						 * .executeQuery("SELECT NumIdentificacion, Muerta, Venta FROM animales WHERE Usuario='"
+						 * + user + "' AND AnoNacimiento='" + AnoNacimiento + "'");
+						 * 
+						 * System.out.println("SELECT NumIdentificacion FROM animales WHERE Usuario='" +
+						 * user + "' AND AnoNacimiento='" + AnoNacimiento + "'");
+						 */
 
-						System.out.println("SELECT NumIdentificacion FROM animales WHERE Usuario='" + user
-								+ "' AND AnoNacimiento='" + AnoNacimiento + "'");
+						ResultSet datosovejaMuertas = s.executeQuery(
+								"SELECT NumIdentificacion, Muerta, Venta FROM animales WHERE NumExplotacion='"
+										+ NumExplotacion + "' AND AnoNacimiento='" + AnoNacimiento + "'");
+
+						System.out
+								.println("SELECT NumIdentificacion, Muerta, Venta FROM animales WHERE NumExplotacion='"
+										+ NumExplotacion + "' AND AnoNacimiento='" + AnoNacimiento + "'");
 
 						Statement st;
 						ResultSet rs;
@@ -1253,22 +1456,23 @@ public class OperationsController {
 		// Consulta a base de datos para comprobar si existe en la tabla usuarios.
 		Connection conexion = null;
 
+		String NumExplotacion = oveja.getNumExplotacion();
 		String NumIdentificacion = oveja.getNumIdentificacion();
 		String usuario = oveja.getUsuario();
 		String sexo = oveja.getSexo();
 		Integer anonacimiento = oveja.getAnoNacimiento();
 		Boolean tienebolo = oveja.getTieneBolo();
 		Integer v_tienebolo;
-		if(tienebolo) {
+		if (tienebolo) {
 			v_tienebolo = 1;
-		}else {
+		} else {
 			v_tienebolo = 0;
 		}
 		Boolean tienecrotal = oveja.getTieneCrotal();
 		Integer v_tienecrotal;
-		if(tienecrotal) {
+		if (tienecrotal) {
 			v_tienecrotal = 1;
-		}else {
+		} else {
 			v_tienecrotal = 0;
 		}
 
@@ -1285,15 +1489,17 @@ public class OperationsController {
 
 					try {
 						// Guardamos los datos en la tabla usuarios
-						System.out.println(
-								"INSERT INTO animales "
-										+ "(NumIdentificacion, Sexo, AnoNacimiento, Muerta, Venta, TieneBolo, TieneCrotal)"
-										+ " VALUES ('"+NumIdentificacion+"','"+sexo+"','"+anonacimiento+"','0','0','"+v_tienebolo+"','"+v_tienecrotal+"')");
+						System.out.println("INSERT INTO animales "
+								+ "(NumIdentificacion, Sexo, AnoNacimiento, Usuario, Muerta, Venta, TieneBolo, TieneCrotal,NumExplotacion)"
+								+ " VALUES ('" + NumIdentificacion + "','" + sexo + "','" + anonacimiento + "','"
+								+ usuario + "','0','0','" + v_tienebolo + "','" + v_tienecrotal + "','" + NumExplotacion
+								+ "')");
 
-						int resultado = s.executeUpdate(
-								"INSERT INTO animales "
-										+ "(NumIdentificacion, Sexo, AnoNacimiento, Usuario, Muerta, Venta, TieneBolo, TieneCrotal,NumExplotacion)"
-										+ " VALUES ('"+NumIdentificacion+"','"+sexo+"','"+anonacimiento+"','"+usuario+"','0','0','"+v_tienebolo+"','"+v_tienecrotal+"','ES491011310211')");
+						int resultado = s.executeUpdate("INSERT INTO animales "
+								+ "(NumIdentificacion, Sexo, AnoNacimiento, Usuario, Muerta, Venta, TieneBolo, TieneCrotal,NumExplotacion)"
+								+ " VALUES ('" + NumIdentificacion + "','" + sexo + "','" + anonacimiento + "','"
+								+ usuario + "','0','0','" + v_tienebolo + "','" + v_tienecrotal + "','" + NumExplotacion
+								+ "')");
 
 						// Comprobar si se ha insertado correctamente el update.
 						if (resultado == 1) {
@@ -1307,10 +1513,11 @@ public class OperationsController {
 
 						responseEntity = new ResponseEntity<>(result, HttpStatus.OK);
 					} catch (SQLException e) {
+						result.put("QueryOk", "incorrecto");
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 						responseEntity = new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
-						// result.put("QueryOk", "incorrecto");
+						
 						System.out.println("ERROR al hacer las consultas SQL");
 					}
 				} catch (SQLException e1) {
@@ -1340,5 +1547,415 @@ public class OperationsController {
 		return responseEntity;
 
 	}
+	
+	@RequestMapping(value = "/modificaranimal", method = RequestMethod.POST)
+	public ResponseEntity<Map<String, String>> ModificarAnimal(@RequestBody Animales oveja) {
 
+		System.out.println("INICIO modificar animal");
+
+		ResponseEntity<Map<String, String>> responseEntity = null;
+		Map<String, String> result = new HashMap<>();
+
+		// Consulta a base de datos para comprobar si existe en la tabla usuarios.
+		Connection conexion = null;
+
+		String NumExplotacion = oveja.getNumExplotacion();
+		String NumIdentificacion = oveja.getNumIdentificacion();
+		String usuario = oveja.getUsuario();
+		String sexo = oveja.getSexo();
+		Integer anonacimiento = oveja.getAnoNacimiento();
+		Boolean tienebolo = oveja.getTieneBolo();
+		Integer v_tienebolo;
+		if (tienebolo) {
+			v_tienebolo = 1;
+		} else {
+			v_tienebolo = 0;
+		}
+		Boolean tienecrotal = oveja.getTieneCrotal();
+		Integer v_tienecrotal;
+		if (tienecrotal) {
+			v_tienecrotal = 1;
+		} else {
+			v_tienecrotal = 0;
+		}
+
+		// Cargar el driver
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+
+			try {
+				conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/tfg_v1", "root", "");
+
+				Statement s = null;
+				try {
+					s = conexion.createStatement();
+
+					try {
+						// Guardamos los datos en la tabla usuarios
+						System.out.println("UPDATE animales SET Sexo='"+sexo+"', AnoNacimiento='"+anonacimiento+"', TieneBolo='"+v_tienebolo+"', TieneCrotal='"+v_tienecrotal+"'"
+								+ "WHERE NumIdentificacion='"+NumIdentificacion+"'");
+
+						int resultado = s.executeUpdate("UPDATE animales SET Sexo='"+sexo+"', AnoNacimiento='"+anonacimiento+"', TieneBolo='"+v_tienebolo+"', TieneCrotal='"+v_tienecrotal+"'"
+								+ "WHERE NumIdentificacion='"+NumIdentificacion+"'");
+
+						// Comprobar si se ha insertado correctamente el update.
+						if (resultado == 1) {
+							System.out.println("Se han modificado los datos correctamente");
+							result.put("QueryOk", "correcto");
+
+						} else {
+							System.out.println("ERROR al modificar los datos");
+							result.put("QueryOk", "incorrecto");
+						}
+
+						responseEntity = new ResponseEntity<>(result, HttpStatus.OK);
+					} catch (SQLException e) {
+						result.put("QueryOk", "incorrecto");
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+						responseEntity = new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+						
+						System.out.println("ERROR al hacer las consultas SQL");
+					}
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+					// result.put("QueryOk", "incorrecto");
+					responseEntity = new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+					System.out.println("ERROR al crear el estamento de la consulta sql");
+				}
+			} catch (SQLException e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+				// result.put("QueryOk", "incorrecto");
+				responseEntity = new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+				System.out.println("ERROR al hacer la conexión a la base de datos");
+			}
+
+		} catch (ClassNotFoundException e3) {
+			// TODO Auto-generated catch block
+			e3.printStackTrace();
+			// result.put("QueryOk", "incorrecto");
+			responseEntity = new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+			System.out.println("ERROR al cargar el driver de sql");
+		}
+
+		System.out.println("FIN modificar animal");
+		return responseEntity;
+
+	}
+
+	@RequestMapping(value = "/exportarSinCrotal/{numexplotacion}", method = RequestMethod.POST)
+	public ResponseEntity<Map<String, String>> ExportarSinCrotal(HttpServletRequest request, HttpServletResponse response, @PathVariable String numexplotacion) throws ServletException, IOException{
+		System.out.println("INICIO exportar animales sin crotal");
+		ResponseEntity<Map<String, String>> responseEntity = null;
+		Map<String, String> result = new HashMap<>();
+		
+		// Consulta a base de datos para comprobar si existe en la tabla usuarios.
+		Connection conexion = null;
+
+		ArrayList<String> ListaOvejas = new ArrayList<>();
+		// Cargar el driver
+				try {
+					Class.forName("com.mysql.jdbc.Driver");
+
+					try {
+						conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/tfg_v1", "root", "");
+
+						Statement s = null;
+						try {
+							s = conexion.createStatement();
+
+							try {
+								ResultSet cont_act = s
+										.executeQuery("SELECT NumIdentificacion FROM animales WHERE NumExplotacion='"
+												+ numexplotacion + "' AND Muerta='0' AND Venta='0' AND TieneCrotal='0'");
+
+								System.out.println("SELECT NumIdentificacion FROM animales WHERE NumExplotacion='"
+										+ numexplotacion + "' AND Muerta='0' AND Venta='0' AND TieneCrotal='0'");
+
+								Statement st;
+								ResultSet rs;
+								ResultSetMetaData md;
+								// st = cn.createStatement();
+								// rs = st.executeQuery(s_sql);
+								md = cont_act.getMetaData();
+								int columnas = md.getColumnCount();
+								// List<String> ListaOvejas = new List();
+								while (cont_act.next()) {
+									String dato;
+									/*
+									 * for (int i = 1; i <= columnas; i++) { dato = cont_act.getObject(i); }
+									 */
+									dato = cont_act.getString("NumIdentificacion");
+									ListaOvejas.add(dato);
+								}
+								//result.put("ListaOvejas", ListaOvejas);
+
+								responseEntity = new ResponseEntity<>(result, HttpStatus.OK);
+							} catch (SQLException e) {
+								result.put("QueryOk", "incorrecto");
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+								responseEntity = new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+								
+								System.out.println("ERROR al hacer las consultas SQL");
+							}
+						} catch (SQLException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+							// result.put("QueryOk", "incorrecto");
+							responseEntity = new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+							System.out.println("ERROR al crear el estamento de la consulta sql");
+						}
+					} catch (SQLException e2) {
+						// TODO Auto-generated catch block
+						e2.printStackTrace();
+						// result.put("QueryOk", "incorrecto");
+						responseEntity = new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+						System.out.println("ERROR al hacer la conexión a la base de datos");
+					}
+
+				} catch (ClassNotFoundException e3) {
+					// TODO Auto-generated catch block
+					e3.printStackTrace();
+					// result.put("QueryOk", "incorrecto");
+					responseEntity = new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+					System.out.println("ERROR al cargar el driver de sql");
+				}
+		
+		
+		
+		//Creación del Excel
+		Workbook wb = new XSSFWorkbook();
+
+		String sheetName = WorkbookUtil.createSafeSheetName("Sin Crotal");
+		Sheet sheet = wb.createSheet(sheetName);
+
+		//Encabezado del fichero
+		
+		//CellStyle estilo = this.estiloCabeceraPrincipal(wb);
+		int columna = 0;
+		
+		int tam = ListaOvejas.size();
+		
+		for(int i=0; i<tam; i++) {
+			Row fila = sheet.createRow(i);
+			Cell celda = fila.createCell(columna);
+			celda.setCellValue(ListaOvejas.get(i));
+		}
+		
+        
+		ByteArrayOutputStream stream = new ByteArrayOutputStream();
+			try {
+				wb.write(stream);
+			} catch (FileNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+			//StringBuilder uriBuilder = new StringBuilder();
+			ServletContext servletContext = request.getSession().getServletContext();
+			StringBuilder uriBuilder = new StringBuilder();
+			uriBuilder.append(servletContext.getRealPath(File.separator));
+			
+			File folder = new File(uriBuilder.toString());
+			if (!folder.exists()){
+				folder.mkdirs();
+			}
+			File fichero = new File(uriBuilder.toString()+"/SinCrotal.xlsx");
+			if(!fichero.exists()){
+				FileOutputStream elFichero = new FileOutputStream(uriBuilder.toString()+"/SinCrotal.xlsx");
+				try{
+					elFichero.write(stream.toByteArray());
+				}finally{
+					elFichero.close();
+				}
+			}
+		
+		String nombreFichero = "SinCrotal";
+		result.put("exported", nombreFichero);
+		responseEntity = new ResponseEntity<>(result, HttpStatus.OK);
+		System.out.println("FIN exportar animales sin crotal");
+		return responseEntity;
+	}
+	
+	@RequestMapping(value = "/exportarSinBolo/{numexplotacion}", method = RequestMethod.POST)
+	public ResponseEntity<Map<String, String>> ExportarSinBolo(HttpServletRequest request, HttpServletResponse response, @PathVariable String numexplotacion) throws ServletException, IOException{
+		System.out.println("INICIO exportar animales sin bolo");
+		ResponseEntity<Map<String, String>> responseEntity = null;
+		Map<String, String> result = new HashMap<>();
+		
+		// Consulta a base de datos para comprobar si existe en la tabla usuarios.
+		Connection conexion = null;
+
+		ArrayList<String> ListaOvejas = new ArrayList<>();
+		// Cargar el driver
+				try {
+					Class.forName("com.mysql.jdbc.Driver");
+
+					try {
+						conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/tfg_v1", "root", "");
+
+						Statement s = null;
+						try {
+							s = conexion.createStatement();
+
+							try {
+								ResultSet cont_act = s
+										.executeQuery("SELECT NumIdentificacion FROM animales WHERE NumExplotacion='"
+												+ numexplotacion + "' AND Muerta='0' AND Venta='0' AND TieneBolo='0'");
+
+								System.out.println("SELECT NumIdentificacion FROM animales WHERE NumExplotacion='"
+										+ numexplotacion + "' AND Muerta='0' AND Venta='0' AND TieneBolo='0'");
+
+								Statement st;
+								ResultSet rs;
+								ResultSetMetaData md;
+								// st = cn.createStatement();
+								// rs = st.executeQuery(s_sql);
+								md = cont_act.getMetaData();
+								int columnas = md.getColumnCount();
+								// List<String> ListaOvejas = new List();
+								while (cont_act.next()) {
+									String dato;
+									/*
+									 * for (int i = 1; i <= columnas; i++) { dato = cont_act.getObject(i); }
+									 */
+									dato = cont_act.getString("NumIdentificacion");
+									ListaOvejas.add(dato);
+								}
+								//result.put("ListaOvejas", ListaOvejas);
+
+								responseEntity = new ResponseEntity<>(result, HttpStatus.OK);
+							} catch (SQLException e) {
+								result.put("QueryOk", "incorrecto");
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+								responseEntity = new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+								
+								System.out.println("ERROR al hacer las consultas SQL");
+							}
+						} catch (SQLException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+							// result.put("QueryOk", "incorrecto");
+							responseEntity = new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+							System.out.println("ERROR al crear el estamento de la consulta sql");
+						}
+					} catch (SQLException e2) {
+						// TODO Auto-generated catch block
+						e2.printStackTrace();
+						// result.put("QueryOk", "incorrecto");
+						responseEntity = new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+						System.out.println("ERROR al hacer la conexión a la base de datos");
+					}
+
+				} catch (ClassNotFoundException e3) {
+					// TODO Auto-generated catch block
+					e3.printStackTrace();
+					// result.put("QueryOk", "incorrecto");
+					responseEntity = new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+					System.out.println("ERROR al cargar el driver de sql");
+				}
+		
+		
+		
+		//Creación del Excel
+		Workbook wb = new XSSFWorkbook();
+
+		String sheetName = WorkbookUtil.createSafeSheetName("SinBolo");
+		Sheet sheet = wb.createSheet(sheetName);
+
+		//Encabezado del fichero
+		
+		//CellStyle estilo = this.estiloCabeceraPrincipal(wb);
+		int columna = 0;
+		
+		int tam = ListaOvejas.size();
+		
+		for(int i=0; i<tam; i++) {
+			Row fila = sheet.createRow(i);
+			Cell celda = fila.createCell(columna);
+			celda.setCellValue(ListaOvejas.get(i));
+		}
+		
+        
+		ByteArrayOutputStream stream = new ByteArrayOutputStream();
+			try {
+				wb.write(stream);
+			} catch (FileNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+			//StringBuilder uriBuilder = new StringBuilder();
+			ServletContext servletContext = request.getSession().getServletContext();
+			StringBuilder uriBuilder = new StringBuilder();
+			uriBuilder.append(servletContext.getRealPath(File.separator));
+			
+			File folder = new File(uriBuilder.toString());
+			if (!folder.exists()){
+				folder.mkdirs();
+			}
+			File fichero = new File(uriBuilder.toString()+"/SinBolo.xlsx");
+			if(!fichero.exists()){
+				FileOutputStream elFichero = new FileOutputStream(uriBuilder.toString()+"/SinBolo.xlsx");
+				try{
+					elFichero.write(stream.toByteArray());
+				}finally{
+					elFichero.close();
+				}
+			}
+		
+		String nombreFichero = "SinBolo";
+		result.put("exported", nombreFichero);
+		responseEntity = new ResponseEntity<>(result, HttpStatus.OK);
+		System.out.println("FIN exportar animales sin bolo");
+		return responseEntity;
+	}
+	
+	/*
+	 * MODULOS PARA EXPORTAR EL ARCHIVO EXCEL, EN ESTE CASO EL SIN CROTAL O EL SIN BOLO
+	 */
+	@RequestMapping(value = "/exportarExcel/{param}", method = RequestMethod.GET)
+	@ResponseBody	
+	public ResponseEntity<byte[]> recuperarInforme(HttpServletRequest request, @PathVariable String param){ 
+		ResponseEntity<byte[]> result = null;
+		HttpHeaders header= new HttpHeaders();
+		header.setContentType(new MediaType("application", "x-download"));
+		String date = new SimpleDateFormat().format(new Date()); 
+		header.set("Content-Disposition",  "attachment; filename="+param+"_"+date+".xlsx");
+		byte[] exportacion = null;
+		
+		ServletContext servletContext = request.getSession().getServletContext();
+		StringBuilder uriBuilder = new StringBuilder();
+		uriBuilder.append(servletContext.getRealPath(File.separator));
+		String path =uriBuilder.toString()+"/"+param+".xlsx";
+		exportacion = OperationsController.descargarInformeValidacion(path);
+		result = new ResponseEntity<byte[]>(exportacion, header, HttpStatus.OK);
+
+		return result;
+	}
+	
+	public static byte[] descargarInformeValidacion(String path) {
+		try {
+			//Recuperamos el fichero para mandarlo
+		    File informe = new File(path);
+		    byte[] byteInforme = new byte[(int) informe.length()];
+		    FileInputStream fis = new FileInputStream(informe);
+		    fis.read(byteInforme);
+		    fis.close();
+			return byteInforme; 
+		} catch (Exception e) {
+			StringWriter stack = new StringWriter();
+			e.printStackTrace(new PrintWriter(stack));
+			return null;
+		}
+	}
+	/*
+	 * FIN
+	 */
+	
+	
 }

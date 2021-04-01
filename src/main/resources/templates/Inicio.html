@@ -68,16 +68,26 @@
 		<div class="card" style="text-align:center;">
 		  <div class="card-body" style="margin-left: 150px;position: absolute; text-align:left;">
 		    <h5 class="card-title">¡BIENVENIDO <script>document.write(sessionStorage.getItem("usuario_activo"));</script>! </h5>
-		    <p class="card-text">VERSION 1.0.2</p>
-		    <p class="card-text">Adaptación a dispositivos moviles y ordenadores</p>
-		    <p class="card-text">Página animales:</p>
-		    <p class="card-text">Visualización, falta poder editar</p>
-		    <p class="card-text">Muerte, se cambian los datos en la base de datos correctamente</p>
-		    <p class="card-text">Venta, falta la funcionalidad</p>
-		    <p class="card-text">Se han añadido los filtros</p>
-		    <p class="card-text">Botón para añadir un nuevo animal</p>
+		    <p class="card-text">VERSION 1.0.3</p>
+		    <p class="card-text"></p>
+		    <p class="card-text"></p>
+		    <p class="card-text"></p>
+		    <p class="card-text"></p>
+		    <p class="card-text"></p>
+		    <p class="card-text"></p>
+		    <p class="card-text"></p>
+		    
+		    <div>
+				<div id="listadoExplotaciones"></div>
+			</div>
 		  </div>
+		  
+		  
 		</div>
+		
+		
+		
+		
 	</div>
 	
 	<div id="Movil" style="display:none;">	
@@ -147,8 +157,57 @@
 
 <script>
 $(function() {
-  //Comprobar si es telefono u ordenador
+  
+  
+	var usuario = sessionStorage.getItem("usuario_activo");
 	
+		var usuarioDatos= {
+		'usuario' : usuario,
+	};
+
+	var usuarioLoginJSON = JSON.stringify(usuarioDatos);
+
+	var url = './recogerExplotaciones';
+
+	$.ajax({
+		type : 'post',
+		url : url,
+		contentType : 'application/json',
+		dataType : 'json',
+		data : usuarioLoginJSON,
+		success : function(data, textStatus, jqXHR) {
+			var numExplotaciones = data.ListaExplotaciones;
+			var size = Object.keys(numExplotaciones).length;
+			
+			txt = document.getElementById("listadoExplotaciones");
+			var doc = "";
+			
+			doc = doc + "<table>";
+				doc = doc + "<tr>";	
+					doc = doc + "<th style='border: 1px solid black;'>Número Explotación</th>";
+					doc = doc + "<th style='border: 1px solid black;'>Tipo de animal</th>";		
+				doc = doc + "</tr>";
+			for(var i=0; i<size; i++){
+				doc = doc + "<tr>";	
+					doc = doc + "<td style='border: 1px solid black;'>" + data.ListaExplotaciones[i] + "</td>";
+					doc = doc + "<td style='border: 1px solid black;'>" + data.ListaTipoAnimal[i] + "</td>";		
+				doc = doc + "</tr>";
+			}
+			doc = doc + "</table>";
+			
+			txt.innerHTML = doc;
+		},
+		error : function(jqXHR, exception) {
+			// mostrarPantallaError(url, jqXHR);
+		},
+		statuscode : {
+			404 : function() {
+				//mostrarPantallaError(url);
+			}
+		}
+	});
+	
+	//Comprobar si es telefono u ordenador
 	    try{ 
 	        document.createEvent("TouchEvent"); 
 	        document.getElementById('Movil').style.display='block';
@@ -160,10 +219,10 @@ $(function() {
 	    	document.getElementById('NoMovil').style.display='block';
 	        return false;
 	    }
-	
-  
+
 });
 </script>
+
 
 <script>
 function CerrarSesion(){
