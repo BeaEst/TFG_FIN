@@ -102,11 +102,6 @@
 				</div>
 				
 				<div class="input-group input-group-sm mb-3 w-75 p-3">
-				  <span class="input-group-text" id="inputGroup-sizing-sm">Número de Explotación</span>
-				  <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" id="NumExplotacionNoMovil" disabled>
-				</div>
-				
-				<div class="input-group input-group-sm mb-3 w-75 p-3">
 				  <span class="input-group-text" id="inputGroup-sizing-sm">Correo Electrónico</span>
 				  <input type="email" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" id="CElectronicoNoMovil" disabled>
 				</div>
@@ -117,7 +112,6 @@
 					$("#SApellidoNoMovil").val(sessionStorage.getItem("SApellido"));
 					$("#DNINIFNoMovil").val(sessionStorage.getItem("DNINIF"));
 					$("#CElectronicoNoMovil").val(sessionStorage.getItem("CElectronico"));
-					$("#NumExplotacionNoMovil").val(sessionStorage.getItem("NumExplotacion"));
 				</script>
 				<div>
 					<button type="button"  id="editarNoMovil" class="btn btn-primary" style="display:none;width:25%;float:left;margin-right:10px;" onClick="GuardarInformacion()">Guardar Información</button> 
@@ -220,9 +214,6 @@
 				<label>DNI/NIF</label>
 				<input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" id="DNINIFMovil" disabled>
 				
-				<label>Número de Explotación</label>
-				<input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" id="NumExplotacionMovil" disabled>
-				
 				<label>Correo Electrónico</label>
 				<input type="email" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" id="CElectronicoMovil" disabled>
 				
@@ -232,7 +223,6 @@
 					$("#SApellidoMovil").val(sessionStorage.getItem("SApellido"));
 					$("#DNINIFMovil").val(sessionStorage.getItem("DNINIF"));
 					$("#CElectronicoMovil").val(sessionStorage.getItem("CElectronico"));
-					$("#NumExplotacionMovil").val(sessionStorage.getItem("NumExplotacion"));
 				</script>
 				
 				</br>

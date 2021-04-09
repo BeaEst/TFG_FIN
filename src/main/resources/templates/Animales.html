@@ -48,10 +48,10 @@
 					<li class="nav-item"><a class="nav-link active"
 						style="padding-left: 10px; background-color: #e3e4e5; width: 150px; color: black"
 						href="./Animales.html"><b>ANIMALES</b></a></li>
-					<!-- 
-	                <li class="nav-item">
-	                    <a class="nav-link active" style="padding-left:10px;" href="#">Leche</a>
-	                </li>
+					<li class="nav-item"><a class="nav-link active"
+						style="padding-left: 10px; width: 150px;"
+						href="./Exportaciones.html">Exportaciones</a></li>
+	                <!-- 
 	                <li class="nav-item">
 	                    <a class="nav-link active" style="padding-left:10px;" href="#">Venta Ovejas</a>
 	                </li>
@@ -441,6 +441,52 @@ function CerrarSesion(){
 	sessionStorage.clear();
 	var url = "./IniciarSesion.html";
     window.location.href = url;
+}
+</script>
+
+<script>
+function VerPerfil(){
+	//Primero hay que sacar los datos de base de datos de el usuario que se encuentra conectado
+	var usuario = sessionStorage.getItem("usuario_activo");
+	
+	var usuarioDatos= {
+		'usuario' : usuario,
+	};
+
+	var usuarioLoginJSON = JSON.stringify(usuarioDatos);
+
+	var url = './sacardatos';
+
+	$.ajax({
+		type : 'post',
+		url : url,
+		contentType : 'application/json',
+		dataType : 'json',
+		data : usuarioLoginJSON,
+		success : function(data, textStatus, jqXHR) {
+			//Guardar las variables globales para mostrarlas en los input de Ver Perfil
+			sessionStorage.setItem('Nombre', data.Nombre);
+			sessionStorage.setItem('PApellido', data.PApellido);
+			sessionStorage.setItem('SApellido', data.SApellido);
+			sessionStorage.setItem('DNINIF', data.DNINIF);
+			sessionStorage.setItem('CElectronico', data.CElectronico);
+			sessionStorage.setItem('NumExplotacion', data.NumExplotacion);
+			
+			//Luego redirigir a la página
+			var url = "./VerPerfil.html";
+		    window.location.href = url;
+		},
+		error : function(jqXHR, exception) {
+			// mostrarPantallaError(url, jqXHR);
+		},
+		statuscode : {
+			404 : function() {
+				//mostrarPantallaError(url);
+			}
+		}
+	});
+	
+	
 }
 </script>
 
@@ -1057,9 +1103,13 @@ function OvejaMuerta(NumIdentificacion){
 
 	var mensaje = "¿Desea marcar como <b style='color:red;'> MUERTA </b> la oveja <b>" + NumIdentificacion + "</b>? </br></br>";
 	
-	mensaje = mensaje + "Por favor, indique la fecha de muerte: ";
+	mensaje = mensaje + "Por favor, indique los siguientes datos.";
 	
+	mensaje = mensaje + "<br><label> Fecha de muerte: </label>";
 	mensaje = mensaje + "<input id='FechaMuerte' type='date'>";
+	
+	mensaje = mensaje + "<br><label> Número de documento: </label>";
+	mensaje = mensaje + "<input id='NDocumento' type='text'>"; 
 	
 	
 	bootbox.confirm({
@@ -1075,7 +1125,8 @@ function OvejaMuerta(NumIdentificacion){
 	    callback: function (result) {
 	        if (result) {
 	        		var FechaMuerte = document.getElementById("FechaMuerte").value;
-                    MarcarMuerta(NumIdentificacion, FechaMuerte);
+	        		var NDocumento = document.getElementById("NDocumento").value;
+                    MarcarMuerta(NumIdentificacion, FechaMuerte, NDocumento);
                 } else {
                     
                 }
@@ -1093,7 +1144,11 @@ function OvejaVendida(NumIdentificacion){
 	
 	mensaje = mensaje + "Por favor, indique la fecha de venta: ";
 	
-	mensaje = mensaje + "<input id='FechaVenta' type='date'>";
+	mensaje = mensaje + "<br><label> Fecha de muerte: </label>";
+	mensaje = mensaje + "<input id='FechaMuerte' type='date'>";
+	
+	mensaje = mensaje + "<br><label> Número de documento: </label>";
+	mensaje = mensaje + "<input id='NDocumento' type='text'>"; 
 	
 	
 	bootbox.confirm({
@@ -1108,8 +1163,9 @@ function OvejaVendida(NumIdentificacion){
 	    },
 	    callback: function (result) {
 	        if (result) {
-	        		var FechaMuerte = document.getElementById("FechaVenta").value;
-                    MarcarVenta(NumIdentificacion, FechaMuerte);
+	        		var FechaMuerte = document.getElementById("FechaMuerte").value;
+	        		var NDocumento = document.getElementById("NDocumento").value;
+                    MarcarVenta(NumIdentificacion, FechaMuerte, NDocumento);
                 } else {
                     
                 }
@@ -1121,11 +1177,16 @@ function OvejaVendida(NumIdentificacion){
 </script>
 
 <script>
-function MarcarMuerta(NumIdentificacion, FechaMuerte){
+function MarcarMuerta(NumIdentificacion, FechaMuerte, NDocumento){
 
+	
+	var numexplotacion = sessionStorage.getItem("NumeroExplotacion");
+	
 	var datosOvejaMuerta= {
 		'NumIdentificacion' : NumIdentificacion,
 		'FechaMuerte': FechaMuerte,
+		'NDocumento': NDocumento,
+		'NumExplotacion': numexplotacion
 	};
 
 	var datosOvejaMuertaJSON = JSON.stringify(datosOvejaMuerta);
@@ -1187,12 +1248,17 @@ function MarcarMuerta(NumIdentificacion, FechaMuerte){
 </script>
 
 <script>
-function MarcarVenta(NumIdentificacion, FechaVenta){
+function MarcarVenta(NumIdentificacion, FechaVenta, NDocumento){
 
+	var numexplotacion = sessionStorage.getItem("NumeroExplotacion");
+	
 	var datosOvejaVenta= {
 		'NumIdentificacion' : NumIdentificacion,
 		'FechaVenta': FechaVenta,
+		'NDocumento': NDocumento,
+		'NumExplotacion': numexplotacion
 	};
+
 
 	var datosOvejaVentaJSON = JSON.stringify(datosOvejaVenta);
 

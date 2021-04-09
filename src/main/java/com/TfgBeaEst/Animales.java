@@ -17,6 +17,25 @@ public class Animales {
 	public String NumExplotacion;
 	public Date FechaBaja;
 	
+	public String ProcDestino;
+	public String NDocumento;
+	
+	public String getProcDestino() {
+		return ProcDestino;
+	}
+
+	public void setProcDestino(String procDestino) {
+		ProcDestino = procDestino;
+	}
+
+	public String getNDocumento() {
+		return NDocumento;
+	}
+
+	public void setNDocumento(String nDocumento) {
+		NDocumento = nDocumento;
+	}
+
 	public Date getFechaBaja() {
 		return FechaBaja;
 	}
