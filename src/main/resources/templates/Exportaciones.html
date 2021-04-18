@@ -46,13 +46,12 @@
 			<nav class="navbar navbar-dark bg-dark">
 				<ul class="navbar-nav">
 					<li class="nav-item"><a class="nav-link active"
-						style="padding-left: 10px; width: 150px;"
-						href="./Animales.html">Animales</a></li>
+						style="padding-left: 10px; width: 150px;" href="./Animales.html">Animales</a></li>
 					<li class="nav-item"><a class="nav-link active"
 						style="padding-left: 10px; background-color: #e3e4e5; width: 150px; color: black"
 						href="./Exportaciones.html"><b>EXPORTACIONES</b></a></li>
-					
-	                <!-- 
+
+					<!-- 
 	                <li class="nav-item">
 	                    <a class="nav-link active" style="padding-left:10px;" href="#">Venta Ovejas</a>
 	                </li>
@@ -82,10 +81,27 @@
 
 		<h1 style="text-align: center;">Exportaciones</h1>
 
-		
-		<img src="./pdf.png" alt="Altas y bajas de animales" width="50" height="50" style="margin-left: 180px" onClick="ExportacionAltasBajas()">
-		<label>Exportación de altas y bajas de animales</label>
-
+		<table class="table align-middle"
+			style="margin-left: 180px; width: 80%;">
+			<thead>
+				<tr>
+					<th>Ovino</th>
+					<th>Caprino</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td id="ABA_Ovino"><img src="./pdf.png" alt="Altas y bajas de animales"
+						width="50" height="50" id="ABA_OvinoE">Exportación
+						de altas y bajas de animales</td>
+					<td id="ABA_Caprino"><img src="./pdf.png" alt="Altas y bajas de animales"
+						width="50" height="50" id="ABA_CaprinoE">Exportación
+						de altas y bajas de animales</td>
+				</tr>
+			</tbody>
+		</table>
+		<!-- 
+		-->
 	</div>
 
 	<div id="Movil" style="display: none;">
@@ -154,7 +170,16 @@
 
 <script>
 $(function() {
-  //Comprobar si es telefono u ordenador
+
+	var usuario = sessionStorage.getItem("usuario_activo");
+	
+	if(usuario == null){
+		sessionStorage.clear();
+		var url = "./IniciarSesion.html";
+	    window.location.href = url;
+	}else{
+	
+  		//Comprobar si es telefono u ordenador
 	
 	    try{ 
 	        document.createEvent("TouchEvent"); 
@@ -169,8 +194,107 @@ $(function() {
 	    	sessionStorage.setItem('Movil', "false");
 	        return false;
 	    }
-	
+	}
   
+});
+</script>
+
+<script>
+$(function() {
+	
+	//Comprobar si hay dos explotaciones
+	var usuario = sessionStorage.getItem("usuario_activo");
+	
+		var usuarioDatos= {
+		'usuario' : usuario,
+	};
+
+	var usuarioLoginJSON = JSON.stringify(usuarioDatos);
+
+	var url = './recogerExplotaciones';
+
+	$.ajax({
+		type : 'post',
+		url : url,
+		contentType : 'application/json',
+		dataType : 'json',
+		data : usuarioLoginJSON,
+		success : function(data, textStatus, jqXHR) {
+			var numExplotaciones = data.ListaExplotaciones;
+			var size = Object.keys(numExplotaciones).length;
+			var TipoAnimal = data.ListaTipoAnimal;
+			if(size == 1){
+				if(TipoAnimal[0] == "ovino"){
+					//Caprino deshabilitado
+						var ABA_C = document.getElementById("ABA_Caprino");
+						ABA_C.style.backgroundColor = "grey";
+						var ABA_CE = document.getElementById("ABA_CaprinoE");
+						ABA_CE.onclick="";
+						
+					//Ovino habilitado
+						var ABA_OE = document.getElementById("ABA_OvinoE");
+						ABA_OE.addEventListener('click', function() {
+						    ExportacionAltasBajasListado(numExplotaciones[0]);
+						}, false);
+						
+				}else{
+					//Ovino deshabilitado
+						var ABA_O = document.getElementById("ABA_Ovino");
+						ABA_O.style.backgroundColor = "grey";
+						var ABA_OE = document.getElementById("ABA_OvinoE");
+						ABA_OE.onclick="";
+						
+					//Caprino habilitado
+						var ABA_CE = document.getElementById("ABA_CaprinoE");
+						ABA_CE.addEventListener('click', function() {
+						    ExportacionAltasBajasListado(numExplotaciones[0]);
+						}, false);
+				}
+				
+			}else{
+				//Ovino habilitado
+				if(TipoAnimal[0] == "ovino"){
+					//Altas y Bajas de animales
+						var ABA_OE = document.getElementById("ABA_OvinoE");
+						ABA_OE.addEventListener('click', function() {
+						    ExportacionAltasBajasListado(numExplotaciones[0]);
+						}, false);
+				}else if(TipoAnimal[1] == "ovino"){
+					//Altas y Bajas de animales
+						var ABA_OE = document.getElementById("ABA_OvinoE");
+						ABA_OE.addEventListener('click', function() {
+						    ExportacionAltasBajasListado(numExplotaciones[1]);
+						}, false);
+				}
+				
+				//Caprino habilitado
+				if(TipoAnimal[0] == "caprino"){
+					//Altas y Bajas de animales
+						var ABA_CE = document.getElementById("ABA_CaprinoE");
+						ABA_CE.addEventListener('click', function() {
+						    ExportacionAltasBajasListado(numExplotaciones[0]);
+						}, false);
+				}else if(TipoAnimal[1] == "caprino"){
+					//Altas y Bajas de animales
+						var ABA_CE = document.getElementById("ABA_CaprinoE");
+						ABA_CE.addEventListener('click', function() {
+						    ExportacionAltasBajasListado(numExplotaciones[1]);
+						}, false);
+				}
+				
+			}
+
+		},
+		error : function(jqXHR, exception) {
+			// mostrarPantallaError(url, jqXHR);
+		},
+		statuscode : {
+			404 : function() {
+				//mostrarPantallaError(url);
+			}
+		}
+	});
+
 });
 </script>
 
@@ -229,9 +353,9 @@ function VerPerfil(){
 </script>
 
 <script>
-function ExportacionAltasBajas(){
-	var NumExplotacion = sessionStorage.getItem("NumeroExplotacion");
-	var urlFirma = './exportacionAltasyBajas/'+NumExplotacion;
+function ExportacionAltasBajas(NumExplotacion, num, Busqueda){
+	//var NumExplotacion = sessionStorage.getItem("NumeroExplotacion");
+	var urlFirma = './exportacionAltasyBajas/'+NumExplotacion+'/'+num+'/'+Busqueda;
 	
 	$.ajax({
 			type: 'get',
@@ -255,5 +379,123 @@ function ExportacionAltasBajas(){
 				404:function(){ mostrarPantallaError(url); }
 			}
 		});
+}
+</script>
+
+<script>
+function ExportacionAltasBajasListado(NumExplotacion){
+	
+		var datos= {
+			'NumExplotacion' : NumExplotacion,
+		};
+	
+		var datos = JSON.stringify(datos);
+	
+		var url = './exportacionAltasyBajasListado';
+	
+		$.ajax({
+			type : 'post',
+			url : url,
+			contentType : 'application/json',
+			dataType : 'json',
+			data : datos,
+			success : function(data, textStatus, jqXHR) {
+				var Recuento = data.recuento;
+				
+				
+				
+				var mensaje = "<h5>BÚSQUEDA DE DOCUMENTOS:</h5>"
+				/*for(var i=0; i<NEnlaces; i++){
+					mensaje = mensaje + "<a>Documento Número "+i+"</a> </br>"		
+				} */
+				
+				mensaje = mensaje + "<table>";
+					mensaje = mensaje + "<tr>";
+						mensaje = mensaje + "<td>";
+							mensaje = mensaje + "<p>Selecciona el año de búsqueda</p>";
+						mensaje = mensaje + "</td>";
+						mensaje = mensaje + "<td>";
+							mensaje = mensaje + "<select class='form-select' aria-label='Default select example' id='AnoBusqueda' style='float: center;'>";
+								mensaje = mensaje + "<option selected>-----</option>";
+								mensaje = mensaje + "<option value='2021'>2021</option>";
+								mensaje = mensaje + "<option value='2022'>2022</option>";
+								mensaje = mensaje + "<option value='2023'>2023</option>";
+							mensaje = mensaje + "</select>";
+						mensaje = mensaje + "</td>";
+					mensaje = mensaje + "</tr>";
+				mensaje = mensaje + "</table>";
+									
+				
+				bootbox.confirm({
+					title:"ALTAS Y BAJAS DE ANIMALES", 
+					message: mensaje,
+					buttons: {
+						confirm: {
+				            label: 'BUSCAR'
+				        }
+				    },
+				    callback: function (result) {
+				        if (result) {
+				        	var Busqueda = document.getElementById("AnoBusqueda").value;
+				        	ExportacionAltasBajasListadoEnlaces(Recuento, Busqueda, NumExplotacion);
+				        	
+			            } else {
+			                    
+			            }
+				    }
+				});
+			},error: function(jqXHR,exception) {
+				
+			},statuscode:{
+				404:function(){ mostrarPantallaError(url); }
+			}
+		});
+}
+</script>
+
+<script>
+function ExportacionAltasBajasListadoEnlaces(Recuento, Busqueda, NumExplotacion){
+	
+		var NDocumentos = Recuento / 16;
+				
+		var NEnlaces;
+		if(NDocumentos % 1 == 0){
+			NEnlaces = parseInt(NDocumentos);
+		}else{
+			NEnlaces = parseInt(NDocumentos + 1);
+		}
+				
+		var mensaje = "<h5>LISTADO DE DOCUMENTOS:</h5>"
+		
+		mensaje = mensaje + "<table>";
+			for(var i=0; i<NEnlaces; i++){
+				var uno = "'" + NumExplotacion + "'";
+				var dos = "'" + i + "'";
+				var busqueda = Busqueda + "-01-01";
+				var tres = "'" + busqueda + "'";
+				var url = "ExportacionAltasBajas(" + uno + "," + dos + ", "+tres+")";
+				
+				mensaje = mensaje + "<tr>";
+					mensaje = mensaje + "<td>";
+						mensaje = mensaje + "<p>Documento número "+i+ ": </p>";
+					mensaje = mensaje + "</td>";
+					mensaje = mensaje + "<td style='text-align: center;'>";
+						mensaje = mensaje + "<button type='button' class='btn btn-success' onClick=\""+url+"\">Descargar</button>";
+					mensaje = mensaje + "</td>";
+				mensaje = mensaje + "</tr>";		
+			} 			
+		mensaje = mensaje + "</table>";
+		
+								
+		bootbox.dialog({
+	        title: "ENLACES DE DESCARGAS",
+	        message: mensaje,
+	        buttons: {
+	            sucess:{
+	                label: "Cancelar",
+	            	className: 'btn-secondary' 
+	            }
+	        }       
+	    });
 }
 </script>

@@ -50,6 +50,9 @@
 						href="./Animales.html"><b>ANIMALES</b></a></li>
 					<li class="nav-item"><a class="nav-link active"
 						style="padding-left: 10px; width: 150px;"
+						href="./Crias.html">Venta crías</a></li>
+					<li class="nav-item"><a class="nav-link active"
+						style="padding-left: 10px; width: 150px;"
 						href="./Exportaciones.html">Exportaciones</a></li>
 	                <!-- 
 	                <li class="nav-item">
@@ -416,7 +419,16 @@
 
 <script>
 $(function() {
-  //Comprobar si es telefono u ordenador
+
+	var usuario = sessionStorage.getItem("usuario_activo");
+	
+	if(usuario == null){
+		sessionStorage.clear();
+		var url = "./IniciarSesion.html";
+	    window.location.href = url;
+	}else{
+	
+  		//Comprobar si es telefono u ordenador
 	
 	    try{ 
 	        document.createEvent("TouchEvent"); 
@@ -431,7 +443,7 @@ $(function() {
 	    	sessionStorage.setItem('Movil', "false");
 	        return false;
 	    }
-	
+	}
   
 });
 </script>
@@ -1109,7 +1121,7 @@ function OvejaMuerta(NumIdentificacion){
 	mensaje = mensaje + "<input id='FechaMuerte' type='date'>";
 	
 	mensaje = mensaje + "<br><label> Número de documento: </label>";
-	mensaje = mensaje + "<input id='NDocumento' type='text'>"; 
+	mensaje = mensaje + "<input id='NDocumento' type='text'>";  
 	
 	
 	bootbox.confirm({
@@ -1150,6 +1162,8 @@ function OvejaVendida(NumIdentificacion){
 	mensaje = mensaje + "<br><label> Número de documento: </label>";
 	mensaje = mensaje + "<input id='NDocumento' type='text'>"; 
 	
+	mensaje = mensaje + "<br><label> Destino: </label>";
+	mensaje = mensaje + "<input id='Destino' type='text'>";
 	
 	bootbox.confirm({
 		title:NumIdentificacion, 
@@ -1165,7 +1179,8 @@ function OvejaVendida(NumIdentificacion){
 	        if (result) {
 	        		var FechaMuerte = document.getElementById("FechaMuerte").value;
 	        		var NDocumento = document.getElementById("NDocumento").value;
-                    MarcarVenta(NumIdentificacion, FechaMuerte, NDocumento);
+	        		var Destino = document.getElementById("Destino").value;
+                    MarcarVenta(NumIdentificacion, FechaMuerte, NDocumento, Destino);
                 } else {
                     
                 }
@@ -1248,7 +1263,7 @@ function MarcarMuerta(NumIdentificacion, FechaMuerte, NDocumento){
 </script>
 
 <script>
-function MarcarVenta(NumIdentificacion, FechaVenta, NDocumento){
+function MarcarVenta(NumIdentificacion, FechaVenta, NDocumento, Destino){
 
 	var numexplotacion = sessionStorage.getItem("NumeroExplotacion");
 	
@@ -1256,7 +1271,8 @@ function MarcarVenta(NumIdentificacion, FechaVenta, NDocumento){
 		'NumIdentificacion' : NumIdentificacion,
 		'FechaVenta': FechaVenta,
 		'NDocumento': NDocumento,
-		'NumExplotacion': numexplotacion
+		'NumExplotacion': numexplotacion,
+		'ProcDestino' : Destino,
 	};
 
 
@@ -2552,10 +2568,15 @@ function AnadirAnimal(){
 	mensaje = mensaje + "<td><input type='checkbox' id='TieneCrotal' name='TieneCrotal' value='TieneCrotal'></td>";
 	mensaje = mensaje + "</tr>"; 
 	
-	/*mensaje = mensaje + "<tr>";
-	mensaje = mensaje + "<td>Número de explotación:</td>";
-	mensaje = mensaje + "<td><input id='NumExplotacion'></td>";
-	mensaje = mensaje + "</tr>";*/
+	mensaje = mensaje + "<tr>";
+	mensaje = mensaje + "<td>Destino:</td>";
+	mensaje = mensaje + "<td><input id='Destino'></td>";
+	mensaje = mensaje + "</tr>";
+	
+	mensaje = mensaje + "<tr>";
+	mensaje = mensaje + "<td> Fecha alta: </td>";
+	mensaje = mensaje + "<td><input id='FechaAlta' type='date'></td>";
+	mensaje = mensaje + "</tr>";
 	
 	mensaje = mensaje + "</table>";
 	
@@ -2579,7 +2600,9 @@ function AnadirAnimal(){
             	var valor_tienebolo = tienebolo.checked;
             	var tienecrotal = document.getElementById("TieneCrotal");
             	var valor_tienecrotal = tienecrotal.checked;
-            	GuardarAnimal(numidentificacion, sexo, anonacimiento, valor_tienebolo, valor_tienecrotal);
+            	var ProcDes = document.getElementById("Destino").value;
+            	var fechaAlta= document.getElementById("FechaAlta").value;
+            	GuardarAnimal(numidentificacion, sexo, anonacimiento, valor_tienebolo, valor_tienecrotal, ProcDes, fechaAlta);
             } else {
                 
             }
@@ -2590,7 +2613,7 @@ function AnadirAnimal(){
 </script>
 
 <script>
-function GuardarAnimal(numidentificacion, sexo, anonacimiento, valor_tienebolo, valor_tienecrotal){
+function GuardarAnimal(numidentificacion, sexo, anonacimiento, valor_tienebolo, valor_tienecrotal, ProcDes, fechaAlta){
 	var usuario = sessionStorage.getItem("usuario_activo");
 	var numexplotacion = sessionStorage.getItem("NumeroExplotacion");
 	
@@ -2602,6 +2625,8 @@ function GuardarAnimal(numidentificacion, sexo, anonacimiento, valor_tienebolo, 
 		'TieneBolo' : valor_tienebolo,
 		'TieneCrotal': valor_tienecrotal,
 		'NumExplotacion' : numexplotacion,
+		'ProcDestino' : ProcDes,
+		'FechaBaja' : fechaAlta,
 	};
 
 	var datosNuevoAnimalJSON = JSON.stringify(datosNuevoAnimal);

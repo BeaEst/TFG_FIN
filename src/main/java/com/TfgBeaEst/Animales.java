@@ -20,30 +20,10 @@ public class Animales {
 	public String ProcDestino;
 	public String NDocumento;
 	
-	public String getProcDestino() {
-		return ProcDestino;
-	}
-
-	public void setProcDestino(String procDestino) {
-		ProcDestino = procDestino;
-	}
-
-	public String getNDocumento() {
-		return NDocumento;
-	}
-
-	public void setNDocumento(String nDocumento) {
-		NDocumento = nDocumento;
-	}
-
-	public Date getFechaBaja() {
-		return FechaBaja;
-	}
-
-	public void setFechaBaja(Date fechaBaja) {
-		FechaBaja = fechaBaja;
-	}
-
+	public Date FechaVentaCria;
+	public String RefGuiaCria;
+	public Integer NumAnimalesCria;
+	
 	public String getNumIdentificacion() {
 		return NumIdentificacion;
 	}
@@ -130,6 +110,54 @@ public class Animales {
 	
 	public void setNumExplotacion(String numExplotacion) {
 		NumExplotacion = numExplotacion;
+	}
+	
+	public Date getFechaBaja() {
+		return FechaBaja;
+	}
+	
+	public void setFechaBaja(Date fechaBaja) {
+		FechaBaja = fechaBaja;
+	}
+	
+	public String getProcDestino() {
+		return ProcDestino;
+	}
+	
+	public void setProcDestino(String procDestino) {
+		ProcDestino = procDestino;
+	}
+	
+	public String getNDocumento() {
+		return NDocumento;
+	}
+	
+	public void setNDocumento(String nDocumento) {
+		NDocumento = nDocumento;
+	}
+	
+	public Date getFechaVentaCria() {
+		return FechaVentaCria;
+	}
+	
+	public void setFechaVentaCria(Date fechaVentaCria) {
+		FechaVentaCria = fechaVentaCria;
+	}
+	
+	public String getRefGuiaCria() {
+		return RefGuiaCria;
+	}
+	
+	public void setRefGuiaCria(String refGuiaCria) {
+		RefGuiaCria = refGuiaCria;
+	}
+	
+	public Integer getNumAnimalesCria() {
+		return NumAnimalesCria;
+	}
+	
+	public void setNumAnimalesCria(Integer numAnimalesCria) {
+		NumAnimalesCria = numAnimalesCria;
 	}
 	
 }

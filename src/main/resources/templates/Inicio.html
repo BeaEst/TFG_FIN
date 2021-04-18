@@ -158,67 +158,74 @@
 <script>
 $(function() {
   
-  
 	var usuario = sessionStorage.getItem("usuario_activo");
 	
+	if(usuario == null){
+		sessionStorage.clear();
+		var url = "./IniciarSesion.html";
+	    window.location.href = url;
+	}else{
 		var usuarioDatos= {
-		'usuario' : usuario,
-	};
-
-	var usuarioLoginJSON = JSON.stringify(usuarioDatos);
-
-	var url = './recogerExplotaciones';
-
-	$.ajax({
-		type : 'post',
-		url : url,
-		contentType : 'application/json',
-		dataType : 'json',
-		data : usuarioLoginJSON,
-		success : function(data, textStatus, jqXHR) {
-			var numExplotaciones = data.ListaExplotaciones;
-			var size = Object.keys(numExplotaciones).length;
-			
-			txt = document.getElementById("listadoExplotaciones");
-			var doc = "";
-			
-			doc = doc + "<table>";
-				doc = doc + "<tr>";	
-					doc = doc + "<th style='border: 1px solid black;'>Número Explotación</th>";
-					doc = doc + "<th style='border: 1px solid black;'>Tipo de animal</th>";		
-				doc = doc + "</tr>";
-			for(var i=0; i<size; i++){
-				doc = doc + "<tr>";	
-					doc = doc + "<td style='border: 1px solid black;'>" + data.ListaExplotaciones[i] + "</td>";
-					doc = doc + "<td style='border: 1px solid black;'>" + data.ListaTipoAnimal[i] + "</td>";		
-				doc = doc + "</tr>";
-			}
-			doc = doc + "</table>";
-			
-			txt.innerHTML = doc;
-		},
-		error : function(jqXHR, exception) {
-			// mostrarPantallaError(url, jqXHR);
-		},
-		statuscode : {
-			404 : function() {
-				//mostrarPantallaError(url);
-			}
-		}
-	});
+			'usuario' : usuario,
+		};
 	
-	//Comprobar si es telefono u ordenador
-	    try{ 
-	        document.createEvent("TouchEvent"); 
-	        document.getElementById('Movil').style.display='block';
-	        var parar;
-	        parar = 1;
-	        return true; 
-	    }
-	    catch(e){ 
-	    	document.getElementById('NoMovil').style.display='block';
-	        return false;
-	    }
+		var usuarioLoginJSON = JSON.stringify(usuarioDatos);
+	
+		var url = './recogerExplotaciones';
+	
+		$.ajax({
+			type : 'post',
+			url : url,
+			contentType : 'application/json',
+			dataType : 'json',
+			data : usuarioLoginJSON,
+			success : function(data, textStatus, jqXHR) {
+				var numExplotaciones = data.ListaExplotaciones;
+				var size = Object.keys(numExplotaciones).length;
+				
+				txt = document.getElementById("listadoExplotaciones");
+				var doc = "";
+				
+				doc = doc + "<table>";
+					doc = doc + "<tr>";	
+						doc = doc + "<th style='border: 1px solid black;'>Número Explotación</th>";
+						doc = doc + "<th style='border: 1px solid black;'>Tipo de animal</th>";		
+					doc = doc + "</tr>";
+				for(var i=0; i<size; i++){
+					doc = doc + "<tr>";	
+						doc = doc + "<td style='border: 1px solid black;'>" + data.ListaExplotaciones[i] + "</td>";
+						doc = doc + "<td style='border: 1px solid black;'>" + data.ListaTipoAnimal[i] + "</td>";		
+					doc = doc + "</tr>";
+				}
+				doc = doc + "</table>";
+				
+				txt.innerHTML = doc;
+			},
+			error : function(jqXHR, exception) {
+				// mostrarPantallaError(url, jqXHR);
+			},
+			statuscode : {
+				404 : function() {
+					//mostrarPantallaError(url);
+				}
+			}
+		});
+		
+		//Comprobar si es telefono u ordenador
+		    try{ 
+		        document.createEvent("TouchEvent"); 
+		        document.getElementById('Movil').style.display='block';
+		        var parar;
+		        parar = 1;
+		        return true; 
+		    }
+		    catch(e){ 
+		    	document.getElementById('NoMovil').style.display='block';
+		        return false;
+		    }
+	}
+	
+	
 
 });
 </script>

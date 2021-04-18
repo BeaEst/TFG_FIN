@@ -283,7 +283,15 @@
 
 <script>
 $(function() {
-  //Comprobar si es telefono u ordenador
+
+	var usuario = sessionStorage.getItem("usuario_activo");
+	
+	if(usuario == null){
+		sessionStorage.clear();
+		var url = "./IniciarSesion.html";
+	    window.location.href = url;
+	}else{
+  		//Comprobar si es telefono u ordenador
 	
 	    try{ 
 	        document.createEvent("TouchEvent"); 
@@ -298,7 +306,7 @@ $(function() {
 	    	sessionStorage.setItem('Movil', "false");
 	        return false;
 	    }
-	
+	}
   
 });
 </script>
