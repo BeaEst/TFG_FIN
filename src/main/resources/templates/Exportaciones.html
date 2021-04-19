@@ -24,18 +24,22 @@
 <body>
 	<div>
 		<nav class="navbar navbar-dark bg-dark justify-content-end">
-			<div class="dropdown">
-				<a class="nav-link dropdown-toggle" href="#"
-					id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown"
-					aria-expanded="false"> <b><script>document.write(sessionStorage.getItem("usuario_activo"));</script></b>
-				</a>
-				<ul class="dropdown-menu dropdown-menu-end"
-					aria-labelledby="navbarDropdownMenuLink">
-					<li><a class="dropdown-item" onclick="VerPerfil()">Ver
-							Perfil</a></li>
-					<li><a class="dropdown-item" onclick="CerrarSesion()">Cerrar
-							Sesión</a></li>
-				</ul>
+			<div class="container-fluid" style="float:left;">
+				<a class="navbar-brand" href="./Inicio.html">OVICAP-DOC</a>
+			
+				<div class="dropdown">
+					<a class="nav-link dropdown-toggle" href="#"
+						id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown"
+						aria-expanded="false"> <b><script>document.write(sessionStorage.getItem("usuario_activo"));</script></b>
+					</a>
+					<ul class="dropdown-menu dropdown-menu-end"
+						aria-labelledby="navbarDropdownMenuLink">
+						<li><a class="dropdown-item" onclick="VerPerfil()">Ver
+								Perfil</a></li>
+						<li><a class="dropdown-item" onclick="CerrarSesion()">Cerrar
+								Sesión</a></li>
+					</ul>
+				</div>
 			</div>
 		</nav>
 	</div>
@@ -46,11 +50,14 @@
 			<nav class="navbar navbar-dark bg-dark">
 				<ul class="navbar-nav">
 					<li class="nav-item"><a class="nav-link active"
-						style="padding-left: 10px; width: 150px;" href="./Animales.html">Animales</a></li>
+						style="padding-left: 10px; width: 150px;"
+						href="./Animales.html">Animales</a></li>
+					<li class="nav-item"><a class="nav-link active"
+						style="padding-left: 10px; width: 150px;"
+						href="./Crias.html">Venta crías</a></li>
 					<li class="nav-item"><a class="nav-link active"
 						style="padding-left: 10px; background-color: #e3e4e5; width: 150px; color: black"
 						href="./Exportaciones.html"><b>EXPORTACIONES</b></a></li>
-
 					<!-- 
 	                <li class="nav-item">
 	                    <a class="nav-link active" style="padding-left:10px;" href="#">Venta Ovejas</a>
@@ -234,7 +241,7 @@ $(function() {
 					//Ovino habilitado
 						var ABA_OE = document.getElementById("ABA_OvinoE");
 						ABA_OE.addEventListener('click', function() {
-						    ExportacionAltasBajasListado(numExplotaciones[0]);
+						    ExportacionAltasBajasListado1(numExplotaciones[0]);
 						}, false);
 						
 				}else{
@@ -247,7 +254,7 @@ $(function() {
 					//Caprino habilitado
 						var ABA_CE = document.getElementById("ABA_CaprinoE");
 						ABA_CE.addEventListener('click', function() {
-						    ExportacionAltasBajasListado(numExplotaciones[0]);
+						    ExportacionAltasBajasListado1(numExplotaciones[0]);
 						}, false);
 				}
 				
@@ -257,13 +264,13 @@ $(function() {
 					//Altas y Bajas de animales
 						var ABA_OE = document.getElementById("ABA_OvinoE");
 						ABA_OE.addEventListener('click', function() {
-						    ExportacionAltasBajasListado(numExplotaciones[0]);
+						    ExportacionAltasBajasListado1(numExplotaciones[0]);
 						}, false);
 				}else if(TipoAnimal[1] == "ovino"){
 					//Altas y Bajas de animales
 						var ABA_OE = document.getElementById("ABA_OvinoE");
 						ABA_OE.addEventListener('click', function() {
-						    ExportacionAltasBajasListado(numExplotaciones[1]);
+						    ExportacionAltasBajasListado1(numExplotaciones[1]);
 						}, false);
 				}
 				
@@ -272,13 +279,13 @@ $(function() {
 					//Altas y Bajas de animales
 						var ABA_CE = document.getElementById("ABA_CaprinoE");
 						ABA_CE.addEventListener('click', function() {
-						    ExportacionAltasBajasListado(numExplotaciones[0]);
+						    ExportacionAltasBajasListado1(numExplotaciones[0]);
 						}, false);
 				}else if(TipoAnimal[1] == "caprino"){
 					//Altas y Bajas de animales
 						var ABA_CE = document.getElementById("ABA_CaprinoE");
 						ABA_CE.addEventListener('click', function() {
-						    ExportacionAltasBajasListado(numExplotaciones[1]);
+						    ExportacionAltasBajasListado1(numExplotaciones[1]);
 						}, false);
 				}
 				
@@ -383,10 +390,57 @@ function ExportacionAltasBajas(NumExplotacion, num, Busqueda){
 </script>
 
 <script>
-function ExportacionAltasBajasListado(NumExplotacion){
+function ExportacionAltasBajasListado1(NumExplotacion){
 	
+	
+		var mensaje = "<h5>BÚSQUEDA DE DOCUMENTOS:</h5>"
+		
+		mensaje = mensaje + "<table>";
+			mensaje = mensaje + "<tr>";
+				mensaje = mensaje + "<td>";
+					mensaje = mensaje + "<p>Selecciona el año de búsqueda</p>";
+				mensaje = mensaje + "</td>";
+				mensaje = mensaje + "<td>";
+					mensaje = mensaje + "<select class='form-select' aria-label='Default select example' id='AnoBusqueda' style='float: center;'>";
+						mensaje = mensaje + "<option selected>-----</option>";
+						mensaje = mensaje + "<option value='2021'>2021</option>";
+						mensaje = mensaje + "<option value='2022'>2022</option>";
+						mensaje = mensaje + "<option value='2023'>2023</option>";
+					mensaje = mensaje + "</select>";
+				mensaje = mensaje + "</td>";
+			mensaje = mensaje + "</tr>";
+		mensaje = mensaje + "</table>";
+							
+		
+		bootbox.confirm({
+			title:"ALTAS Y BAJAS DE ANIMALES", 
+			message: mensaje,
+			buttons: {
+				confirm: {
+		            label: 'BUSCAR'
+		        }
+		    },
+		    callback: function (result) {
+		        if (result) {
+		        	var Busqueda = document.getElementById("AnoBusqueda").value;
+		        	ExportacionAltasBajasListado(Busqueda, NumExplotacion);
+		        	
+	            } else {
+	                    
+	            }
+		    }
+		});
+}
+</script>
+
+<script>
+function ExportacionAltasBajasListado(Busqueda, NumExplotacion){
+	
+		var busqueda = Busqueda + "-01-01";
+		
 		var datos= {
 			'NumExplotacion' : NumExplotacion,
+			'FechaVenta' : busqueda
 		};
 	
 		var datos = JSON.stringify(datos);
@@ -401,49 +455,9 @@ function ExportacionAltasBajasListado(NumExplotacion){
 			data : datos,
 			success : function(data, textStatus, jqXHR) {
 				var Recuento = data.recuento;
-				
-				
-				
-				var mensaje = "<h5>BÚSQUEDA DE DOCUMENTOS:</h5>"
-				/*for(var i=0; i<NEnlaces; i++){
-					mensaje = mensaje + "<a>Documento Número "+i+"</a> </br>"		
-				} */
-				
-				mensaje = mensaje + "<table>";
-					mensaje = mensaje + "<tr>";
-						mensaje = mensaje + "<td>";
-							mensaje = mensaje + "<p>Selecciona el año de búsqueda</p>";
-						mensaje = mensaje + "</td>";
-						mensaje = mensaje + "<td>";
-							mensaje = mensaje + "<select class='form-select' aria-label='Default select example' id='AnoBusqueda' style='float: center;'>";
-								mensaje = mensaje + "<option selected>-----</option>";
-								mensaje = mensaje + "<option value='2021'>2021</option>";
-								mensaje = mensaje + "<option value='2022'>2022</option>";
-								mensaje = mensaje + "<option value='2023'>2023</option>";
-							mensaje = mensaje + "</select>";
-						mensaje = mensaje + "</td>";
-					mensaje = mensaje + "</tr>";
-				mensaje = mensaje + "</table>";
-									
-				
-				bootbox.confirm({
-					title:"ALTAS Y BAJAS DE ANIMALES", 
-					message: mensaje,
-					buttons: {
-						confirm: {
-				            label: 'BUSCAR'
-				        }
-				    },
-				    callback: function (result) {
-				        if (result) {
-				        	var Busqueda = document.getElementById("AnoBusqueda").value;
-				        	ExportacionAltasBajasListadoEnlaces(Recuento, Busqueda, NumExplotacion);
-				        	
-			            } else {
-			                    
-			            }
-				    }
-				});
+
+				ExportacionAltasBajasListadoEnlaces(Recuento, Busqueda, NumExplotacion);
+
 			},error: function(jqXHR,exception) {
 				
 			},statuscode:{

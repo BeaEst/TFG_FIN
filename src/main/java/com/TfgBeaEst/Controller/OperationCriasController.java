@@ -9,6 +9,7 @@ import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -283,5 +284,190 @@ public class OperationCriasController {
 		return responseEntity;
 
 	}
+	
+	@RequestMapping(value = "/filtroGuia", method = RequestMethod.POST)
+	public ResponseEntity<Map<String, String>> filtroGuia(@RequestBody Animales cria) {
 
+		System.out.println("INICIO sacar datos pertenecientes de la venta por número de referencia");
+
+		ResponseEntity<Map<String, String>> responseEntity = null;
+		Map<String, String> result = new HashMap<>();
+
+		// Consulta a base de datos para comprobar si existe en la tabla usuarios.
+		Connection conexion = null;
+
+		String RefGuiaCria = cria.getRefGuiaCria();
+		
+		// Cargar el driver
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+
+			try {
+				conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/tfg_v1", "root", "");
+
+				Statement s = null;
+				try {
+					s = conexion.createStatement();
+
+					try {
+						List<String> datos = new ArrayList<String>();
+
+						System.out.println("SELECT NGuia, NAnimales, FechaVenta FROM venta_crias WHERE NGuia='"
+										+ RefGuiaCria + "'");
+						
+						ResultSet datosoveja = s.executeQuery("SELECT NGuia, NAnimales, FechaVenta FROM venta_crias WHERE NGuia='"
+								+ RefGuiaCria + "'");
+
+						
+
+						// Para obtener los resultados de las ovejas
+						if (datosoveja.next()) {
+							String NGuia = datosoveja.getString("NGuia");
+							String NAnimales = datosoveja.getString("NAnimales");
+							String FechaVenta = datosoveja.getString("FechaVenta");
+
+
+							result.put("NGuia", NGuia);
+							result.put("NAnimales", NAnimales);
+							result.put("FechaVenta", FechaVenta);
+						}
+
+						responseEntity = new ResponseEntity<>(result, HttpStatus.OK);
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+						responseEntity = new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+						// result.put("QueryOk", "incorrecto");
+						System.out.println("ERROR al hacer las consultas SQL");
+					}
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+					// result.put("QueryOk", "incorrecto");
+					responseEntity = new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+					System.out.println("ERROR al crear el estamento de la consulta sql");
+				}
+			} catch (SQLException e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+				// result.put("QueryOk", "incorrecto");
+				responseEntity = new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+				System.out.println("ERROR al hacer la conexión a la base de datos");
+			}
+
+		} catch (ClassNotFoundException e3) {
+			// TODO Auto-generated catch block
+			e3.printStackTrace();
+			// result.put("QueryOk", "incorrecto");
+			responseEntity = new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+			System.out.println("ERROR al cargar el driver de sql");
+		}
+
+		System.out.println("FIN sacar datos pertenecientes de la venta por número de referencia");
+		return responseEntity;
+
+	}
+
+	@RequestMapping(value = "/filtroAno", method = RequestMethod.POST)
+	public ResponseEntity<Map<String, ArrayList<String>>> filtroAno(@RequestBody Animales cria) {
+
+		System.out.println("INICIO mostrar resultado de venta de crías por filtro de año");
+
+		ResponseEntity<Map<String, ArrayList<String>>> responseEntity = null;
+		Map<String, ArrayList<String>> result = new HashMap<>();
+
+		// Consulta a base de datos para comprobar si existe en la tabla usuarios.
+		Connection conexion = null;
+
+		Date FechaVentaCria = cria.getFechaVentaCria();
+		String NumExplotacion = cria.getNumExplotacion();
+		
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(FechaVentaCria);
+		calendar.add(calendar.YEAR, 1);
+		Date fechaMuerte2Filtro = calendar.getTime();
+
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
+		String strDate = dateFormat.format(FechaVentaCria);
+		String strDate2 = dateFormat.format(fechaMuerte2Filtro);
+		
+		// Cargar el driver
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+
+			try {
+				conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/tfg_v1", "root", "");
+
+				Statement s = null;
+				try {
+					s = conexion.createStatement();
+
+					try {
+						// Si se marca la opcion de año de nacimiento
+						List<String> datos = new ArrayList<String>();
+						
+						System.out
+						.println("SELECT NGuia, NAnimales, FechaVenta FROM venta_crias WHERE (FechaVenta BETWEEN '" + strDate + "' AND '" + strDate2 + "') AND NumExplotacion='"
+								+ NumExplotacion + "'");
+
+						ResultSet datosovejaMuertas = s.executeQuery("SELECT NGuia, NAnimales, FechaVenta FROM venta_crias WHERE (FechaVenta BETWEEN '" + strDate + "' AND '" + strDate2 + "') AND"
+								+ " NumExplotacion='"+ NumExplotacion + "'");
+
+						ArrayList<String> NGuia = new ArrayList<>();
+						ArrayList<String> NAnimales = new ArrayList<>();
+						ArrayList<String> FechaVenta = new ArrayList<>();
+						
+						while (datosovejaMuertas.next()) {
+							String dato;
+							String dato2;
+							String dato3;
+							
+							dato = datosovejaMuertas.getString("NGuia");
+							dato2 = datosovejaMuertas.getString("NAnimales");
+							dato3 = datosovejaMuertas.getString("FechaVenta");
+							
+							NGuia.add(dato);
+							NAnimales.add(dato2);
+							FechaVenta.add(dato3);
+						}
+						
+						result.put("NGuia", NGuia);
+						result.put("NAnimales", NAnimales);
+						result.put("FechaVenta", FechaVenta);
+						
+						responseEntity = new ResponseEntity<>(result, HttpStatus.OK);
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+						responseEntity = new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+						// result.put("QueryOk", "incorrecto");
+						System.out.println("ERROR al hacer las consultas SQL");
+					}
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+					// result.put("QueryOk", "incorrecto");
+					responseEntity = new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+					System.out.println("ERROR al crear el estamento de la consulta sql");
+				}
+			} catch (SQLException e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+				// result.put("QueryOk", "incorrecto");
+				responseEntity = new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+				System.out.println("ERROR al hacer la conexión a la base de datos");
+			}
+
+		} catch (ClassNotFoundException e3) {
+			// TODO Auto-generated catch block
+			e3.printStackTrace();
+			// result.put("QueryOk", "incorrecto");
+			responseEntity = new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+			System.out.println("ERROR al cargar el driver de sql");
+		}
+
+		System.out.println("FIN mostrar resultado de venta de crías por filtro de año");
+		return responseEntity;
+
+	}
 }

@@ -24,18 +24,22 @@
 <body>
 	<div>
 		<nav class="navbar navbar-dark bg-dark justify-content-end">
-			<div class="dropdown">
-				<a class="nav-link dropdown-toggle" href="#"
-					id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown"
-					aria-expanded="false"> <b><script>document.write(sessionStorage.getItem("usuario_activo"));</script></b>
-				</a>
-				<ul class="dropdown-menu dropdown-menu-end"
-					aria-labelledby="navbarDropdownMenuLink">
-					<li><a class="dropdown-item" onclick="VerPerfil()">Ver
-							Perfil</a></li>
-					<li><a class="dropdown-item" onclick="CerrarSesion()">Cerrar
-							Sesión</a></li>
-				</ul>
+			<div class="container-fluid" style="float:left;">
+				<a class="navbar-brand" href="./Inicio.html">OVICAP-DOC</a>
+			
+				<div class="dropdown">
+					<a class="nav-link dropdown-toggle" href="#"
+						id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown"
+						aria-expanded="false"> <b><script>document.write(sessionStorage.getItem("usuario_activo"));</script></b>
+					</a>
+					<ul class="dropdown-menu dropdown-menu-end"
+						aria-labelledby="navbarDropdownMenuLink">
+						<li><a class="dropdown-item" onclick="VerPerfil()">Ver
+								Perfil</a></li>
+						<li><a class="dropdown-item" onclick="CerrarSesion()">Cerrar
+								Sesión</a></li>
+					</ul>
+				</div>
 			</div>
 		</nav>
 	</div>

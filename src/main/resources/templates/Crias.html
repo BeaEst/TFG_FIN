@@ -24,18 +24,22 @@
 <body>
 	<div>
 		<nav class="navbar navbar-dark bg-dark justify-content-end">
-			<div class="dropdown">
-				<a class="nav-link dropdown-toggle" href="#"
-					id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown"
-					aria-expanded="false"> <b><script>document.write(sessionStorage.getItem("usuario_activo"));</script></b>
-				</a>
-				<ul class="dropdown-menu dropdown-menu-end"
-					aria-labelledby="navbarDropdownMenuLink">
-					<li><a class="dropdown-item" onclick="VerPerfil()">Ver
-							Perfil</a></li>
-					<li><a class="dropdown-item" onclick="CerrarSesion()">Cerrar
-							Sesión</a></li>
-				</ul>
+			<div class="container-fluid" style="float:left;">
+				<a class="navbar-brand" href="./Inicio.html">OVICAP-DOC</a>
+			
+				<div class="dropdown">
+					<a class="nav-link dropdown-toggle" href="#"
+						id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown"
+						aria-expanded="false"> <b><script>document.write(sessionStorage.getItem("usuario_activo"));</script></b>
+					</a>
+					<ul class="dropdown-menu dropdown-menu-end"
+						aria-labelledby="navbarDropdownMenuLink">
+						<li><a class="dropdown-item" onclick="VerPerfil()">Ver
+								Perfil</a></li>
+						<li><a class="dropdown-item" onclick="CerrarSesion()">Cerrar
+								Sesión</a></li>
+					</ul>
+				</div>
 			</div>
 		</nav>
 	</div>
@@ -106,7 +110,7 @@
 									<div>
 										<label style="float: left;">Buscar por año de ventas:</label> <select
 											class="form-select" aria-label="Default select example"
-											id="FiltroAnoNacNoMovil" style="width: 30%; float: left;">
+											id="FiltroAnoVentaNoMovil" style="width: 30%; float: left;">
 											<option selected>-----</option>
 											<option value="2021">2021</option>
 											<option value="2022">2022</option>
@@ -115,18 +119,18 @@
 									</div> <br> <br>
 
 									<button type="button" class="btn btn-outline-light"
-										onClick="BuscarFiltro1()">Buscar</button>
+										onClick="BuscarFiltroAno()">Buscar</button>
 								</td>
 
 								<td style="width: 25%;">
 									<div>
 										<label style="margin-left: 1%; float: left;">Buscar
 											por referencia de venta:</label> <input type="number" class="form-control"
-											style="width: 50%;" id="FiltroNumRefNoMovil">
+											style="width: 50%;" id="FiltroNumGuiaNoMovil">
 									</div>
 
 									<button type="button" class="btn btn-outline-light"
-										onClick="BuscarFiltro2()">Buscar</button>
+										onClick="BuscarFiltroGuia()">Buscar</button>
 								</td>
 
 								<td style="width: 25%;">
@@ -609,14 +613,14 @@ function AnadirVenta(RefGuia, NumAnimales, FechaVenta, Destino){
 			if(estado == 'correcto'){
 				bootbox.dialog({
 					title:numidentificacion, 
-					message: "Se ha añadido el animal indicado correctamente",
+					message: "Se ha añadido la venta de las crías",
 					closeButton: true,
 					onEscape: true
 				});
 			}else if(estado == 'incorrecto'){
 				bootbox.dialog({
 					title:"ERROR", 
-					message: "NO se ha podido añadir el animal indicado",
+					message: "NO se ha podido añadir la venta de las crías",
 					closeButton: true,
 					onEscape: true
 				});
@@ -625,7 +629,7 @@ function AnadirVenta(RefGuia, NumAnimales, FechaVenta, Destino){
 		error : function(jqXHR, exception) {
 			bootbox.dialog({
 					title:"ERROR", 
-					message: "NO se ha podido añadir el animal indicado",
+					message: "NO se ha podido añadir la venta de las crías",
 					closeButton: true,
 					onEscape: true
 				});
@@ -636,5 +640,346 @@ function AnadirVenta(RefGuia, NumAnimales, FechaVenta, Destino){
 			}
 		}
 	});
+}
+</script>
+
+<script>
+function BuscarFiltroGuia(){
+
+	var movil = sessionStorage.getItem("Movil");
+	if(sessionStorage.getItem("Movil") == "false"){
+		var NumReferencia = document.getElementById("FiltroNumGuiaNoMovil").value;
+	}else{
+		var NumReferencia = document.getElementById("FiltroNumGuiaMovil").value;
+	}
+	
+	var usuario = sessionStorage.getItem("usuario_activo");
+	var numexplotacion = sessionStorage.getItem("NumeroExplotacion");
+	
+	var datosFiltro3= {
+		'RefGuiaCria' : NumReferencia,
+		'NumExplotacion' : numexplotacion,
+	};
+
+	var datosFiltro3JSON = JSON.stringify(datosFiltro3);
+
+	var url = './filtroGuia';
+	
+	var NGuia;
+	var NAnimales;
+	var FechaVenta;
+	
+	$.ajax({
+		type : 'post',
+		url : url,
+		contentType : 'application/json',
+		dataType : 'json',
+		data : datosFiltro3JSON,
+		success : function(data, textStatus, jqXHR) {
+			NGuia = data.NGuia;
+			NAnimales = data.NAnimales;
+			FechaVenta = data.FechaVenta;
+			
+			VentanaVentaCria(NGuia, NAnimales, FechaVenta);
+			
+		},
+		error : function(jqXHR, exception) {
+			// mostrarPantallaError(url, jqXHR);
+		},
+		statuscode : {
+			404 : function() {
+				//mostrarPantallaError(url);
+			}
+		}
+	});
+	
+}
+</script>
+
+<script>
+function VentanaVentaCria(NGuia, NAnimales, FechaVenta){
+	var mensaje = "";
+
+	mensaje = mensaje + "<table>";
+	
+	mensaje = mensaje + "<tr>";
+	mensaje = mensaje + "<td><p>Se han vendido <b>"+NAnimales+"</b> crías</p></td>";
+	mensaje = mensaje + "</tr>";
+	
+	mensaje = mensaje + "<tr>";
+	mensaje = mensaje + "<td><p>Venta realizada en la fecha: <b>"+FechaVenta+"</b> </p></td>";
+	mensaje = mensaje + "</tr>";
+	
+	bootbox.confirm({
+		title:NGuia, 
+		message: mensaje,
+		closeButton: true,
+		onEscape: true,
+		buttons: {
+	        confirm: {
+	            label: 'Aceptar',
+	            className: 'btn-primary'
+	        }
+	    },
+	    callback: function (result) {
+	        if (result) {
+	        
+               } else {
+               
+               }
+	    }
+	});
+			
+}
+</script>
+
+<script>
+function BuscarFiltroAno(){
+
+	var movil = sessionStorage.getItem("Movil");
+	if(sessionStorage.getItem("Movil") == "false"){
+		//Buscar apartado 2 (año de nacimiento)
+		var ano = $('#FiltroAnoVentaNoMovil').find('option:selected').val();
+		var numexplotacion = sessionStorage.getItem("NumeroExplotacion");
+		
+		ano = ano + "-01-01";
+		
+		var datosFiltro2= {
+			'FechaVentaCria' : ano,
+			'NumExplotacion' : numexplotacion,
+		};
+	
+		var datosFiltro2JSON = JSON.stringify(datosFiltro2);
+	
+		var url = './filtroAno';
+	
+		$.ajax({
+			type : 'post',
+			url : url,
+			contentType : 'application/json',
+			dataType : 'json',
+			data : datosFiltro2JSON,
+			success : function(data, textStatus, jqXHR) {
+				var NumGuia = data.NGuia;
+				var FVenta = data.FechaVenta;
+				var NumAnimales = data.NAnimales;
+				
+				var size = Object.keys(NumGuia).length;
+	
+				txt = document.getElementById("card");
+				var doc = "";
+				
+				//Sacar el número de paginaciones que va a haber de animales.
+				var paginacion = size / 16;
+				
+				if(Number.isInteger(paginacion)){
+					paginacion = paginacion;
+				}else{
+					paginacion = parseInt(paginacion, 10);
+					paginacion = paginacion + 1;
+				}
+				
+				valor = 0;
+					
+				var total = (valor * 16) + 16;
+				doc = doc + '<p style="margin-left: 155px;"><em>Página '+valor+' de '+paginacion+'</em></p>';
+				//for(var i=1; i<=paginacion; i++){
+					doc = doc + '<table style="margin-left: 155px;">';
+						for(var j=0; j<4; j++){
+							doc = doc + '<tr style="width: 100%">';
+								for(var x=0; x<4; x++){
+									if(x==0){
+										var par = 1;
+									}else{
+										if(x % 2 == 0) {
+											var par = 1;
+										}else{
+											var par = 0;
+										}
+									}
+								
+									
+									doc = doc + '<td style="width: 1000px;">';
+										if(par == 0){
+											if(valor < total && valor < size){
+												doc= doc + '<div class="card text-black bg-light mb-3" style="cursor:pointer;">'
+												+'<div class="card-header" style="margin-top:5px;"><h5>'+NumGuia[valor]
+												+'</h5><p class="card-text" style="text-align:right;">Fecha de Venta: '+FVenta[valor]+'</p>'
+												+'<p class="card-text" style="text-align:right;">Se han vendido '+NumAnimales[valor]+' crias</p></div></div>';
+											}
+										}else{
+											if(valor < total && valor < size){
+												doc= doc + '<div class="card text-white bg-secondary mb-3" style="cursor:pointer;">'
+												+'<div class="card-header" style="margin-top:5px;"><h5>'+NumGuia[valor]
+												+'</h5><p class="card-text" style="text-align:right;">Fecha de Venta: '+FVenta[valor]+'</p>'
+												+'<p class="card-text" style="text-align:right;">Se han vendido '+NumAnimales[valor]+' crias</p></div></div>';
+											}
+										}
+										valor = valor + 1;
+									doc = doc + '</td>';
+								}
+							doc = doc + '</tr>';
+						}
+					doc = doc + '</table>';
+				//}
+				
+				txt.innerHTML = doc;
+				
+				txt2 = document.getElementById("paginacion");
+				
+				doc2 = "";
+				
+				for(var z=1; z<=paginacion; z++){
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+z+')">' + z + '</a></li>';
+				}
+				
+				txt2.innerHTML = doc2;
+			},
+			error : function(jqXHR, exception) {
+				// mostrarPantallaError(url, jqXHR);
+			},
+			statuscode : {
+				404 : function() {
+					//mostrarPantallaError(url);
+				}
+			}
+		});
+	}else{
+	
+	}
+	
+	
+}
+</script>
+
+<script>
+function paginacionFiltroAno(NumPaginacion){
+	
+	var movil = sessionStorage.getItem("Movil");
+	if(movil == "false"){
+		//Buscar apartado 2 (año de nacimiento)
+		var ano = $('#FiltroAnoVentaNoMovil').find('option:selected').val();
+		var numexplotacion = sessionStorage.getItem("NumeroExplotacion");
+		
+		var datosFiltro2= {
+			'AnoNacimiento' : ano,
+			'NumExplotacion' : numexplotacion,
+		};
+	
+		var datosFiltro2JSON = JSON.stringify(datosFiltro2);
+	
+		var url = './filtroAno';
+	
+		$.ajax({
+			type : 'post',
+			url : url,
+			contentType : 'application/json',
+			dataType : 'json',
+			data : datosFiltro2JSON,
+			success : function(data, textStatus, jqXHR) {
+				var ovejas = data.ListaOvejas;
+				var size = Object.keys(ovejas).length;
+	
+				txt = document.getElementById("card");
+				var doc = "";
+				
+				//Sacar el número de paginaciones que va a haber de animales.
+				var paginacion = size / 16;
+				
+				if(Number.isInteger(paginacion)){
+					paginacion = paginacion;
+				}else{
+					paginacion = parseInt(paginacion, 10);
+					paginacion = paginacion + 1;
+				}
+				
+				if(NumPaginacion == 1){
+					var valor = 0;	
+				}else{
+					var valor = (NumPaginacion - 1) * 16;	
+				}
+					
+				var total = (NumPaginacion * 16) + 16;
+				doc = doc + '<p style="margin-left: 155px;"><em>Página '+NumPaginacion+' de '+paginacion+'</em></p>';
+				//for(var i=1; i<=paginacion; i++){
+					doc = doc + '<table style="margin-left: 155px;">';
+						for(var j=0; j<5; j++){
+							doc = doc + '<tr style="width: 100%">';
+								for(var x=0; x<5; x++){
+									if(x==0){
+										var par = 1;
+									}else{
+										if(x % 2 == 0) {
+											var par = 1;
+										}else{
+											var par = 0;
+										}
+									}
+								
+									
+									doc = doc + '<td style="width: 500px;">';
+									if(par == 0){
+											if(valor < total && valor < size){
+												doc= doc + '<div class="card text-black bg-light mb-3" style="cursor:pointer;">'
+												+'<div class="card-header" style="margin-top:5px;"><h5>'+NumGuia[valor]
+												+'</h5><p class="card-text" style="text-align:right;">Fecha de Venta: '+FVenta[valor]+'</p>'
+												+'<p class="card-text" style="text-align:right;">Se han vendido '+NumAnimales[valor]+' crias</p></div></div>';
+											};
+										}else{
+											if(valor < total && valor < size){
+												doc= doc + '<div class="card text-white bg-secondary mb-3" style="cursor:pointer;">'
+												+'<div class="card-header" style="margin-top:5px;"><h5>'+NumGuia[valor]
+												+'</h5><p class="card-text" style="text-align:right;">Fecha de Venta: '+FVenta[valor]+'</p>'
+												+'<p class="card-text" style="text-align:right;">Se han vendido '+NumAnimales[valor]+' crias</p></div></div>';
+											}
+											
+										}
+										valor = valor + 1;
+									doc = doc + '</td>';
+								}
+							doc = doc + '</tr>';
+						}
+					doc = doc + '</table>';
+				//}
+				
+				txt.innerHTML = doc;
+				
+				txt2 = document.getElementById("paginacion");
+				
+				doc2 = "";
+				
+				if(NumPaginacion == 1){
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+NumPaginacion+')">' + NumPaginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion+1)+')">' + (NumPaginacion+1) + '</a></li>';
+				}else if (NumPaginacion == paginacion){
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion-1)+')">' + (NumPaginacion-1) + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+NumPaginacion+')">' + NumPaginacion + '</a></li>';
+				}else if(NumPaginacion == 2 || NumPaginacion == paginacion-1){
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion-1)+')">' + (NumPaginacion-1) + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+NumPaginacion+')">' + NumPaginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion+1)+')">' + (NumPaginacion+1) + '</a></li>';
+				}else{
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion(1)">' + 1 + '</a></li>...';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion-1)+')">' + (NumPaginacion-1) + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+NumPaginacion+')">' + NumPaginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion+1)+')">' + (NumPaginacion+1) + '</a></li>...';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+paginacion+')">' + paginacion + '</a></li>';
+				}
+				
+				txt2.innerHTML = doc2;
+			},
+			error : function(jqXHR, exception) {
+				// mostrarPantallaError(url, jqXHR);
+			},
+			statuscode : {
+				404 : function() {
+					//mostrarPantallaError(url);
+				}
+			}
+		});
+	}else{
+	
+	}
+  
 }
 </script>

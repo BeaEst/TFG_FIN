@@ -2239,6 +2239,17 @@ public class OperationsController {
 		Connection conexion = null;
 
 		String NumExplotacion = animal.getNumExplotacion();
+		Date fecha = animal.getFechaVenta();
+		
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(fecha);
+		calendar.add(calendar.YEAR, 1);
+		Date fechaMuerte2Filtro = calendar.getTime();
+
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
+		String strDate = dateFormat.format(fecha);
+		String strDate2 = dateFormat.format(fechaMuerte2Filtro);
+		
 		// Cargar el driver
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
@@ -2252,11 +2263,13 @@ public class OperationsController {
 
 					try {
 
-						System.out.println("SELECT COUNT(Id) AS NumHojas FROM Altas_Bajas_Animales WHERE NumExplotacion='"
+						System.out.println("SELECT COUNT(Id) AS NumHojas FROM Altas_Bajas_Animales "
+								+ "WHERE (Fecha BETWEEN '" + strDate + "' AND '" + strDate2 + "') AND NumExplotacion='"
 								+ NumExplotacion + "'");
 						
 						ResultSet recuento = s
-								.executeQuery("SELECT COUNT(Id) AS NumHojas FROM Altas_Bajas_Animales WHERE NumExplotacion='"
+								.executeQuery("SELECT COUNT(Id) AS NumHojas FROM Altas_Bajas_Animales "
+										+ "WHERE (Fecha BETWEEN '" + strDate + "' AND '" + strDate2 + "') AND NumExplotacion='"
 										+ NumExplotacion + "'");
 
 						String recuento_ = null;
