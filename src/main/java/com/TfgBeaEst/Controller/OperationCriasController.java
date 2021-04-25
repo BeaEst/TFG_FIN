@@ -29,7 +29,7 @@ import com.TfgBeaEst.Usuario;
 public class OperationCriasController {
 
 	@RequestMapping(value = "/cargarventacrias", method = RequestMethod.POST)
-	public ResponseEntity<Map<String, ArrayList<String>>> CrearVentaCrias(@RequestBody Usuario usuario) {
+	public ResponseEntity<Map<String, ArrayList<String>>> CargarVentaCrias(@RequestBody Usuario usuario) {
 
 		System.out.println("INICIO sacar ventas de crías de la explotación");
 
@@ -121,7 +121,7 @@ public class OperationCriasController {
 	}
 
 	@RequestMapping(value = "/nuevaventacria", method = RequestMethod.POST)
-	public ResponseEntity<Map<String, String>> NuevoAnimal(@RequestBody Animales cria) {
+	public ResponseEntity<Map<String, String>> NuevaVentaCria(@RequestBody Animales cria) {
 
 		System.out.println("INICIO añadir un nueva venta de cría");
 
@@ -160,7 +160,7 @@ public class OperationCriasController {
 								+ "(NGuia, NAnimales, FechaVenta, NumExplotacion)" + " VALUES ('" + RefGuia + "','"
 								+ NumAnimales + "','" + date + "','" + NumExplotacion + "')");
 
-						System.out.println(
+						/*System.out.println(
 								"SELECT COUNT(NumHoja) AS NumHojas FROM Altas_Bajas_Animales WHERE NumExplotacion='"
 										+ NumExplotacion + "'");
 
@@ -217,23 +217,21 @@ public class OperationCriasController {
 							hoja = Integer.parseInt(NumHoja) + 1;
 						} else {
 							hoja = Integer.parseInt(NumHoja);
-						}
+						}*/
 
 						// Comprobar si se ha insertado correctamente el update.
 						if (resultado == 1) {
 
 							// Guardamos los datos en la tabla altas_bajas
 							System.out.println(
-									"INSERT INTO `altas_bajas_animales` (`Fecha`, `Motivo`, `Procedencia_Destino`, `NDocumento`, `NAnimales`, `BalanceFinal`, `NumExplotacion`, `NumHoja`, `AnimalesHojaAnt`) "
+									"INSERT INTO `altas_bajas_animales` (`Fecha`, `Motivo`, `Procedencia_Destino`, `NDocumento`, `NAnimales`, `BalanceFinal`, `NumExplotacion`) "
 											+ "VALUES ('" + date + "', 'BAJA - SALIDA', '" + Destino + "', '" + RefGuia
-											+ "', '" + NumAnimales + " CORDEROS', '', '" + NumExplotacion + "', '"
-											+ hoja + "', '" + total_final + "')");
+											+ "', '" + NumAnimales + " CRIAS', '', '" + NumExplotacion + "')");
 
 							int resultado1 = s.executeUpdate(
-									"INSERT INTO `altas_bajas_animales` (`Fecha`, `Motivo`, `Procedencia_Destino`, `NDocumento`, `NAnimales`, `BalanceFinal`, `NumExplotacion`, `NumHoja`, `AnimalesHojaAnt`) "
+									"INSERT INTO `altas_bajas_animales` (`Fecha`, `Motivo`, `Procedencia_Destino`, `NDocumento`, `NAnimales`, `BalanceFinal`, `NumExplotacion`) "
 											+ "VALUES ('" + date + "', 'BAJA - SALIDA', '" + Destino + "', '" + RefGuia
-											+ "', '" + NumAnimales + " CORDEROS', '', '" + NumExplotacion + "', '"
-											+ hoja + "', '" + total_final + "')");
+											+ "', '" + NumAnimales + " CORDEROS', '', '" + NumExplotacion + "')");
 
 							if (resultado1 == 1) {
 								System.out.println("Se han modificado los datos correctamente");

@@ -56,6 +56,12 @@
 						style="padding-left: 10px; width: 150px;"
 						href="./Crias.html">Venta crías</a></li>
 					<li class="nav-item"><a class="nav-link active"
+						style="padding-left: 10px; width: 150px;"
+						href="./Leche.html">Leche</a></li>
+					<li class="nav-item"><a class="nav-link active"
+						style="padding-left: 10px; width: 150px;"
+						href="./AlimentosSuministrados.html">Alimentos Suministrados</a></li>
+					<li class="nav-item"><a class="nav-link active"
 						style="padding-left: 10px; background-color: #e3e4e5; width: 150px; color: black"
 						href="./Exportaciones.html"><b>EXPORTACIONES</b></a></li>
 					<!-- 
@@ -99,11 +105,15 @@
 			<tbody>
 				<tr>
 					<td id="ABA_Ovino"><img src="./pdf.png" alt="Altas y bajas de animales"
-						width="50" height="50" id="ABA_OvinoE">Exportación
-						de altas y bajas de animales</td>
+						width="50" height="50" id="ABA_OvinoE">Exportación de altas y bajas de animales</td>
 					<td id="ABA_Caprino"><img src="./pdf.png" alt="Altas y bajas de animales"
-						width="50" height="50" id="ABA_CaprinoE">Exportación
-						de altas y bajas de animales</td>
+						width="50" height="50" id="ABA_CaprinoE">Exportación de altas y bajas de animales</td>
+				</tr>
+				<tr>
+					<td id="L_Ovino"><img src="./pdf.png" alt="Leche"
+						width="50" height="50" id="L_OvinoE">Exportación de registros de entrega de leche</td>
+					<td id="L_Caprino"><img src="./pdf.png" alt="Leche"
+						width="50" height="50" id="L_CaprinoE">Exportación de Registros de entrega de leche<</td>
 				</tr>
 			</tbody>
 		</table>
@@ -233,29 +243,57 @@ $(function() {
 			if(size == 1){
 				if(TipoAnimal[0] == "ovino"){
 					//Caprino deshabilitado
-						var ABA_C = document.getElementById("ABA_Caprino");
-						ABA_C.style.backgroundColor = "grey";
-						var ABA_CE = document.getElementById("ABA_CaprinoE");
-						ABA_CE.onclick="";
+						//Altas y Bajas de animales
+							var ABA_C = document.getElementById("ABA_Caprino");
+							ABA_C.style.backgroundColor = "grey";
+							var ABA_CE = document.getElementById("ABA_CaprinoE");
+							ABA_CE.onclick="";
+							
+						//Registros de entrega de leche
+							var L_C = document.getElementById("L_Caprino");
+							L_C.style.backgroundColor = "grey";
+							var L_CE = document.getElementById("L_CaprinoE");
+							L_CE.onclick="";
 						
 					//Ovino habilitado
-						var ABA_OE = document.getElementById("ABA_OvinoE");
-						ABA_OE.addEventListener('click', function() {
-						    ExportacionAltasBajasListado1(numExplotaciones[0]);
-						}, false);
+						//Altas y Bajas de animales
+							var ABA_OE = document.getElementById("ABA_OvinoE");
+							ABA_OE.addEventListener('click', function() {
+							    ExportacionAltasBajasListado1(numExplotaciones[0]);
+							}, false);
+						
+						//Registros de entrega de leche
+							var L_OE = document.getElementById("L_OvinoE");
+							L_OE.addEventListener('click', function() {
+							    ExportacionRegistrosLeche(numExplotaciones[0]);
+							}, false);
 						
 				}else{
 					//Ovino deshabilitado
-						var ABA_O = document.getElementById("ABA_Ovino");
-						ABA_O.style.backgroundColor = "grey";
-						var ABA_OE = document.getElementById("ABA_OvinoE");
-						ABA_OE.onclick="";
+						//Altas y Bajas de animales
+							var ABA_O = document.getElementById("ABA_Ovino");
+							ABA_O.style.backgroundColor = "grey";
+							var ABA_OE = document.getElementById("ABA_OvinoE");
+							ABA_OE.onclick="";
+						
+						//Registros de entrega de leche
+							var L_O = document.getElementById("L_Ovino");
+							L_O.style.backgroundColor = "grey";
+							var L_OE = document.getElementById("L_OvinoE");
+							L_OE.onclick="";
 						
 					//Caprino habilitado
-						var ABA_CE = document.getElementById("ABA_CaprinoE");
-						ABA_CE.addEventListener('click', function() {
-						    ExportacionAltasBajasListado1(numExplotaciones[0]);
-						}, false);
+						//Altas y Bajas de animales
+							var ABA_CE = document.getElementById("ABA_CaprinoE");
+							ABA_CE.addEventListener('click', function() {
+							    ExportacionAltasBajasListado1(numExplotaciones[0]);
+							}, false);
+						
+						//Registros de entrega de leche
+							var L_CE = document.getElementById("L_CaprinoE");
+							L_CE.addEventListener('click', function() {
+							    ExportacionRegistrosLeche(numExplotaciones[0]);
+							}, false);
 				}
 				
 			}else{
@@ -266,11 +304,23 @@ $(function() {
 						ABA_OE.addEventListener('click', function() {
 						    ExportacionAltasBajasListado1(numExplotaciones[0]);
 						}, false);
+						
+					//Registros de entrega de leche
+						var L_OE = document.getElementById("L_OvinoE");
+						L_OE.addEventListener('click', function() {
+						    ExportacionRegistrosLeche(numExplotaciones[0]);
+						}, false);
 				}else if(TipoAnimal[1] == "ovino"){
 					//Altas y Bajas de animales
 						var ABA_OE = document.getElementById("ABA_OvinoE");
 						ABA_OE.addEventListener('click', function() {
 						    ExportacionAltasBajasListado1(numExplotaciones[1]);
+						}, false);
+						
+					//Registros de entrega de leche	
+						var L_OE = document.getElementById("L_OvinoE");
+						L_OE.addEventListener('click', function() {
+						    ExportacionRegistrosLeche(numExplotaciones[1]);
 						}, false);
 				}
 				
@@ -281,11 +331,23 @@ $(function() {
 						ABA_CE.addEventListener('click', function() {
 						    ExportacionAltasBajasListado1(numExplotaciones[0]);
 						}, false);
+					
+					//Registros de entrega de leche	
+						var L_CE = document.getElementById("L_CaprinoE");
+						L_CE.addEventListener('click', function() {
+						    ExportacionRegistrosLeche(numExplotaciones[0]);
+						}, false);
 				}else if(TipoAnimal[1] == "caprino"){
 					//Altas y Bajas de animales
 						var ABA_CE = document.getElementById("ABA_CaprinoE");
 						ABA_CE.addEventListener('click', function() {
 						    ExportacionAltasBajasListado1(numExplotaciones[1]);
+						}, false);
+						
+					//Registros de entrega de leche	
+						var L_CE = document.getElementById("L_CaprinoE");
+						L_CE.addEventListener('click', function() {
+						    ExportacionRegistrosLeche(numExplotaciones[1]);
 						}, false);
 				}
 				
@@ -511,5 +573,160 @@ function ExportacionAltasBajasListadoEnlaces(Recuento, Busqueda, NumExplotacion)
 	            }
 	        }       
 	    });
+}
+</script>
+
+<script>
+function ExportacionRegistrosLeche(NumExplotacion){
+	
+	
+		var mensaje = "<h5>BÚSQUEDA DE DOCUMENTOS:</h5>"
+		
+		mensaje = mensaje + "<table>";
+			mensaje = mensaje + "<tr>";
+				mensaje = mensaje + "<td>";
+					mensaje = mensaje + "<p>Selecciona el año de búsqueda</p>";
+				mensaje = mensaje + "</td>";
+				mensaje = mensaje + "<td>";
+					mensaje = mensaje + "<select class='form-select' aria-label='Default select example' id='AnoBusqueda' style='float: center;'>";
+						mensaje = mensaje + "<option selected>-----</option>";
+						mensaje = mensaje + "<option value='2021'>2021</option>";
+						mensaje = mensaje + "<option value='2022'>2022</option>";
+						mensaje = mensaje + "<option value='2023'>2023</option>";
+					mensaje = mensaje + "</select>";
+				mensaje = mensaje + "</td>";
+			mensaje = mensaje + "</tr>";
+		mensaje = mensaje + "</table>";
+							
+		
+		bootbox.confirm({
+			title:"REGISTROS DE ENTREGA DE LECHE", 
+			message: mensaje,
+			buttons: {
+				confirm: {
+		            label: 'BUSCAR'
+		        }
+		    },
+		    callback: function (result) {
+		        if (result) {
+		        	var Busqueda = document.getElementById("AnoBusqueda").value;
+		        	ExportacionRegistrosLecheListado(Busqueda, NumExplotacion);
+		        	
+	            } else {
+	                    
+	            }
+		    }
+		});
+}
+</script>
+
+<script>
+function ExportacionRegistrosLecheListado(Busqueda, NumExplotacion){
+	
+		var busqueda = Busqueda + "-01-01";
+		
+		var datos= {
+			'NumExplotacion' : NumExplotacion,
+			'FechaVenta' : busqueda
+		};
+	
+		var datos = JSON.stringify(datos);
+	
+		var url = './exportacionRegistroLecheListado';
+	
+		$.ajax({
+			type : 'post',
+			url : url,
+			contentType : 'application/json',
+			dataType : 'json',
+			data : datos,
+			success : function(data, textStatus, jqXHR) {
+				var Recuento = data.recuento;
+
+				ExportacionRegistrosLecheListadoEnlaces(Recuento, Busqueda, NumExplotacion);
+
+			},error: function(jqXHR,exception) {
+				
+			},statuscode:{
+				404:function(){ mostrarPantallaError(url); }
+			}
+		});
+}
+</script>
+
+<script>
+function ExportacionRegistrosLecheListadoEnlaces(Recuento, Busqueda, NumExplotacion){
+	
+		var NDocumentos = Recuento / 50;
+				
+		var NEnlaces;
+		if(NDocumentos % 1 == 0){
+			NEnlaces = parseInt(NDocumentos);
+		}else{
+			NEnlaces = parseInt(NDocumentos + 1);
+		}
+				
+		var mensaje = "<h5>LISTADO DE DOCUMENTOS:</h5>"
+		
+		mensaje = mensaje + "<table>";
+			for(var i=0; i<NEnlaces; i++){
+				var uno = "'" + NumExplotacion + "'";
+				var dos = "'" + i + "'";
+				var busqueda = Busqueda + "-01-01";
+				var tres = "'" + busqueda + "'";
+				var url = "ExportacionRegistrosLecheDescarga(" + uno + "," + dos + ", "+tres+")";
+				
+				mensaje = mensaje + "<tr>";
+					mensaje = mensaje + "<td>";
+						mensaje = mensaje + "<p>Documento número "+i+ ": </p>";
+					mensaje = mensaje + "</td>";
+					mensaje = mensaje + "<td style='text-align: center;'>";
+						mensaje = mensaje + "<button type='button' class='btn btn-success' onClick=\""+url+"\">Descargar</button>";
+					mensaje = mensaje + "</td>";
+				mensaje = mensaje + "</tr>";		
+			} 			
+		mensaje = mensaje + "</table>";
+		
+								
+		bootbox.dialog({
+	        title: "ENLACES DE DESCARGAS",
+	        message: mensaje,
+	        buttons: {
+	            sucess:{
+	                label: "Cancelar",
+	            	className: 'btn-secondary' 
+	            }
+	        }       
+	    });
+}
+</script>
+
+<script>
+function ExportacionRegistrosLecheDescarga(NumExplotacion, num, Busqueda){
+	//var NumExplotacion = sessionStorage.getItem("NumeroExplotacion");
+	var urlFirma = './exportacionRegistrosLeche/'+NumExplotacion+'/'+num+'/'+Busqueda;
+	
+	$.ajax({
+			type: 'get',
+			url: urlFirma,
+			contentType: 'application/pdf',
+			success: function(data,textStatus,jqXHR){	
+				url = './exportacionRegistroLecheDescarga'
+				jQuery('<form action="' + url + '" method="get"></form>').appendTo('body').submit().remove();
+			},error: function(jqXHR,exception) {
+				bootbox.alert({
+					title: "EXPORTACIÓN REGISTROS DE LECHE",
+					message: "No se puede recuperar el archivo",
+					buttons: {
+						ok: {
+							label: 'Aceptar',
+							className: 'btn btn-primary'
+						}
+					}
+				});
+			},statuscode:{
+				404:function(){ mostrarPantallaError(url); }
+			}
+		});
 }
 </script>

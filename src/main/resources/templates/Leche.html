@@ -19,7 +19,7 @@
 <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 <script src="../js/bootbox.min.js"></script>
 
-<title>Crías</title>
+<title>Entregas de Leche</title>
 </head>
 <body>
 	<div>
@@ -53,11 +53,11 @@
 						style="padding-left: 10px; width: 150px;"
 						href="./Animales.html">Animales</a></li>
 					<li class="nav-item"><a class="nav-link active"
-						style="padding-left: 10px; background-color: #e3e4e5; width: 150px; color: black"
-						href="./Crias.html"><b>VENTA CRIAS</b></a></li>
-					<li class="nav-item"><a class="nav-link active"
 						style="padding-left: 10px; width: 150px;"
-						href="./Leche.html">Leche</a></li>
+						href="./Crias.html">Venta Crías</a></li>
+					<li class="nav-item"><a class="nav-link active"
+						style="padding-left: 10px; background-color: #e3e4e5; width: 150px; color: black"
+						href="./Leche.html"><b>LECHE</b></a></li>
 					<li class="nav-item"><a class="nav-link active"
 						style="padding-left: 10px; width: 150px;"
 						href="./AlimentosSuministrados.html">Alimentos Suministrados</a></li>
@@ -92,7 +92,7 @@
 		</div>
 
 
-		<h1 style="text-align: center;">REGISTROS DE VENTAS DE CRÍAS</h1>
+		<h1 style="text-align: center;">REGISTROS DE VENTAS DE LECHE</h1>
 
 		<nav class="navbar navbar-dark bg-dark" style="margin-left: 155px">
 			<div class="container-fluid">
@@ -129,22 +129,11 @@
 								</td>
 
 								<td style="width: 25%;">
-									<div>
-										<label style="margin-left: 1%; float: left;">Buscar
-											por referencia de venta:</label> <input type="number" class="form-control"
-											style="width: 50%;" id="FiltroNumGuiaNoMovil">
-									</div>
-
-									<button type="button" class="btn btn-outline-light"
-										onClick="BuscarFiltroGuia()">Buscar</button>
-								</td>
-
-								<td style="width: 25%;">
 									<div class="form-check">
 										<img src="./anadir.png" title="Añadir venta cria" height="25"
 											size="25" id="" style="float: left; cursor: pointer;"
-											onClick="AnadirVentaCria()"> <label style="float: left;">&nbsp;
-											Añadir venta</label>
+											onClick="AnadirRegistroLeche()"> <label style="float: left;">&nbsp;
+											Añadir venta leche</label>
 									</div>
 								</td>
 							</tr>
@@ -431,7 +420,7 @@ function paginacion(NumPaginacion){
 	
 		var usuarioLoginJSON = JSON.stringify(usuarioDatos);
 	
-		var url = './cargarventacrias';
+		var url = './cargarventaleche';
 	
 		$.ajax({
 			type : 'post',
@@ -440,17 +429,16 @@ function paginacion(NumPaginacion){
 			dataType : 'json',
 			data : usuarioLoginJSON,
 			success : function(data, textStatus, jqXHR) {
-				var NumGuia = data.NumGuia;
-				var FVenta = data.FVenta;
-				var NumAnimales = data.NumAnimales;
+				var FechaEntrega = data.FechaEntrega;
+				var CodigoCisterna = data.CodigoCisterna;
 				
-				var size = Object.keys(NumGuia).length;
+				var size = Object.keys(CodigoCisterna).length;
 	
 				txt = document.getElementById("card");
 				var doc = "";
 				
 				//Sacar el número de paginaciones que va a haber de animales.
-				var paginacion = size / 20;
+				var paginacion = size / 16;
 				
 				if(Number.isInteger(paginacion)){
 					paginacion = paginacion;
@@ -462,16 +450,16 @@ function paginacion(NumPaginacion){
 				if(NumPaginacion == 1){
 					var valor = 0;	
 				}else{
-					var valor = (NumPaginacion - 1) * 20;	
+					var valor = (NumPaginacion - 1) * 16;	
 				}
 					
-				var total = (NumPaginacion * 20) + 20;
+				var total = (NumPaginacion * 16) + 16;
 				doc = doc + '<p style="margin-left: 155px;"><em>Página '+NumPaginacion+' de '+paginacion+'</em></p>';
 				//for(var i=1; i<=paginacion; i++){
 					doc = doc + '<table style="margin-left: 155px;">';
 						for(var j=0; j<4; j++){
 							doc = doc + '<tr style="width: 100%">';
-								for(var x=0; x<5; x++){
+								for(var x=0; x<4; x++){
 									if(x==0){
 										var par = 1;
 									}else{
@@ -487,16 +475,14 @@ function paginacion(NumPaginacion){
 										if(par == 0){
 											if(valor < total && valor < size){
 												doc= doc + '<div class="card text-black bg-light mb-3" style="cursor:pointer;">'
-												+'<div class="card-header" style="margin-top:5px;"><h5>'+NumGuia[valor]
-												+'</h5><p class="card-text" style="text-align:right;">Fecha de Venta: '+FVenta[valor]+'</p>'
-												+'<p class="card-text" style="text-align:right;">Se han vendido '+NumAnimales[valor]+' crias</p></div></div>';
+												+'<div class="card-header" style="margin-top:5px;"><h5>'+CodigoCisterna[valor]
+												+'</h5><p class="card-text" style="text-align:right;">Fecha de Entrega: '+FechaEntrega[valor]+'</p></div></div>';
 											}
 										}else{
 											if(valor < total && valor < size){
 												doc= doc + '<div class="card text-white bg-secondary mb-3" style="cursor:pointer;">'
-												+'<div class="card-header" style="margin-top:5px;"><h5>'+NumGuia[valor]
-												+'</h5><p class="card-text" style="text-align:right;">Fecha de Venta: '+FVenta[valor]+'</p>'
-												+'<p class="card-text" style="text-align:right;">Se han vendido '+NumAnimales[valor]+' crias</p></div></div>';
+												+'<div class="card-header" style="margin-top:5px;"><h5>'+CodigoCisterna[valor]
+												+'</h5><p class="card-text" style="text-align:right;">Fecha de Entrega: '+FechaEntrega[valor]+'</p></div></div>';
 											}
 										}
 										valor = valor + 1;
@@ -536,36 +522,26 @@ function paginacion(NumPaginacion){
 </script>
 
 <script>
-function AnadirVentaCria(){
+function AnadirRegistroLeche(){
 
 	var mensaje = "";
 	
 	mensaje = mensaje + "<table>";
 	
 	mensaje = mensaje + "<tr>";
-	mensaje = mensaje + "<td> Fecha venta: </td>";
-	mensaje = mensaje + "<td><input id='FechaVenta' type='date'></td>";
+	mensaje = mensaje + "<td> Fecha de entrega: </td>";
+	mensaje = mensaje + "<td><input id='FechaEntrega' type='date'></td>";
 	mensaje = mensaje + "</tr>";
 	
 	mensaje = mensaje + "<tr>";
-	mensaje = mensaje + "<td>Referencia de la guía:</td>";
-	mensaje = mensaje + "<td><input id='RefGuia'></td>";
-	mensaje = mensaje + "</tr>";
-
-	mensaje = mensaje + "<tr>";
-	mensaje = mensaje + "<td>Número de animales:</td>";
-	mensaje = mensaje + "<td><input id='NumAnimales'></td>";
-	mensaje = mensaje + "</tr>";
-	
-	mensaje = mensaje + "<tr>";
-	mensaje = mensaje + "<td>Destino:</td>";
-	mensaje = mensaje + "<td><input id='Destino'></td>";
+	mensaje = mensaje + "<td>Código de la cisterna:</td>";
+	mensaje = mensaje + "<td><input id='CodCisterna'></td>";
 	mensaje = mensaje + "</tr>";
 	
 	mensaje = mensaje + "</table>";
 	
 	bootbox.confirm({
-		title:"Nueva venta de crías", 
+		title:"Nueva venta de leche", 
 		message: mensaje,
 		onEscape: true,
 		buttons: {
@@ -576,11 +552,9 @@ function AnadirVentaCria(){
 	    },
 	    callback: function (result) {
 	        if (result) {
-	        	var RefGuia= document.getElementById("RefGuia").value;
-	        	var NumAnimales= document.getElementById("NumAnimales").value;
-            	var FechaVenta= document.getElementById("FechaVenta").value;
-            	var Destino= document.getElementById("Destino").value;
-            	AnadirVenta(RefGuia, NumAnimales, FechaVenta, Destino);
+	        	var FechaEntrega= document.getElementById("FechaEntrega").value;
+	        	var CodCisterna= document.getElementById("CodCisterna").value;
+            	AnadirRegistro(FechaEntrega, CodCisterna);
             } else {
                 
             }
@@ -591,21 +565,19 @@ function AnadirVentaCria(){
 </script>
 
 <script>
-function AnadirVenta(RefGuia, NumAnimales, FechaVenta, Destino){
+function AnadirRegistro(FechaEntrega, CodCisterna){
 	var usuario = sessionStorage.getItem("usuario_activo");
 	var numexplotacion = sessionStorage.getItem("NumeroExplotacion");
 	
 	var datosNuevoAnimal= {
-		'NumAnimalesCria' : NumAnimales,
-		'RefGuiaCria' : RefGuia,
-		'FechaVentaCria' : FechaVenta, 
-		'NumExplotacion' : numexplotacion,
-		'ProcDestino' : Destino
+		'FechaVentaCria' : FechaEntrega,
+		'RefGuiaCria' : CodCisterna,
+		'NumExplotacion' : numexplotacion
 	};
 
 	var datosNuevoAnimalJSON = JSON.stringify(datosNuevoAnimal);
 
-	var url = './nuevaventacria';
+	var url = './nuevaregistroleche';
 
 	$.ajax({
 		type : 'post',
@@ -618,15 +590,15 @@ function AnadirVenta(RefGuia, NumAnimales, FechaVenta, Destino){
 			
 			if(estado == 'correcto'){
 				bootbox.dialog({
-					title:RefGuia, 
-					message: "Se ha añadido la venta de las crías",
+					title: "Entrega de Leche del día " + FechaEntrega, 
+					message: "Se ha añadido correctamente",
 					closeButton: true,
 					onEscape: true
 				});
 			}else if(estado == 'incorrecto'){
 				bootbox.dialog({
 					title:"ERROR", 
-					message: "NO se ha podido añadir la venta de las crías",
+					message: "NO se ha podido añadir el registro de venta de leche",
 					closeButton: true,
 					onEscape: true
 				});
@@ -635,7 +607,7 @@ function AnadirVenta(RefGuia, NumAnimales, FechaVenta, Destino){
 		error : function(jqXHR, exception) {
 			bootbox.dialog({
 					title:"ERROR", 
-					message: "NO se ha podido añadir la venta de las crías",
+					message: "NO se ha podido añadir el registro de venta de leche",
 					closeButton: true,
 					onEscape: true
 				});
@@ -646,96 +618,6 @@ function AnadirVenta(RefGuia, NumAnimales, FechaVenta, Destino){
 			}
 		}
 	});
-}
-</script>
-
-<script>
-function BuscarFiltroGuia(){
-
-	var movil = sessionStorage.getItem("Movil");
-	if(sessionStorage.getItem("Movil") == "false"){
-		var NumReferencia = document.getElementById("FiltroNumGuiaNoMovil").value;
-	}else{
-		var NumReferencia = document.getElementById("FiltroNumGuiaMovil").value;
-	}
-	
-	var usuario = sessionStorage.getItem("usuario_activo");
-	var numexplotacion = sessionStorage.getItem("NumeroExplotacion");
-	
-	var datosFiltro3= {
-		'RefGuiaCria' : NumReferencia,
-		'NumExplotacion' : numexplotacion,
-	};
-
-	var datosFiltro3JSON = JSON.stringify(datosFiltro3);
-
-	var url = './filtroGuia';
-	
-	var NGuia;
-	var NAnimales;
-	var FechaVenta;
-	
-	$.ajax({
-		type : 'post',
-		url : url,
-		contentType : 'application/json',
-		dataType : 'json',
-		data : datosFiltro3JSON,
-		success : function(data, textStatus, jqXHR) {
-			NGuia = data.NGuia;
-			NAnimales = data.NAnimales;
-			FechaVenta = data.FechaVenta;
-			
-			VentanaVentaCria(NGuia, NAnimales, FechaVenta);
-			
-		},
-		error : function(jqXHR, exception) {
-			// mostrarPantallaError(url, jqXHR);
-		},
-		statuscode : {
-			404 : function() {
-				//mostrarPantallaError(url);
-			}
-		}
-	});
-	
-}
-</script>
-
-<script>
-function VentanaVentaCria(NGuia, NAnimales, FechaVenta){
-	var mensaje = "";
-
-	mensaje = mensaje + "<table>";
-	
-	mensaje = mensaje + "<tr>";
-	mensaje = mensaje + "<td><p>Se han vendido <b>"+NAnimales+"</b> crías</p></td>";
-	mensaje = mensaje + "</tr>";
-	
-	mensaje = mensaje + "<tr>";
-	mensaje = mensaje + "<td><p>Venta realizada en la fecha: <b>"+FechaVenta+"</b> </p></td>";
-	mensaje = mensaje + "</tr>";
-	
-	bootbox.confirm({
-		title:NGuia, 
-		message: mensaje,
-		closeButton: true,
-		onEscape: true,
-		buttons: {
-	        confirm: {
-	            label: 'Aceptar',
-	            className: 'btn-primary'
-	        }
-	    },
-	    callback: function (result) {
-	        if (result) {
-	        
-               } else {
-               
-               }
-	    }
-	});
-			
 }
 </script>
 
@@ -757,7 +639,7 @@ function BuscarFiltroAno(){
 	
 		var datosFiltro2JSON = JSON.stringify(datosFiltro2);
 	
-		var url = './filtroAno';
+		var url = './filtroAnoleche';
 	
 		$.ajax({
 			type : 'post',
@@ -766,11 +648,10 @@ function BuscarFiltroAno(){
 			dataType : 'json',
 			data : datosFiltro2JSON,
 			success : function(data, textStatus, jqXHR) {
-				var NumGuia = data.NGuia;
-				var FVenta = data.FechaVenta;
-				var NumAnimales = data.NAnimales;
+				var CodigoCisterna = data.CodigoCisterna;
+				var FechaEntrega = data.FechaEntrega;
 				
-				var size = Object.keys(NumGuia).length;
+				var size = Object.keys(CodigoCisterna).length;
 	
 				txt = document.getElementById("card");
 				var doc = "";
@@ -809,16 +690,14 @@ function BuscarFiltroAno(){
 										if(par == 0){
 											if(valor < total && valor < size){
 												doc= doc + '<div class="card text-black bg-light mb-3" style="cursor:pointer;">'
-												+'<div class="card-header" style="margin-top:5px;"><h5>'+NumGuia[valor]
-												+'</h5><p class="card-text" style="text-align:right;">Fecha de Venta: '+FVenta[valor]+'</p>'
-												+'<p class="card-text" style="text-align:right;">Se han vendido '+NumAnimales[valor]+' crias</p></div></div>';
+												+'<div class="card-header" style="margin-top:5px;"><h5>'+CodigoCisterna[valor]
+												+'</h5><p class="card-text" style="text-align:right;">Fecha de Entrega: '+FechaEntrega[valor]+'</p></div></div>';
 											}
 										}else{
 											if(valor < total && valor < size){
 												doc= doc + '<div class="card text-white bg-secondary mb-3" style="cursor:pointer;">'
-												+'<div class="card-header" style="margin-top:5px;"><h5>'+NumGuia[valor]
-												+'</h5><p class="card-text" style="text-align:right;">Fecha de Venta: '+FVenta[valor]+'</p>'
-												+'<p class="card-text" style="text-align:right;">Se han vendido '+NumAnimales[valor]+' crias</p></div></div>';
+												+'<div class="card-header" style="margin-top:5px;"><h5>'+CodigoCisterna[valor]
+												+'</h5><p class="card-text" style="text-align:right;">Fecha de Entrega: '+FechaEntrega[valor]+'</p></div></div>';
 											}
 										}
 										valor = valor + 1;
@@ -874,7 +753,7 @@ function paginacionFiltroAno(NumPaginacion){
 	
 		var datosFiltro2JSON = JSON.stringify(datosFiltro2);
 	
-		var url = './filtroAno';
+		var url = './filtroAnoleche';
 	
 		$.ajax({
 			type : 'post',
@@ -883,14 +762,16 @@ function paginacionFiltroAno(NumPaginacion){
 			dataType : 'json',
 			data : datosFiltro2JSON,
 			success : function(data, textStatus, jqXHR) {
-				var ovejas = data.ListaOvejas;
-				var size = Object.keys(ovejas).length;
+				var CodigoCisterna = data.CodigoCisterna;
+				var FechaEntrega = data.FechaEntrega;
+				
+				var size = Object.keys(CodigoCisterna).length;
 	
 				txt = document.getElementById("card");
 				var doc = "";
 				
 				//Sacar el número de paginaciones que va a haber de animales.
-				var paginacion = size / 20;
+				var paginacion = size / 16;
 				
 				if(Number.isInteger(paginacion)){
 					paginacion = paginacion;
@@ -902,16 +783,16 @@ function paginacionFiltroAno(NumPaginacion){
 				if(NumPaginacion == 1){
 					var valor = 0;	
 				}else{
-					var valor = (NumPaginacion - 1) * 20;	
+					var valor = (NumPaginacion - 1) * 16;	
 				}
 					
-				var total = (NumPaginacion * 20) + 20;
+				var total = (NumPaginacion * 16) + 16;
 				doc = doc + '<p style="margin-left: 155px;"><em>Página '+NumPaginacion+' de '+paginacion+'</em></p>';
 				//for(var i=1; i<=paginacion; i++){
 					doc = doc + '<table style="margin-left: 155px;">';
 						for(var j=0; j<4; j++){
 							doc = doc + '<tr style="width: 100%">';
-								for(var x=0; x<5; x++){
+								for(var x=0; x<4; x++){
 									if(x==0){
 										var par = 1;
 									}else{
@@ -925,20 +806,17 @@ function paginacionFiltroAno(NumPaginacion){
 									
 									doc = doc + '<td style="width: 500px;">';
 									if(par == 0){
-											if(valor < total && valor < size){
+										if(valor < total && valor < size){
 												doc= doc + '<div class="card text-black bg-light mb-3" style="cursor:pointer;">'
-												+'<div class="card-header" style="margin-top:5px;"><h5>'+NumGuia[valor]
-												+'</h5><p class="card-text" style="text-align:right;">Fecha de Venta: '+FVenta[valor]+'</p>'
-												+'<p class="card-text" style="text-align:right;">Se han vendido '+NumAnimales[valor]+' crias</p></div></div>';
-											};
+												+'<div class="card-header" style="margin-top:5px;"><h5>'+CodigoCisterna[valor]
+												+'</h5><p class="card-text" style="text-align:right;">Fecha de Entrega: '+FechaEntrega[valor]+'</p></div></div>';
+											}
 										}else{
 											if(valor < total && valor < size){
 												doc= doc + '<div class="card text-white bg-secondary mb-3" style="cursor:pointer;">'
-												+'<div class="card-header" style="margin-top:5px;"><h5>'+NumGuia[valor]
-												+'</h5><p class="card-text" style="text-align:right;">Fecha de Venta: '+FVenta[valor]+'</p>'
-												+'<p class="card-text" style="text-align:right;">Se han vendido '+NumAnimales[valor]+' crias</p></div></div>';
+												+'<div class="card-header" style="margin-top:5px;"><h5>'+CodigoCisterna[valor]
+												+'</h5><p class="card-text" style="text-align:right;">Fecha de Entrega: '+FechaEntrega[valor]+'</p></div></div>';
 											}
-											
 										}
 										valor = valor + 1;
 									doc = doc + '</td>';
