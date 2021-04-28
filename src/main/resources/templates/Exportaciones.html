@@ -62,31 +62,11 @@
 						style="padding-left: 10px; width: 150px;"
 						href="./AlimentosSuministrados.html">Alimentos Suministrados</a></li>
 					<li class="nav-item"><a class="nav-link active"
+						style="padding-left: 10px; width: 150px;"
+						href="./PiensosMedicamentosos.html">Piensos Medicamentosos</a></li>
+					<li class="nav-item"><a class="nav-link active"
 						style="padding-left: 10px; background-color: #e3e4e5; width: 150px; color: black"
 						href="./Exportaciones.html"><b>EXPORTACIONES</b></a></li>
-					<!-- 
-	                <li class="nav-item">
-	                    <a class="nav-link active" style="padding-left:10px;" href="#">Venta Ovejas</a>
-	                </li>
-	                <li class="nav-item">
-	                    <a class="nav-link active" style="padding-left:10px;" href="#">Venta Corderos</a>
-	                </li>
-	                <li class="nav-item">
-	                    <a class="nav-link active" style="padding-left:10px;" href="#">Muerte Ovejas</a>
-	                </li>
-	                <li class="nav-item">
-	                    <a class="nav-link active" style="padding-left:10px;" href="#">Medicamentos</a>
-	                </li>
-	                <li class="nav-item">
-	                    <a class="nav-link active" style="padding-left:10px;" href="#">Piensos</a>
-	                </li>
-	                <li class="nav-item">
-	                    <a class="nav-link active" style="padding-left:10px;" href="#">Piensos Medicamentosos</a>
-	                </li>
-	                <li class="nav-item">
-	                    <a class="nav-link active" style="padding-left:10px;" href="#">Enfermedades</a>
-	                </li>
-	                -->
 				</ul>
 			</nav>
 		</div>
@@ -113,7 +93,13 @@
 					<td id="L_Ovino"><img src="./pdf.png" alt="Leche"
 						width="50" height="50" id="L_OvinoE">Exportación de registros de entrega de leche</td>
 					<td id="L_Caprino"><img src="./pdf.png" alt="Leche"
-						width="50" height="50" id="L_CaprinoE">Exportación de Registros de entrega de leche<</td>
+						width="50" height="50" id="L_CaprinoE">Exportación de Registros de entrega de leche</td>
+				</tr>
+				<tr>
+					<td id="AS_Ovino"><img src="./pdf.png" alt="Alimentos Suministrados"
+						width="50" height="50" id="AS_OvinoE">Exportación de registros de alimentos suminsitrados</td>
+					<td id="AS_Caprino"><img src="./pdf.png" alt="Alimentos Suministrados"
+						width="50" height="50" id="AS_CaprinoE">Exportación de registros de alimentos suminsitrados</td>
 				</tr>
 			</tbody>
 		</table>
@@ -126,38 +112,27 @@
 			style="width: 60px; float: left; position: absolute; top: 50px; bottom: 0; background-color: #212529;">
 			<nav class="navbar navbar-dark bg-dark">
 				<ul class="navbar-nav">
-					<li class="nav-item"><a class="nav-link active"
-						style="padding-left: 10px;" href="./Animales.html"> <img
-							src="./oveja.png" width="15" height="15" style="display: inline;">
-							<img src="./cabra.png" width="15" height="15"
-							style="display: inline;">
-					</a></li>
-					<!-- 
-	                <li class="nav-item">
-	                    <a class="nav-link active" style="padding-left:10px;" href="#">Leche</a>
-	                </li>
-	                <li class="nav-item">
-	                    <a class="nav-link active" style="padding-left:10px;" href="#">Venta Ovejas</a>
-	                </li>
-	                <li class="nav-item">
-	                    <a class="nav-link active" style="padding-left:10px;" href="#">Venta Corderos</a>
-	                </li>
-	                <li class="nav-item">
-	                    <a class="nav-link active" style="padding-left:10px;" href="#">Muerte Ovejas</a>
-	                </li>
-	                <li class="nav-item">
-	                    <a class="nav-link active" style="padding-left:10px;" href="#">Medicamentos</a>
-	                </li>
-	                <li class="nav-item">
-	                    <a class="nav-link active" style="padding-left:10px;" href="#">Piensos</a>
-	                </li>
-	                <li class="nav-item">
-	                    <a class="nav-link active" style="padding-left:10px;" href="#">Piensos Medicamentosos</a>
-	                </li>
-	                <li class="nav-item">
-	                    <a class="nav-link active" style="padding-left:10px;" href="#">Enfermedades</a>
-	                </li>
-	                -->
+					<li class="nav-item">
+						<a class="nav-link active" style="padding-left: 10px;" href="./Animales.html"> 
+							<img src="./oveja.png" width="20" height="20" style="display: inline;">
+							<img src="./cabra.png" width="20" height="20"style="display: inline;">
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link active" style="padding-left: 10px;" href="./Crias.html"> 
+							<img src="./camion.png" width="30" height="30" style="display: inline;">
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link active" style="padding-left: 10px;" href="./Leche.html"> 
+							<img src="./leche.png" width="30" height="30" style="display: inline;">
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link active" style="padding-left: 10px; background-color: #e3e4e5; width: 60px; color: black"href="./Exportaciones.html">
+							<img src="./camionN.png" width="30" height="30" style="display: inline;">
+						</a>
+					</li>
 				</ul>
 			</nav>
 		</div>
@@ -255,6 +230,12 @@ $(function() {
 							var L_CE = document.getElementById("L_CaprinoE");
 							L_CE.onclick="";
 						
+						//Registros de alimentos suministrados
+							var AS_C = document.getElementById("AS_Caprino");
+							AS_C.style.backgroundColor = "grey";
+							var AS_CE = document.getElementById("AS_CaprinoE");
+							AS_CE.onclick="";
+						
 					//Ovino habilitado
 						//Altas y Bajas de animales
 							var ABA_OE = document.getElementById("ABA_OvinoE");
@@ -266,6 +247,12 @@ $(function() {
 							var L_OE = document.getElementById("L_OvinoE");
 							L_OE.addEventListener('click', function() {
 							    ExportacionRegistrosLeche(numExplotaciones[0]);
+							}, false);
+						
+						//Registros de alimentos suministrados
+							var AS_OE = document.getElementById("AS_OvinoE");
+							AS_OE.addEventListener('click', function() {
+							    ExportacionAlimentosSuministrados(numExplotaciones[0]);
 							}, false);
 						
 				}else{
@@ -282,6 +269,12 @@ $(function() {
 							var L_OE = document.getElementById("L_OvinoE");
 							L_OE.onclick="";
 						
+						//Registros de alimentos suministrados
+							var AS_O = document.getElementById("AS_Ovino");
+							AS_O.style.backgroundColor = "grey";
+							var AS_OE = document.getElementById("AS_OvinoE");
+							AS_OE.onclick="";
+						
 					//Caprino habilitado
 						//Altas y Bajas de animales
 							var ABA_CE = document.getElementById("ABA_CaprinoE");
@@ -293,6 +286,12 @@ $(function() {
 							var L_CE = document.getElementById("L_CaprinoE");
 							L_CE.addEventListener('click', function() {
 							    ExportacionRegistrosLeche(numExplotaciones[0]);
+							}, false);
+							
+						//Registros de alimentos suministrados
+							var AS_CE = document.getElementById("AS_CaprinoE");
+							AS_CE.addEventListener('click', function() {
+							     ExportacionAlimentosSuministrados(numExplotaciones[0]);
 							}, false);
 				}
 				
@@ -310,6 +309,14 @@ $(function() {
 						L_OE.addEventListener('click', function() {
 						    ExportacionRegistrosLeche(numExplotaciones[0]);
 						}, false);
+						
+					//Registros de alimentos suministrados
+						var AS_OE = document.getElementById("AS_OvinoE");
+						AS_OE.addEventListener('click', function() {
+						     ExportacionAlimentosSuministrados(numExplotaciones[0]);
+						}, false);
+						
+						
 				}else if(TipoAnimal[1] == "ovino"){
 					//Altas y Bajas de animales
 						var ABA_OE = document.getElementById("ABA_OvinoE");
@@ -321,6 +328,12 @@ $(function() {
 						var L_OE = document.getElementById("L_OvinoE");
 						L_OE.addEventListener('click', function() {
 						    ExportacionRegistrosLeche(numExplotaciones[1]);
+						}, false);
+						
+					//Registros de alimentos suministrados
+						var AS_OE = document.getElementById("AS_OvinoE");
+						AS_OE.addEventListener('click', function() {
+						     ExportacionAlimentosSuministrados(numExplotaciones[1]);
 						}, false);
 				}
 				
@@ -337,6 +350,12 @@ $(function() {
 						L_CE.addEventListener('click', function() {
 						    ExportacionRegistrosLeche(numExplotaciones[0]);
 						}, false);
+						
+					//Registros de alimentos suministrados	
+						var AS_CE = document.getElementById("AS_CaprinoE");
+						AS_CE.addEventListener('click', function() {
+						     ExportacionAlimentosSuministrados(numExplotaciones[0]);
+						}, false);
 				}else if(TipoAnimal[1] == "caprino"){
 					//Altas y Bajas de animales
 						var ABA_CE = document.getElementById("ABA_CaprinoE");
@@ -348,6 +367,12 @@ $(function() {
 						var L_CE = document.getElementById("L_CaprinoE");
 						L_CE.addEventListener('click', function() {
 						    ExportacionRegistrosLeche(numExplotaciones[1]);
+						}, false);
+						
+					//Registros de alimentos suministrados	
+						var AS_CE = document.getElementById("AS_CaprinoE");
+						AS_CE.addEventListener('click', function() {
+						     ExportacionAlimentosSuministrados(numExplotaciones[1]);
 						}, false);
 				}
 				
@@ -712,6 +737,161 @@ function ExportacionRegistrosLecheDescarga(NumExplotacion, num, Busqueda){
 			contentType: 'application/pdf',
 			success: function(data,textStatus,jqXHR){	
 				url = './exportacionRegistroLecheDescarga'
+				jQuery('<form action="' + url + '" method="get"></form>').appendTo('body').submit().remove();
+			},error: function(jqXHR,exception) {
+				bootbox.alert({
+					title: "EXPORTACIÓN REGISTROS DE LECHE",
+					message: "No se puede recuperar el archivo",
+					buttons: {
+						ok: {
+							label: 'Aceptar',
+							className: 'btn btn-primary'
+						}
+					}
+				});
+			},statuscode:{
+				404:function(){ mostrarPantallaError(url); }
+			}
+		});
+}
+</script>
+
+<script>
+function ExportacionAlimentosSuministrados(NumExplotacion){
+	
+	
+		var mensaje = "<h5>BÚSQUEDA DE DOCUMENTOS:</h5>"
+		
+		mensaje = mensaje + "<table>";
+			mensaje = mensaje + "<tr>";
+				mensaje = mensaje + "<td>";
+					mensaje = mensaje + "<p>Selecciona el año de búsqueda</p>";
+				mensaje = mensaje + "</td>";
+				mensaje = mensaje + "<td>";
+					mensaje = mensaje + "<select class='form-select' aria-label='Default select example' id='AnoBusqueda' style='float: center;'>";
+						mensaje = mensaje + "<option selected>-----</option>";
+						mensaje = mensaje + "<option value='2021'>2021</option>";
+						mensaje = mensaje + "<option value='2022'>2022</option>";
+						mensaje = mensaje + "<option value='2023'>2023</option>";
+					mensaje = mensaje + "</select>";
+				mensaje = mensaje + "</td>";
+			mensaje = mensaje + "</tr>";
+		mensaje = mensaje + "</table>";
+							
+		
+		bootbox.confirm({
+			title:"REGISTROS DE ALIMENTOS SUMINISTRADOS", 
+			message: mensaje,
+			buttons: {
+				confirm: {
+		            label: 'BUSCAR'
+		        }
+		    },
+		    callback: function (result) {
+		        if (result) {
+		        	var Busqueda = document.getElementById("AnoBusqueda").value;
+		        	ExportacionAlimentosSuministradosListado(Busqueda, NumExplotacion);
+		        	
+	            } else {
+	                    
+	            }
+		    }
+		});
+}
+</script>
+
+<script>
+function ExportacionAlimentosSuministradosListado(Busqueda, NumExplotacion){
+	
+		var busqueda = Busqueda + "-01-01";
+		
+		var datos= {
+			'NumExplotacion' : NumExplotacion,
+			'FechaVenta' : busqueda
+		};
+	
+		var datos = JSON.stringify(datos);
+	
+		var url = './ExportacionAlimentosSuministradosListado';
+	
+		$.ajax({
+			type : 'post',
+			url : url,
+			contentType : 'application/json',
+			dataType : 'json',
+			data : datos,
+			success : function(data, textStatus, jqXHR) {
+				var Recuento = data.recuento;
+
+				ExportacionAlimentosSuministradosEnlaces(Recuento, Busqueda, NumExplotacion);
+
+			},error: function(jqXHR,exception) {
+				
+			},statuscode:{
+				404:function(){ mostrarPantallaError(url); }
+			}
+		});
+}
+</script>
+
+<script>
+function ExportacionAlimentosSuministradosEnlaces(Recuento, Busqueda, NumExplotacion){
+	
+		var NDocumentos = Recuento / 25;
+				
+		var NEnlaces;
+		if(NDocumentos % 1 == 0){
+			NEnlaces = parseInt(NDocumentos);
+		}else{
+			NEnlaces = parseInt(NDocumentos + 1);
+		}
+				
+		var mensaje = "<h5>LISTADO DE DOCUMENTOS:</h5>"
+		
+		mensaje = mensaje + "<table>";
+			for(var i=0; i<NEnlaces; i++){
+				var uno = "'" + NumExplotacion + "'";
+				var dos = "'" + i + "'";
+				var busqueda = Busqueda + "-01-01";
+				var tres = "'" + busqueda + "'";
+				var url = "ExportacionAlimentosSuministradosDescarga(" + uno + "," + dos + ", "+tres+")";
+				
+				mensaje = mensaje + "<tr>";
+					mensaje = mensaje + "<td>";
+						mensaje = mensaje + "<p>Documento número "+i+ ": </p>";
+					mensaje = mensaje + "</td>";
+					mensaje = mensaje + "<td style='text-align: center;'>";
+						mensaje = mensaje + "<button type='button' class='btn btn-success' onClick=\""+url+"\">Descargar</button>";
+					mensaje = mensaje + "</td>";
+				mensaje = mensaje + "</tr>";		
+			} 			
+		mensaje = mensaje + "</table>";
+		
+								
+		bootbox.dialog({
+	        title: "ENLACES DE DESCARGAS",
+	        message: mensaje,
+	        buttons: {
+	            sucess:{
+	                label: "Cancelar",
+	            	className: 'btn-secondary' 
+	            }
+	        }       
+	    });
+}
+</script>
+
+<script>
+function ExportacionAlimentosSuministradosDescarga(NumExplotacion, num, Busqueda){
+	//var NumExplotacion = sessionStorage.getItem("NumeroExplotacion");
+	var urlFirma = './ExportacionAlimentosSuministrados/'+NumExplotacion+'/'+num+'/'+Busqueda;
+	
+	$.ajax({
+			type: 'get',
+			url: urlFirma,
+			contentType: 'application/pdf',
+			success: function(data,textStatus,jqXHR){	
+				url = './ExportacionAlimentosSuministradosDescarga'
 				jQuery('<form action="' + url + '" method="get"></form>').appendTo('body').submit().remove();
 			},error: function(jqXHR,exception) {
 				bootbox.alert({

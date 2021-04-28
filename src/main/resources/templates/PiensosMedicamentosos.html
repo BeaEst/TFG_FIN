@@ -19,7 +19,7 @@
 <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 <script src="../js/bootbox.min.js"></script>
 
-<title>Alimentos Suministrados</title>
+<title>Piensos Medicamentosos</title>
 </head>
 <body>
 	<div>
@@ -59,11 +59,11 @@
 						style="padding-left: 10px; width: 150px;"
 						href="./Leche.html">Leche</a></li>
 					<li class="nav-item"><a class="nav-link active"
-						style="padding-left: 10px; background-color: #e3e4e5; width: 150px; color: black"
-						href="./AlimentosSuministrados.html"><b>ALIMENTOS SUMINISTRADOS</b></a></li>
-					<li class="nav-item"><a class="nav-link active"
 						style="padding-left: 10px; width: 150px;"
-						href="./PiensosMedicamentosos.html">Piensos Medicamentosos</a></li>
+						href="./AlimentosSuministrados.html">Alimentos Suministrados</a></li>
+					<li class="nav-item"><a class="nav-link active"
+						style="padding-left: 10px; background-color: #e3e4e5; width: 150px; color: black"
+						href="./PiensosMedicamentosos.html"><b>PIENSOS MEDICAMENTOSOS</b></a></li>
 					<li class="nav-item"><a class="nav-link active"
 						style="padding-left: 10px; width: 150px;"
 						href="./Exportaciones.html">Exportaciones</a></li>
@@ -112,8 +112,8 @@
 									<div class="form-check">
 										<img src="./anadir.png" title="Añadir venta cria" height="25"
 											size="25" id="" style="float: left; cursor: pointer;"
-											onClick="AnadirAlimentoSum()"> <label style="float: left;">&nbsp;
-											Añadir alimento </label>
+											onClick="AnadirPiensoMedicamentoso()"> <label style="float: left;">&nbsp;
+											Añadir pienso medicamentoso </label>
 									</div>
 								</td>
 							</tr>
@@ -161,7 +161,6 @@
 							<img src="./siloN.png" width="30" height="30" style="display: inline;">
 						</a>
 					</li>
-					
 					<li class="nav-item">
 						<a class="nav-link active" style="padding-left: 10px;" href="./Exportaciones.html"> 
 							<img src="./camion.png" width="30" height="30" style="display: inline;">
@@ -396,7 +395,7 @@ function paginacion(NumPaginacion){
 	
 		var usuarioLoginJSON = JSON.stringify(usuarioDatos);
 	
-		var url = './cargaralimentossuministrados';
+		var url = './cargarpiensosmedicamentosos';
 	
 		$.ajax({
 			type : 'post',
@@ -406,17 +405,16 @@ function paginacion(NumPaginacion){
 			data : usuarioLoginJSON,
 			success : function(data, textStatus, jqXHR) {
 				var FechaCompra = data.FechaCompra;
-				var NaturalezaAlimento = data.NaturalezaAlimento;
-				var Cantidad = data.Cantidad;
-				var NDocumento = data.NDocumento;
+				var CodigoReceta = data.CodigoReceta;
+				var PiensoMedicamentoso = data.PiensoMedicamentoso;
 				
-				var size = Object.keys(NDocumento).length;
+				var size = Object.keys(CodigoReceta).length;
 	
 				txt = document.getElementById("card");
 				var doc = "";
 				
 				//Sacar el número de paginaciones que va a haber de animales.
-				var paginacion = size / 24;
+				var paginacion = size / 12;
 				
 				if(Number.isInteger(paginacion)){
 					paginacion = paginacion;
@@ -428,10 +426,10 @@ function paginacion(NumPaginacion){
 				if(NumPaginacion == 1){
 					var valor = 0;	
 				}else{
-					var valor = (NumPaginacion - 1) * 24;	
+					var valor = (NumPaginacion - 1) * 12;	
 				}
 					
-				var total = (NumPaginacion * 24) + 24;
+				var total = (NumPaginacion * 12) + 12;
 				doc = doc + '<p style="margin-left: 155px;"><em>Página '+NumPaginacion+' de '+paginacion+'</em></p>';
 				//for(var i=1; i<=paginacion; i++){
 					doc = doc + '<table style="margin-left: 155px;">';
@@ -453,18 +451,16 @@ function paginacion(NumPaginacion){
 										if(par == 0){
 											if(valor < total && valor < size){
 												doc= doc + '<div class="card text-black bg-light mb-3" style="cursor:pointer;">'
-												+'<div class="card-header" style="margin-top:5px;"><h5>'+NDocumento[valor]
+												+'<div class="card-header" style="margin-top:5px;"><h5>'+CodigoReceta[valor]
 												+'</h5><p class="card-text" style="text-align:right;">Fecha compra: '+FechaCompra[valor]+'</p>'
-												+'<p class="card-text" style="text-align:right;">'+Cantidad[valor]+'Kg</p>'
-												+'<p class="card-text" style="text-align:right;">'+NaturalezaAlimento[valor]+'</p></div></div>';
+												+'<p class="card-text" style="text-align:right;">'+PiensoMedicamentoso[valor]+'</p></div></div>';
 											}
 										}else{
 											if(valor < total && valor < size){
 												doc= doc + '<div class="card text-white bg-secondary mb-3" style="cursor:pointer;">'
-												+'<div class="card-header" style="margin-top:5px;"><h5>'+NDocumento[valor]
+												+'<div class="card-header" style="margin-top:5px;"><h5>'+CodigoReceta[valor]
 												+'</h5><p class="card-text" style="text-align:right;">Fecha compra: '+FechaCompra[valor]+'</p>'
-												+'<p class="card-text" style="text-align:right;">'+Cantidad[valor]+'Kg</p>'
-												+'<p class="card-text" style="text-align:right;">'+NaturalezaAlimento[valor]+'</p></div></div>';
+												+'<p class="card-text" style="text-align:right;">'+PiensoMedicamentoso[valor]+'</p></div></div>';
 											}
 										}
 										valor = valor + 1;
@@ -614,7 +610,7 @@ function paginacion(NumPaginacion){
 </script>
 
 <script>
-function AnadirAlimentoSum(){
+function AnadirPiensoMedicamentoso(){
 
 	var mensaje = "";
 	
@@ -626,18 +622,13 @@ function AnadirAlimentoSum(){
 	mensaje = mensaje + "</tr>";
 	
 	mensaje = mensaje + "<tr>";
-	mensaje = mensaje + "<td>Número de documento:</td>";
-	mensaje = mensaje + "<td><input id='NDocumento'></td>";
+	mensaje = mensaje + "<td>Pienso medicamentoso:</td>";
+	mensaje = mensaje + "<td><input id='PMedicamentoso' maxlength='200'></td>";
 	mensaje = mensaje + "</tr>";
 	
 	mensaje = mensaje + "<tr>";
-	mensaje = mensaje + "<td>Cantidad:</td>";
-	mensaje = mensaje + "<td><input id='Cantidad'></td>";
-	mensaje = mensaje + "</tr>";
-	
-	mensaje = mensaje + "<tr>";
-	mensaje = mensaje + "<td>Naturaleza:</td>";
-	mensaje = mensaje + "<td><textarea id='Naturaleza' rows='5' cols='20'></textarea></td>";
+	mensaje = mensaje + "<td>Código receta:</td>";
+	mensaje = mensaje + "<td><input id='CReceta' maxlength='100'></td>";
 	mensaje = mensaje + "</tr>";
 	
 	mensaje = mensaje + "</table>";
@@ -655,10 +646,9 @@ function AnadirAlimentoSum(){
 	    callback: function (result) {
 	        if (result) {
 	        	var FechaCompra= document.getElementById("FechaCompra").value;
-	        	var NDocumento= document.getElementById("NDocumento").value;
-	        	var Cantidad= document.getElementById("Cantidad").value;
-	        	var Naturaleza= document.getElementById("Naturaleza").value;
-            	AnadirRegistro(FechaCompra, NDocumento, Cantidad, Naturaleza);
+	        	var PMedicamentoso= document.getElementById("PMedicamentoso").value;
+	        	var CReceta= document.getElementById("CReceta").value;
+            	AnadirRegistro(FechaCompra, PMedicamentoso, CReceta);
             } else {
                 
             }
@@ -669,21 +659,20 @@ function AnadirAlimentoSum(){
 </script>
 
 <script>
-function AnadirRegistro(FechaCompra, NDocumento, Cantidad, Naturaleza){
+function AnadirRegistro(FechaCompra, PMedicamentoso, CReceta){
 	var usuario = sessionStorage.getItem("usuario_activo");
 	var numexplotacion = sessionStorage.getItem("NumeroExplotacion");
 	
 	var datosNuevoAnimal= {
 		'FechaCompra' : FechaCompra,
-		'NDocumento' : NDocumento,
-		'Cantidad' : Cantidad,
-		'Naturaleza' : Naturaleza,
+		'CReceta' : CReceta,
+		'PiensoMedicamentoso' : PMedicamentoso,
 		'NumExplotacion' : numexplotacion
 	};
 
 	var datosNuevoAnimalJSON = JSON.stringify(datosNuevoAnimal);
 
-	var url = './nuevoalimentosuministrado';
+	var url = './nuevopiensomedicamentoso';
 
 	$.ajax({
 		type : 'post',
@@ -696,7 +685,7 @@ function AnadirRegistro(FechaCompra, NDocumento, Cantidad, Naturaleza){
 			
 			if(estado == 'correcto'){
 				bootbox.dialog({
-					title: NDocumento, 
+					title: CReceta, 
 					message: "Se ha añadido correctamente",
 					closeButton: true,
 					onEscape: true
@@ -704,7 +693,7 @@ function AnadirRegistro(FechaCompra, NDocumento, Cantidad, Naturaleza){
 			}else if(estado == 'incorrecto'){
 				bootbox.dialog({
 					title:"ERROR", 
-					message: "NO se ha podido añadir el registro de alimento suministrado",
+					message: "NO se ha podido añadir el registro de pienso medicamentoso",
 					closeButton: true,
 					onEscape: true
 				});
@@ -713,7 +702,7 @@ function AnadirRegistro(FechaCompra, NDocumento, Cantidad, Naturaleza){
 		error : function(jqXHR, exception) {
 			bootbox.dialog({
 					title:"ERROR", 
-					message: "NO se ha podido añadir el registro de alimento suministrado",
+					message: "NO se ha podido añadir el registro de pienso medicamentoso",
 					closeButton: true,
 					onEscape: true
 				});
@@ -745,7 +734,7 @@ function BuscarFiltroAno(){
 	
 		var datosFiltro2JSON = JSON.stringify(datosFiltro2);
 	
-		var url = './filtroAnoAlimentos';
+		var url = './filtroAnoPMedicamentosos';
 	
 		$.ajax({
 			type : 'post',
@@ -755,17 +744,16 @@ function BuscarFiltroAno(){
 			data : datosFiltro2JSON,
 			success : function(data, textStatus, jqXHR) {
 				var FechaCompra = data.FechaCompra;
-				var NDocumento = data.NDocumento;
-				var NaturalezaAlimento = data.NaturalezaAlimento;
-				var Cantidad = data.Cantidad;
+				var CodigoReceta = data.CodigoReceta;
+				var PiensoMedicamentoso = data.PiensoMedicamentoso;
 				
-				var size = Object.keys(NDocumento).length;
+				var size = Object.keys(CodigoReceta).length;
 	
 				txt = document.getElementById("card");
 				var doc = "";
 				
 				//Sacar el número de paginaciones que va a haber de animales.
-				var paginacion = size / 20;
+				var paginacion = size / 12;
 				
 				if(Number.isInteger(paginacion)){
 					paginacion = paginacion;
@@ -776,7 +764,7 @@ function BuscarFiltroAno(){
 				
 				valor = 0;
 					
-				var total = (valor * 20) + 20;
+				var total = (valor * 12) + 12;
 				doc = doc + '<p style="margin-left: 155px;"><em>Página '+valor+' de '+paginacion+'</em></p>';
 				//for(var i=1; i<=paginacion; i++){
 					doc = doc + '<table style="margin-left: 155px;">';
@@ -798,18 +786,16 @@ function BuscarFiltroAno(){
 										if(par == 0){
 											if(valor < total && valor < size){
 												doc= doc + '<div class="card text-black bg-light mb-3" style="cursor:pointer;">'
-												+'<div class="card-header" style="margin-top:5px;"><h5>'+NDocumento[valor]
+												+'<div class="card-header" style="margin-top:5px;"><h5>'+CodigoReceta[valor]
 												+'</h5><p class="card-text" style="text-align:right;">Fecha compra: '+FechaCompra[valor]+'</p>'
-												+'<p class="card-text" style="text-align:right;">'+Cantidad[valor]+'Kg</p>'
-												+'<p class="card-text" style="text-align:right;">'+NaturalezaAlimento[valor]+'</p></div></div>';
+												+'<p class="card-text" style="text-align:right;">'+PiensoMedicamentoso[valor]+'</p></div></div>';
 											}
 										}else{
 											if(valor < total && valor < size){
 												doc= doc + '<div class="card text-white bg-secondary mb-3" style="cursor:pointer;">'
-												+'<div class="card-header" style="margin-top:5px;"><h5>'+NDocumento[valor]
+												+'<div class="card-header" style="margin-top:5px;"><h5>'+CodigoReceta[valor]
 												+'</h5><p class="card-text" style="text-align:right;">Fecha compra: '+FechaCompra[valor]+'</p>'
-												+'<p class="card-text" style="text-align:right;">'+Cantidad[valor]+'Kg</p>'
-												+'<p class="card-text" style="text-align:right;">'+NaturalezaAlimento[valor]+'</p></div></div>';
+												+'<p class="card-text" style="text-align:right;">'+PiensoMedicamentoso[valor]+'</p></div></div>';
 											}
 										}
 										valor = valor + 1;
@@ -867,7 +853,7 @@ function paginacionFiltroAno(NumPaginacion){
 	
 		var datosFiltro2JSON = JSON.stringify(datosFiltro2);
 	
-		var url = './filtroAnoAlimentos';
+		var url = './filtroAnoPMedicamentosos';
 	
 		$.ajax({
 			type : 'post',
@@ -877,17 +863,16 @@ function paginacionFiltroAno(NumPaginacion){
 			data : datosFiltro2JSON,
 			success : function(data, textStatus, jqXHR) {
 				var FechaCompra = data.FechaCompra;
-				var NDocumento = data.NDocumento;
-				var NaturalezaAlimento = data.NaturalezaAlimento;
-				var Cantidad = data.Cantidad;
+				var CodigoReceta = data.CodigoReceta;
+				var PiensoMedicamentoso = data.PiensoMedicamentoso;
 				
-				var size = Object.keys(NDocumento).length;
+				var size = Object.keys(CodigoReceta).length;
 	
 				txt = document.getElementById("card");
 				var doc = "";
 				
 				//Sacar el número de paginaciones que va a haber de animales.
-				var paginacion = size / 24;
+				var paginacion = size / 12;
 				
 				if(Number.isInteger(paginacion)){
 					paginacion = paginacion;
@@ -899,10 +884,10 @@ function paginacionFiltroAno(NumPaginacion){
 				if(NumPaginacion == 1){
 					var valor = 0;	
 				}else{
-					var valor = (NumPaginacion - 1) * 24;	
+					var valor = (NumPaginacion - 1) * 12;	
 				}
 					
-				var total = (NumPaginacion * 24) + 24;
+				var total = (NumPaginacion * 12) + 12;
 				doc = doc + '<p style="margin-left: 155px;"><em>Página '+NumPaginacion+' de '+paginacion+'</em></p>';
 				//for(var i=1; i<=paginacion; i++){
 					doc = doc + '<table style="margin-left: 155px;">';
@@ -924,18 +909,16 @@ function paginacionFiltroAno(NumPaginacion){
 									if(par == 0){
 										if(valor < total && valor < size){
 												doc= doc + '<div class="card text-black bg-light mb-3" style="cursor:pointer;">'
-												+'<div class="card-header" style="margin-top:5px;"><h5>'+NDocumento[valor]
+												+'<div class="card-header" style="margin-top:5px;"><h5>'+CodigoReceta[valor]
 												+'</h5><p class="card-text" style="text-align:right;">Fecha compra: '+FechaCompra[valor]+'</p>'
-												+'<p class="card-text" style="text-align:right;">'+Cantidad[valor]+'Kg</p>'
-												+'<p class="card-text" style="text-align:right;">'+NaturalezaAlimento[valor]+'</p></div></div>';
+												+'<p class="card-text" style="text-align:right;">'+PiensoMedicamentoso[valor]+'</p></div></div>';
 											}
 										}else{
 											if(valor < total && valor < size){
 												doc= doc + '<div class="card text-white bg-secondary mb-3" style="cursor:pointer;">'
-												+'<div class="card-header" style="margin-top:5px;"><h5>'+NDocumento[valor]
+												+'<div class="card-header" style="margin-top:5px;"><h5>'+CodigoReceta[valor]
 												+'</h5><p class="card-text" style="text-align:right;">Fecha compra: '+FechaCompra[valor]+'</p>'
-												+'<p class="card-text" style="text-align:right;">'+Cantidad[valor]+'Kg</p>'
-												+'<p class="card-text" style="text-align:right;">'+NaturalezaAlimento[valor]+'</p></div></div>';
+												+'<p class="card-text" style="text-align:right;">'+PiensoMedicamentoso[valor]+'</p></div></div>';
 											}
 										}
 										valor = valor + 1;
