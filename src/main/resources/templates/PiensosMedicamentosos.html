@@ -66,6 +66,12 @@
 						href="./PiensosMedicamentosos.html"><b>PIENSOS MEDICAMENTOSOS</b></a></li>
 					<li class="nav-item"><a class="nav-link active"
 						style="padding-left: 10px; width: 150px;"
+						href="./Medicamentos.html">Medicamentos</a></li>
+					<li class="nav-item"><a class="nav-link active"
+						style="padding-left: 10px; width: 150px;"
+						href="./Enfermedades.html">Enfermedades</a></li>
+					<li class="nav-item"><a class="nav-link active"
+						style="padding-left: 10px; width: 150px;"
 						href="./Exportaciones.html">Exportaciones</a></li>
 				</ul>
 			</nav>
@@ -936,21 +942,21 @@ function paginacionFiltroAno(NumPaginacion){
 				doc2 = "";
 				
 				if(NumPaginacion == 1){
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+NumPaginacion+')">' + NumPaginacion + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion+1)+')">' + (NumPaginacion+1) + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+NumPaginacion+')">' + NumPaginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+(NumPaginacion+1)+')">' + (NumPaginacion+1) + '</a></li>';
 				}else if (NumPaginacion == paginacion){
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion-1)+')">' + (NumPaginacion-1) + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+NumPaginacion+')">' + NumPaginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+(NumPaginacion-1)+')">' + (NumPaginacion-1) + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+NumPaginacion+')">' + NumPaginacion + '</a></li>';
 				}else if(NumPaginacion == 2 || NumPaginacion == paginacion-1){
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion-1)+')">' + (NumPaginacion-1) + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+NumPaginacion+')">' + NumPaginacion + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion+1)+')">' + (NumPaginacion+1) + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+(NumPaginacion-1)+')">' + (NumPaginacion-1) + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+NumPaginacion+')">' + NumPaginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+(NumPaginacion+1)+')">' + (NumPaginacion+1) + '</a></li>';
 				}else{
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion(1)">' + 1 + '</a></li>...';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion-1)+')">' + (NumPaginacion-1) + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+NumPaginacion+')">' + NumPaginacion + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion+1)+')">' + (NumPaginacion+1) + '</a></li>...';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+paginacion+')">' + paginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno(1)">' + 1 + '</a></li>...';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+(NumPaginacion-1)+')">' + (NumPaginacion-1) + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+NumPaginacion+')">' + NumPaginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+(NumPaginacion+1)+')">' + (NumPaginacion+1) + '</a></li>...';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+paginacion+')">' + paginacion + '</a></li>';
 				}
 				
 				txt2.innerHTML = doc2;
