@@ -22,27 +22,6 @@
 <title>Exportaciones</title>
 </head>
 <body>
-	<div>
-		<nav class="navbar navbar-dark bg-dark justify-content-end">
-			<div class="container-fluid" style="float:left;">
-				<a class="navbar-brand" href="./Inicio.html">OVICAP-DOC</a>
-			
-				<div class="dropdown">
-					<a class="nav-link dropdown-toggle" href="#"
-						id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown"
-						aria-expanded="false"> <b><script>document.write(sessionStorage.getItem("usuario_activo"));</script></b>
-					</a>
-					<ul class="dropdown-menu dropdown-menu-end"
-						aria-labelledby="navbarDropdownMenuLink">
-						<li><a class="dropdown-item" onclick="VerPerfil()">Ver
-								Perfil</a></li>
-						<li><a class="dropdown-item" onclick="CerrarSesion()">Cerrar
-								Sesión</a></li>
-					</ul>
-				</div>
-			</div>
-		</nav>
-	</div>
 
 	<div id="NoMovil" style="display: none;">
 		<div
@@ -77,7 +56,28 @@
 			</nav>
 		</div>
 
-
+		<div>
+		<nav class="navbar navbar-dark bg-dark justify-content-end">
+			<div class="container-fluid" style="float:left;">
+				<a class="navbar-brand" href="./Inicio.html">OVICAP-DOC</a>
+			
+				<div class="dropdown">
+					<a class="nav-link dropdown-toggle" href="#"
+						id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown"
+						aria-expanded="false"> <b><script>document.write(sessionStorage.getItem("usuario_activo"));</script></b>
+					</a>
+					<ul class="dropdown-menu dropdown-menu-end"
+						aria-labelledby="navbarDropdownMenuLink">
+						<li><a class="dropdown-item" onclick="VerPerfil()">Ver
+								Perfil</a></li>
+						<li><a class="dropdown-item" onclick="CerrarSesion()">Cerrar
+								Sesión</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</div>
+	
 		<h1 style="text-align: center;">Exportaciones</h1>
 
 		<table class="table align-middle"
@@ -127,13 +127,11 @@
 				</tr>
 			</tbody>
 		</table>
-		<!-- 
-		-->
 	</div>
 
 	<div id="Movil" style="display: none;">
 		<div
-			style="width: 60px; float: left; position: absolute; top: 50px; bottom: 0; background-color: #212529;">
+			style="width: 60px; float: left; position: fixed; top: 0px; bottom: 0; background-color: #212529; padding-top:50px">
 			<nav class="navbar navbar-dark bg-dark">
 				<ul class="navbar-nav">
 					<li class="nav-item">
@@ -153,16 +151,129 @@
 						</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link active" style="padding-left: 10px; background-color: #e3e4e5; width: 60px; color: black"href="./Exportaciones.html">
-							<img src="./camionN.png" width="30" height="30" style="display: inline;">
+						<a class="nav-link active" style="padding-left: 10px;" href="./AlimentosSuministrados.html"> 
+							<img src="./silo.png" width="30" height="30" style="display: inline;">
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link active" style="padding-left: 10px;" href="./PiensosMedicamentosos.html">
+							<img src="./silo.png" width="25" height="25" style="display: inline;">
+							<img src="./pildora.png" width="17" height="17" style="display: inline;">
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link active" style="padding-left: 10px;" href="./Medicamentos.html">
+							<img src="./medicamentos.png" width="25" height="25" style="display: inline;">
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link active" style="padding-left: 10px;" href="./Enfermedades.html">
+							<img src="./virus.png" width="30" height="30" style="display: inline;">
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link active" style="padding-left: 10px; background-color: #e3e4e5; width: 60px; color: black" href="./Exportaciones.html"> 
+							<img src="./exportacionesN.png" width="30" height="30" style="display: inline;">
 						</a>
 					</li>
 				</ul>
 			</nav>
+			
 		</div>
 
+		<div>
+		<nav class="navbar navbar-dark bg-dark justify-content-end">
+			<div class="container-fluid" style="float:left;">
+				<a class="navbar-brand" href="./Inicio.html">OVICAP-DOC</a>
+			
+				<div class="dropdown">
+					<a class="nav-link dropdown-toggle" href="#"
+						id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown"
+						aria-expanded="false"> <b><script>document.write(sessionStorage.getItem("usuario_activo"));</script></b>
+					</a>
+					<ul class="dropdown-menu dropdown-menu-end"
+						aria-labelledby="navbarDropdownMenuLink">
+						<li><a class="dropdown-item" onclick="VerPerfil()">Ver
+								Perfil</a></li>
+						<li><a class="dropdown-item" onclick="CerrarSesion()">Cerrar
+								Sesión</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</div>
+	
+		<h1 style="text-align: center;margin-left: 60px">EXPORTACIONES</h1>
+		
+		<table class="table align-middle" style="margin-left: 65px; width: 80%;">
+				<thead>
+					<tr>
+						<th>Ovino</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td id="ABA_Ovino"><img src="./pdf.png" alt="Altas y bajas de animales"
+							width="30" height="30" id="ABA_OvinoE">Exportación de altas y bajas de animales</td>
+					</tr>
+					<tr>
+						<td id="L_Ovino"><img src="./pdf.png" alt="Leche"
+							width="30" height="30" id="L_OvinoE">Exportación de registros de entrega de leche</td>
+					</tr>
+					<tr>
+						<td id="AS_Ovino"><img src="./pdf.png" alt="Alimentos Suministrados"
+							width="30" height="30" id="AS_OvinoE">Exportación de registros de alimentos suminsitrados</td>
+					</tr>
+					<tr>
+						<td id="PM_Ovino"><img src="./pdf.png" alt="Piensos Medicamentosos"
+							width="30" height="30" id="PM_OvinoE">Exportación de registros de piensos medicamentosos</td>
+					</tr>
+					<tr>
+						<td id="M_Ovino"><img src="./pdf.png" alt="Medicamentos"
+							width="30" height="30" id="M_OvinoE">Exportación de registros de medicamentos</td>
+					</tr>
+					<tr>
+						<td id="E_Ovino"><img src="./pdf.png" alt="Enfermedades"
+							width="30" height="30" id="E_OvinoE">Exportación de registros de enfermedades</td>
+					</tr>
+				</tbody>
+			</table>
+			
+			<table class="table align-middle" style="margin-left: 65px; width: 80%;">
+				<thead>
+					<tr>
+						<th>Caprino</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td id="ABA_Caprino"><img src="./pdf.png" alt="Altas y bajas de animales"
+							width="30" height="30" id="ABA_CaprinoE">Exportación de altas y bajas de animales</td>
+					</tr>
+					<tr>
+						<td id="L_Caprino"><img src="./pdf.png" alt="Leche"
+							width="30" height="30" id="L_CaprinoE">Exportación de Registros de entrega de leche</td>
+					</tr>
+					<tr>
+						<td id="AS_Caprino"><img src="./pdf.png" alt="Alimentos Suministrados"
+							width="30" height="30" id="AS_CaprinoE">Exportación de registros de alimentos suminsitrados</td>
+					</tr>
+					<tr>
+						<td id="PM_Caprino"><img src="./pdf.png" alt="Piensos Medicamentosos"
+							width="30" height="30" id="PM_CaprinoE">Exportación de registros de piensos medicamentosos</td>
+					</tr>
+					<tr>
+						<td id="M_Caprino"><img src="./pdf.png" alt="Medicamentos"
+							width="30" height="30" id="M_CaprinoE">Exportación de registros de medicamentos</td>
+					</tr>
+					<tr>
+						<td id="E_Caprino"><img src="./pdf.png" alt="Enfermedades"
+							width="30" height="30" id="E_CaprinoE">Exportación de registros de enfermedades</td>
+					</tr>
+				</tbody>
+			</table>
 
-		<h1 style="text-align: center;">Exportaciones</h1>
+		
 
 		<div id="cardMovil"></div>
 
