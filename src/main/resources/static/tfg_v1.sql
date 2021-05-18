@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 25-04-2021 a las 12:54:15
+-- Tiempo de generación: 18-05-2021 a las 20:21:58
 -- Versión del servidor: 10.4.16-MariaDB
 -- Versión de PHP: 7.3.24
 
@@ -36,15 +36,6 @@ CREATE TABLE `alimentos_suministrados` (
   `NumExplotacion` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Volcado de datos para la tabla `alimentos_suministrados`
---
-
-INSERT INTO `alimentos_suministrados` (`Id`, `FechaCompra`, `NaturalezaAlimento`, `Cantidad`, `NDocumento`, `NumExplotacion`) VALUES
-(1, '2020-04-27', 'rt6dcfhjlk', 2000, 'tfctyfygui', 'ES491011310211'),
-(2, '2021-04-27', 'rt6dcfhjlk', 2000, 'tfctyfygui', 'ES491011310211'),
-(3, '2021-04-09', 'Esto es una prueba', 2000, 'kugk', 'ES491011310211');
-
 -- --------------------------------------------------------
 
 --
@@ -67,16 +58,7 @@ CREATE TABLE `altas_bajas_animales` (
 --
 
 INSERT INTO `altas_bajas_animales` (`Id`, `Fecha`, `Motivo`, `Procedencia_Destino`, `NDocumento`, `NAnimales`, `BalanceFinal`, `NumExplotacion`) VALUES
-(1, '1099-01-01', '-', 'INICIO APLICACION', '-', '74', '74', 'ES491011310211'),
-(78, '2019-04-01', 'BAJA - MUERTE', '-', '', '1', '73', 'ES491011310211'),
-(79, '2021-04-02', 'BAJA - MUERTE', '-', '', '1', '72', 'ES491011310211'),
-(80, '2021-04-03', 'BAJA - MUERTE', '-', '', '1', '71', 'ES491011310211'),
-(81, '2021-04-05', 'BAJA - MUERTE', '-', '', '1', '70', 'ES491011310211'),
-(82, '2021-04-06', 'BAJA - MUERTE', '-', '', '1', '69', 'ES491011310211'),
-(83, '2021-04-07', 'BAJA - MUERTE', '-', '', '1', '68', 'ES491011310211'),
-(114, '2021-04-23', 'BAJA - SALIDA', 'dsfgsdf', 'dfsfgsdfg', '1', '52', 'ES491011310211'),
-(115, '2021-04-23', 'BAJA - MUERTE', '-', 'cvzbxvcbzx', '1', '51', 'ES491011310211'),
-(116, '2021-04-21', 'BAJA - SALIDA', 'ljhpoi', 'ygyvkjhuigb', '12 CORDEROS', '', 'ES491011310211');
+(1, '1099-01-01', '-', 'INICIO APLICACION', '-', '74', '74', 'ES491011310211');
 
 -- --------------------------------------------------------
 
@@ -102,7 +84,7 @@ CREATE TABLE `animales` (
 --
 
 INSERT INTO `animales` (`NumIdentificacion`, `Sexo`, `AnoNacimiento`, `Usuario`, `Muerta`, `Venta`, `FechaBaja`, `TieneBolo`, `TieneCrotal`, `NumExplotacion`) VALUES
-('724080000531440', 'H', 2000, 'admin', 1, 0, '2021-04-01', 0, 0, 'ES491011310211'),
+('724080000531440', 'H', 2000, 'admin', 0, 0, NULL, 0, 0, 'ES491011310211'),
 ('724080003323723', 'H', 2021, 'admin', 1, 0, '2021-04-02', 0, 0, 'ES491011310211'),
 ('724080003323744', 'H', 2021, 'admin', 1, 0, '2021-04-03', 1, 1, 'ES491011310211'),
 ('724080003323764', 'H', 2021, 'admin', 1, 0, '2021-04-05', 1, 1, 'ES491011310211'),
@@ -127,7 +109,7 @@ INSERT INTO `animales` (`NumIdentificacion`, `Sexo`, `AnoNacimiento`, `Usuario`,
 ('724080004006174', 'H', 2021, 'admin', 1, 0, '2021-04-22', 0, 0, 'ES491011310211'),
 ('724080004006175', 'H', 2021, 'admin', 0, 1, '2021-04-23', 0, 0, 'ES491011310211'),
 ('724080004006176', 'H', 2021, 'admin', 1, 0, '2021-04-23', 0, 0, 'ES491011310211'),
-('724080004006177', 'H', 2021, 'admin', 0, 0, '2021-04-18', 0, 0, 'ES491011310211'),
+('724080004006177', 'H', 2021, 'admin', 1, 0, '2021-05-05', 1, 1, 'ES491011310211'),
 ('724080004006178', 'H', 0, 'admin', 0, 0, '2021-04-20', 0, 0, 'ES491011310211'),
 ('724080004006180', 'H', 0, 'admin', 0, 0, '2021-04-20', 0, 0, 'ES491011310211'),
 ('724080004006188', 'H', 0, 'admin', 0, 0, '2021-04-09', 0, 0, 'ES491011310211'),
@@ -178,6 +160,23 @@ INSERT INTO `animales` (`NumIdentificacion`, `Sexo`, `AnoNacimiento`, `Usuario`,
 ('724080004018208', 'H', 2021, 'admin', 0, 0, '2021-04-13', 1, 1, 'ES491011310211'),
 ('724080004018209', 'H', 2021, 'admin', 0, 0, NULL, 1, 1, 'ES491011310211'),
 ('724080004018210', 'H', 2021, 'admin', 0, 0, NULL, 1, 1, 'ES491011310211');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `enfermedades`
+--
+
+CREATE TABLE `enfermedades` (
+  `Id` int(11) NOT NULL,
+  `FechaAparicion` date NOT NULL,
+  `Diagnostico` varchar(100) NOT NULL,
+  `DocAsociado` varchar(100) NOT NULL,
+  `NAnimales` int(11) NOT NULL,
+  `MedidasAdoptadas` varchar(100) NOT NULL,
+  `FechaDesaparicion` date NOT NULL,
+  `NumExplotacion` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -277,7 +276,36 @@ INSERT INTO `leche` (`id`, `FechaEntrega`, `CodigoCisterna`, `NumExplotacion`) V
 (58, '2021-05-07', 'ghdfghdfg', 'ES491011310211'),
 (59, '2021-04-08', 'fghdfgh', 'ES491011310211'),
 (60, '2021-05-09', 'gdhfghd', 'ES491011310211'),
-(61, '2021-05-10', 'dfghdfg', 'ES491011310211');
+(61, '2021-05-10', 'dfghdfg', 'ES491011310211'),
+(62, '2021-04-28', 'asd123', 'ES491011310211');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `medicamentos`
+--
+
+CREATE TABLE `medicamentos` (
+  `Id` int(11) NOT NULL,
+  `FechaCompra` date NOT NULL,
+  `CodigoReceta` varchar(100) NOT NULL,
+  `Medicamento` varchar(200) NOT NULL,
+  `NumExplotacion` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `piensos_medicamentosos`
+--
+
+CREATE TABLE `piensos_medicamentosos` (
+  `Id` int(11) NOT NULL,
+  `FechaCompra` date NOT NULL,
+  `CodigoReceta` varchar(100) NOT NULL,
+  `PiensoMedicamentoso` varchar(200) NOT NULL,
+  `NumExplotacion` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -317,32 +345,6 @@ CREATE TABLE `venta_crias` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Volcado de datos para la tabla `venta_crias`
---
-
-INSERT INTO `venta_crias` (`ID`, `NGuia`, `NAnimales`, `FechaVenta`, `NumExplotacion`) VALUES
-(1, '1234567891', '12', '2020-04-30', 'ES491011310211'),
-(2, '9516358651', '25', '2022-04-20', 'ES491011310211'),
-(3, '6491941981', '40', '2021-04-25', 'ES491011310211'),
-(4, '9516358651', '25', '2021-04-20', 'ES491011310211'),
-(5, '6491941981', '40', '2021-04-25', 'ES491011310211'),
-(6, '689168961', '15', '2021-04-01', 'ES491011310211'),
-(7, '86415455', '14', '2021-04-01', 'ES491011310211'),
-(8, '2465151', '99', '2021-05-09', 'ES491011310211'),
-(9, '6529196', '98', '2021-04-10', 'ES491011310211'),
-(10, '264SGDFG', '97', '2021-05-06', 'ES491011310211'),
-(11, 'VZCBZVB', '12', '2021-05-04', 'ES491011310211'),
-(12, '2525', '25', '2021-04-01', 'ES491011310211'),
-(13, 'sadfasd', '25', '2021-05-07', 'ES491011310211'),
-(14, 'sdfasdf', '9', '2021-05-03', 'ES491011310211'),
-(15, 'sdfasdfas', '1', '2021-04-03', 'ES491011310211'),
-(16, 'sdfasdfa', '8', '2021-04-24', 'ES491011310211'),
-(17, 'sadfasdf', '6', '2021-04-11', 'ES491011310211'),
-(18, 'xfhdf', '3', '2021-05-05', 'ES491011310211'),
-(19, 'fsgdfgfdg', '36', '2021-04-20', 'ES491011310211'),
-(20, 'ygyvkjhuigb', '12', '2021-04-21', 'ES491011310211');
-
---
 -- Índices para tablas volcadas
 --
 
@@ -350,7 +352,8 @@ INSERT INTO `venta_crias` (`ID`, `NGuia`, `NAnimales`, `FechaVenta`, `NumExplota
 -- Indices de la tabla `alimentos_suministrados`
 --
 ALTER TABLE `alimentos_suministrados`
-  ADD PRIMARY KEY (`Id`);
+  ADD PRIMARY KEY (`Id`),
+  ADD UNIQUE KEY `NDocumento` (`NDocumento`) USING BTREE;
 
 --
 -- Indices de la tabla `altas_bajas_animales`
@@ -366,6 +369,13 @@ ALTER TABLE `animales`
   ADD KEY `fk_usuario` (`Usuario`);
 
 --
+-- Indices de la tabla `enfermedades`
+--
+ALTER TABLE `enfermedades`
+  ADD PRIMARY KEY (`Id`),
+  ADD UNIQUE KEY `DocAsociado` (`DocAsociado`);
+
+--
 -- Indices de la tabla `explotaciones`
 --
 ALTER TABLE `explotaciones`
@@ -379,6 +389,20 @@ ALTER TABLE `leche`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `medicamentos`
+--
+ALTER TABLE `medicamentos`
+  ADD PRIMARY KEY (`Id`),
+  ADD UNIQUE KEY `CodigoReceta` (`CodigoReceta`);
+
+--
+-- Indices de la tabla `piensos_medicamentosos`
+--
+ALTER TABLE `piensos_medicamentosos`
+  ADD PRIMARY KEY (`Id`),
+  ADD UNIQUE KEY `CodigoReceta` (`CodigoReceta`);
+
+--
 -- Indices de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
@@ -388,7 +412,8 @@ ALTER TABLE `usuarios`
 -- Indices de la tabla `venta_crias`
 --
 ALTER TABLE `venta_crias`
-  ADD PRIMARY KEY (`ID`);
+  ADD PRIMARY KEY (`ID`),
+  ADD UNIQUE KEY `NGuia` (`NGuia`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -398,25 +423,43 @@ ALTER TABLE `venta_crias`
 -- AUTO_INCREMENT de la tabla `alimentos_suministrados`
 --
 ALTER TABLE `alimentos_suministrados`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT de la tabla `altas_bajas_animales`
 --
 ALTER TABLE `altas_bajas_animales`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=117;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=119;
+
+--
+-- AUTO_INCREMENT de la tabla `enfermedades`
+--
+ALTER TABLE `enfermedades`
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de la tabla `leche`
 --
 ALTER TABLE `leche`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
+
+--
+-- AUTO_INCREMENT de la tabla `medicamentos`
+--
+ALTER TABLE `medicamentos`
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+
+--
+-- AUTO_INCREMENT de la tabla `piensos_medicamentosos`
+--
+ALTER TABLE `piensos_medicamentosos`
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT de la tabla `venta_crias`
 --
 ALTER TABLE `venta_crias`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- Restricciones para tablas volcadas

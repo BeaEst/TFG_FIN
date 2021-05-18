@@ -58,10 +58,10 @@ public class OperationsPiensosMedicamentosos {
 						List<String> datos = new ArrayList<String>();
 
 						System.out.println("SELECT FechaCompra, CodigoReceta, PiensoMedicamentoso, NumExplotacion FROM piensos_medicamentosos WHERE NumExplotacion='"
-								+ numexplotacion + "'");
+								+ numexplotacion + "' ORDER BY FechaCompra");
 
 						ResultSet cont_act = s.executeQuery("SELECT FechaCompra, CodigoReceta, PiensoMedicamentoso, NumExplotacion FROM piensos_medicamentosos WHERE NumExplotacion='"
-								+ numexplotacion + "'");
+								+ numexplotacion + "' ORDER BY FechaCompra");
 
 						ArrayList<String> FechaCompra = new ArrayList<>();
 						ArrayList<String> CodigoReceta = new ArrayList<>();

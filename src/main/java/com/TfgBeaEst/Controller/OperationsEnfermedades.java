@@ -29,7 +29,6 @@ import com.TfgBeaEst.Usuario;
 @Controller
 public class OperationsEnfermedades {
 
-
 	@RequestMapping(value = "/cargarenfermedades", method = RequestMethod.POST)
 	public ResponseEntity<Map<String, ArrayList<String>>> CargarMedicamentos(@RequestBody Usuario usuario) {
 
@@ -60,10 +59,10 @@ public class OperationsEnfermedades {
 						List<String> datos = new ArrayList<String>();
 
 						System.out.println("SELECT FechaAparicion, Diagnostico, DocAsociado, NAnimales, MedidasAdoptadas, FechaDesaparicion FROM enfermedades WHERE NumExplotacion='"
-								+ numexplotacion + "'");
+								+ numexplotacion + "' ORDER BY FechaAparicion");
 
 						ResultSet cont_act = s.executeQuery("SELECT FechaAparicion, Diagnostico, DocAsociado, NAnimales, MedidasAdoptadas, FechaDesaparicion FROM enfermedades WHERE NumExplotacion='"
-								+ numexplotacion + "'");
+								+ numexplotacion + "' ORDER BY FechaAparicion");
 
 						ArrayList<String> FechaAparicion = new ArrayList<>();
 						ArrayList<String> Diagnostico = new ArrayList<>();

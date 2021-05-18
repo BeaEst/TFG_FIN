@@ -2226,6 +2226,25 @@ public class OperationsController {
 	/*
 	 * FIN
 	 */
-	
-	
+
+	@RequestMapping(value = "/PlantillaExcel", method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseEntity<byte[]> DescargarPlantillaExcel(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("INICIO descarga altas y bajas de animales");
+
+		ResponseEntity<byte[]> result = null;
+		HttpHeaders header = new HttpHeaders();
+		header.setContentType(new MediaType("application", "x-download"));
+		String date = new SimpleDateFormat().format(new Date());
+		header.set("Content-Disposition", "attachment; filename=PlantillaImportaciones.xlsx");
+
+		// Recoger los bytes del archivo
+		File file = new File("./src/main/resources/static/PlantillaImportaciones.xlsx");
+		byte[] Archivo = Files.readAllBytes(file.toPath());
+
+		result = new ResponseEntity<>(Archivo, header, HttpStatus.OK);
+		System.out.println("FIN descarga altas y bajas de animales");
+		return result;
+	}
 }

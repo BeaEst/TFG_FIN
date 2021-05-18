@@ -78,7 +78,7 @@
 		</nav>
 	</div>
 	
-		<h1 style="text-align: center;">Animales</h1>
+		<h1 style="text-align: center;">ANIMALES</h1>
 
 		<nav class="navbar navbar-dark bg-dark" style="margin-left: 155px">
 			<div class="container-fluid">
@@ -192,6 +192,14 @@
 											onClick="DescargarSinBolo()"> <label
 											style="float: left;">&nbsp; Descargar sin bolo</label>
 									</div>
+									<!--
+									<div class="form-check">
+										<img src="./subir-archivo.png" title="Importar Animales" height="25" size="25"
+											id="" style="float: left; cursor: pointer;"
+											onClick="ImportarAnimales()"> <label
+											style="float: left;">&nbsp; Importar animales mediante Excel</label>
+									</div>
+									  -->
 								</td>
 							</tr>
 						</table>
@@ -290,7 +298,7 @@
 		</nav>
 	</div>
 
-		<h1 style="text-align: center;margin-left: 60px">Animales</h1>
+		<h1 style="text-align: center;margin-left: 60px">ANIMALES</h1>
 
 		<nav class="navbar navbar-dark bg-dark" style="margin-left: 65px;">
 			<div class="container-fluid">
@@ -984,44 +992,18 @@ function VentanaOveja(NumIdentificacion, FechaBaja, sexo1, AnoNacimiento, TieneB
 	
 		
 			if(Muerta == "1"){
-				bootbox.confirm({
-					title:NumIdentificacion, 
+				bootbox.dialog({
+					title: NumIdentificacion, 
 					message: mensaje,
 					closeButton: true,
-					onEscape: true,
-					buttons: {
-				        confirm: {
-				            label: 'Cerrar',
-				            className: 'btn-sucess'
-				        }
-				    },
-				    callback: function (result) {
-				        if (result) {
-				        
-			                } else {
-			                
-			                }
-				    }
+					onEscape: true
 				});
 			}else if(Venta == "1"){
-				bootbox.confirm({
-					title:NumIdentificacion, 
+				bootbox.dialog({
+					title: NumIdentificacion, 
 					message: mensaje,
 					closeButton: true,
-					onEscape: true,
-					buttons: {
-				        confirm: {
-				            label: 'Cerrar',
-				            className: 'btn-sucess'
-				        }
-				    },
-				    callback: function (result) {
-				        if (result) {
-				        
-			                } else {
-			                
-			                }
-				    }
+					onEscape: true
 				});
 			}else{
 			
@@ -1369,6 +1351,8 @@ function BuscarFiltro4(){
 		var usuario = sessionStorage.getItem("usuario_activo");
 		var numExplotacion = sessionStorage.getItem("NumeroExplotacion");
 		
+		var ano2 = ano;
+		
 		if(ano == "-----" && checkVendida.checked == false && checkMuerta.checked == false){
 		bootbox.dialog({
 					title:'ERROR', 
@@ -1493,22 +1477,24 @@ function BuscarFiltro4(){
 				
 				NumPaginacion = 1;
 				
-				if(NumPaginacion == 1){
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+NumPaginacion+')">' + NumPaginacion + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion+1)+')">' + (NumPaginacion+1) + '</a></li>';
+				if(NumPaginacion == 1 && paginacion == 1){
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro4('+NumPaginacion+', '+muerta+', '+vendida+', '+ano2+')">' + NumPaginacion + '</a></li>';
+				}else if(NumPaginacion == 1 && paginacion > 1){
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro4('+NumPaginacion+', '+muerta+', '+vendida+', '+ano2+')">' + NumPaginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro4('+(NumPaginacion+1)+', '+muerta+', '+vendida+', '+ano2+')">' + (NumPaginacion+1) + '</a></li>';
 				}else if (NumPaginacion == paginacion){
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion-1)+')">' + (NumPaginacion-1) + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+NumPaginacion+')">' + NumPaginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro4('+(NumPaginacion-1)+', '+muerta+', '+vendida+', '+ano2+')">' + (NumPaginacion-1) + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro4('+NumPaginacion+', '+muerta+', '+vendida+', '+ano2+')">' + NumPaginacion + '</a></li>';
 				}else if(NumPaginacion == 2 || NumPaginacion == paginacion-1){
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion-1)+')">' + (NumPaginacion-1) + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+NumPaginacion+')">' + NumPaginacion + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion+1)+')">' + (NumPaginacion+1) + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro4('+(NumPaginacion-1)+', '+muerta+', '+vendida+', '+ano2+')">' + (NumPaginacion-1) + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro4('+NumPaginacion+', '+muerta+', '+vendida+', '+ano2+')">' + NumPaginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro4('+(NumPaginacion+1)+', '+muerta+', '+vendida+', '+ano2+')">' + (NumPaginacion+1) + '</a></li>';
 				}else{
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion(1)">' + 1 + '</a></li>...';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion-1)+')">' + (NumPaginacion-1) + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+NumPaginacion+')">' + NumPaginacion + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion+1)+')">' + (NumPaginacion+1) + '</a></li>...';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+paginacion+')">' + paginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro4(1, '+muerta+', '+vendida+', '+ano2+')">' + 1 + '</a></li>...';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro4('+(NumPaginacion-1)+', '+muerta+', '+vendida+', '+ano2+')">' + (NumPaginacion-1) + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro4('+NumPaginacion+', '+muerta+', '+vendida+', '+ano2+')">' + NumPaginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro4('+(NumPaginacion+1)+', '+muerta+', '+vendida+', '+ano2+')">' + (NumPaginacion+1) + '</a></li>...';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro4('+paginacion+', '+muerta+', '+vendida+', '+ano2+')">' + paginacion + '</a></li>';
 				}
 				
 				
@@ -1530,6 +1516,8 @@ function BuscarFiltro4(){
 		var ano = $('#FiltroAnoMVMovil').find('option:selected').val();
 		var usuario = sessionStorage.getItem("usuario_activo");
 		var numExplotacion = sessionStorage.getItem("NumeroExplotacion");
+		
+		var ano2 = ano;
 		
 		if(ano == "-----" && checkVendida.checked == false && checkMuerta.checked == false){
 		bootbox.dialog({
@@ -1655,22 +1643,24 @@ function BuscarFiltro4(){
 				
 				NumPaginacion = 1;
 				
-				if(NumPaginacion == 1){
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+NumPaginacion+')">' + NumPaginacion + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion+1)+')">' + (NumPaginacion+1) + '</a></li>';
+				if(NumPaginacion == 1 && paginacion == 1){
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro4('+NumPaginacion+', '+muerta+', '+vendida+', '+ano2+')">' + NumPaginacion + '</a></li>';
+				}else if(NumPaginacion == 1 && paginacion > 1){
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro4('+NumPaginacion+', '+muerta+', '+vendida+', '+ano2+')">' + NumPaginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro4('+(NumPaginacion+1)+', '+muerta+', '+vendida+', '+ano2+')">' + (NumPaginacion+1) + '</a></li>';
 				}else if (NumPaginacion == paginacion){
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion-1)+')">' + (NumPaginacion-1) + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+NumPaginacion+')">' + NumPaginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro4('+(NumPaginacion-1)+', '+muerta+', '+vendida+', '+ano2+')">' + (NumPaginacion-1) + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro4('+NumPaginacion+', '+muerta+', '+vendida+', '+ano2+')">' + NumPaginacion + '</a></li>';
 				}else if(NumPaginacion == 2 || NumPaginacion == paginacion-1){
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion-1)+')">' + (NumPaginacion-1) + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+NumPaginacion+')">' + NumPaginacion + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion+1)+')">' + (NumPaginacion+1) + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro4('+(NumPaginacion-1)+', '+muerta+', '+vendida+', '+ano2+')">' + (NumPaginacion-1) + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro4('+NumPaginacion+', '+muerta+', '+vendida+', '+ano2+')">' + NumPaginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro4('+(NumPaginacion+1)+', '+muerta+', '+vendida+', '+ano2+')">' + (NumPaginacion+1) + '</a></li>';
 				}else{
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion(1)">' + 1 + '</a></li>...';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion-1)+')">' + (NumPaginacion-1) + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+NumPaginacion+')">' + NumPaginacion + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion+1)+')">' + (NumPaginacion+1) + '</a></li>...';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+paginacion+')">' + paginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro4(1, '+muerta+', '+vendida+', '+ano2+')">' + 1 + '</a></li>...';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro4('+(NumPaginacion-1)+', '+muerta+', '+vendida+', '+ano2+')">' + (NumPaginacion-1) + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro4('+NumPaginacion+', '+muerta+', '+vendida+', '+ano2+')">' + NumPaginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro4('+(NumPaginacion+1)+', '+muerta+', '+vendida+', '+ano2+')">' + (NumPaginacion+1) + '</a></li>...';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro4('+paginacion+', '+muerta+', '+vendida+', '+ano2+')">' + paginacion + '</a></li>';
 				}
 				
 				txt2.innerHTML = doc2;
@@ -1693,29 +1683,15 @@ function BuscarFiltro4(){
 </script>
 
 <script>
-function paginacionFiltro4(NumPaginacion){
+function paginacionFiltro4(NumPaginacion, muerta, vendida, ano){
 	var movil = sessionStorage.getItem("Movil");
 	if(sessionStorage.getItem("Movil") == "false"){
-		var checkVendida = document.getElementById("CheckVendidasMovil");
-		var checkMuerta = document.getElementById("CheckMuertasMovil");
-		var ano = $('#FiltroAnoMVMovil').find('option:selected').val();
 		var usuario = sessionStorage.getItem("usuario_activo");
 		var numExplotacion = sessionStorage.getItem("NumeroExplotacion");
 		
+		var ano2 = ano;
+		
 		ano = ano + '-01-01';
-		
-		if(checkVendida.checked == true){
-			var vendida = 1;
-		}else{
-			var vendida = 0;
-		}
-		
-		if(checkMuerta.checked == true){
-			var muerta = 1;
-		}else{
-			var muerta = 0;
-		}
-		
 		
 		//FechaMuerte se utiliza para el filtro del año, tanto para vendidas como para muertas
 		var datosFiltro4= {
@@ -1723,7 +1699,7 @@ function paginacionFiltro4(NumPaginacion){
 			'Muerta' : muerta,
 			'Venta': vendida,
 			'FechaMuerte' : ano,
-			'NumExplotacion' : numexplotacion,
+			'NumExplotacion' : numExplotacion,
 		};
 	
 		var datosFiltro4JSON = JSON.stringify(datosFiltro4);
@@ -1744,7 +1720,7 @@ function paginacionFiltro4(NumPaginacion){
 				var doc = "";
 				
 				//Sacar el número de paginaciones que va a haber de animales.
-				var paginacion = size / 10;
+				var paginacion = size / 25;
 				
 				if(Number.isInteger(paginacion)){
 					paginacion = paginacion;
@@ -1756,13 +1732,13 @@ function paginacionFiltro4(NumPaginacion){
 				if(NumPaginacion == 1){
 					var valor = 0;	
 				}else{
-					var valor = (NumPaginacion - 1) * 10;	
+					var valor = (NumPaginacion - 1) * 25;	
 				}
 					
-				var total = (NumPaginacion * 10) + 10;
-				doc = doc + '<p style="margin-left: 68px;"><em>Página '+NumPaginacion+' de '+paginacion+'</em></p>';
+				var total = (NumPaginacion * 25) + 25;
+				doc = doc + '<p style="margin-left: 155px;"><em>Página '+NumPaginacion+' de '+paginacion+'</em></p>';
 				//for(var i=1; i<=paginacion; i++){
-					doc = doc + '<table style="margin-left: 68px;">';
+					doc = doc + '<table style="margin-left: 155px;">';
 						for(var j=0; j<5; j++){
 							doc = doc + '<tr style="width: 100%">';
 								for(var x=0; x<5; x++){
@@ -1808,21 +1784,21 @@ function paginacionFiltro4(NumPaginacion){
 				doc2 = "";
 				
 				if(NumPaginacion == 1){
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+NumPaginacion+')">' + NumPaginacion + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion+1)+')">' + (NumPaginacion+1) + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro4('+NumPaginacion+', '+muerta+', '+vendida+', '+ano2+')">' + NumPaginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro4('+(NumPaginacion+1)+', '+muerta+', '+vendida+', '+ano2+')">' + (NumPaginacion+1) + '</a></li>';
 				}else if (NumPaginacion == paginacion){
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion-1)+')">' + (NumPaginacion-1) + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+NumPaginacion+')">' + NumPaginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro4('+(NumPaginacion-1)+', '+muerta+', '+vendida+', '+ano2+')">' + (NumPaginacion-1) + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro4('+NumPaginacion+', '+muerta+', '+vendida+', '+ano2+')">' + NumPaginacion + '</a></li>';
 				}else if(NumPaginacion == 2 || NumPaginacion == paginacion-1){
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion-1)+')">' + (NumPaginacion-1) + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+NumPaginacion+')">' + NumPaginacion + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion+1)+')">' + (NumPaginacion+1) + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro4('+(NumPaginacion-1)+', '+muerta+', '+vendida+', '+ano2+')">' + (NumPaginacion-1) + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro4('+NumPaginacion+', '+muerta+', '+vendida+', '+ano2+')">' + NumPaginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro4('+(NumPaginacion+1)+', '+muerta+', '+vendida+', '+ano2+')">' + (NumPaginacion+1) + '</a></li>';
 				}else{
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion(1)">' + 1 + '</a></li>...';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion-1)+')">' + (NumPaginacion-1) + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+NumPaginacion+')">' + NumPaginacion + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion+1)+')">' + (NumPaginacion+1) + '</a></li>...';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+paginacion+')">' + paginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro4(1, '+muerta+', '+vendida+', '+ano2+')">' + 1 + '</a></li>...';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro4('+(NumPaginacion-1)+', '+muerta+', '+vendida+', '+ano2+')">' + (NumPaginacion-1) + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro4('+NumPaginacion+', '+muerta+', '+vendida+', '+ano2+')">' + NumPaginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro4('+(NumPaginacion+1)+', '+muerta+', '+vendida+', '+ano2+')">' + (NumPaginacion+1) + '</a></li>...';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro4('+paginacion+', '+muerta+', '+vendida+', '+ano2+')">' + paginacion + '</a></li>';
 				}
 				
 				txt2.innerHTML = doc2;
@@ -1837,27 +1813,12 @@ function paginacionFiltro4(NumPaginacion){
 			}
 		});
 	}else{
-		 ///Buscar apartado 4 (ovejas muertas, ovejas vivas, año)
-		var checkVendida = document.getElementById("CheckVendidas");
-		var checkMuerta = document.getElementById("CheckMuertas");
-		var ano = $('#FiltroAnoMVNoMovil').find('option:selected').val();
 		var usuario = sessionStorage.getItem("usuario_activo");
-		var numexplotacion = sessionStorage.getItem("NumeroExplotacion");4
+		var numExplotacion = sessionStorage.getItem("NumeroExplotacion");
+		
+		var ano2 = ano;
 		
 		ano = ano + '-01-01';
-		
-		if(checkVendida.checked == true){
-			var vendida = 1;
-		}else{
-			var vendida = 0;
-		}
-		
-		if(checkMuerta.checked == true){
-			var muerta = 1;
-		}else{
-			var muerta = 0;
-		}
-		
 		
 		//FechaMuerte se utiliza para el filtro del año, tanto para vendidas como para muertas
 		var datosFiltro4= {
@@ -1865,7 +1826,7 @@ function paginacionFiltro4(NumPaginacion){
 			'Muerta' : muerta,
 			'Venta': vendida,
 			'FechaMuerte' : ano,
-			'NumExplotacion' : numexplotacion,
+			'NumExplotacion' : numExplotacion,
 		};
 	
 		var datosFiltro4JSON = JSON.stringify(datosFiltro4);
@@ -1950,21 +1911,21 @@ function paginacionFiltro4(NumPaginacion){
 				doc2 = "";
 				
 				if(NumPaginacion == 1){
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+NumPaginacion+')">' + NumPaginacion + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion+1)+')">' + (NumPaginacion+1) + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro4('+NumPaginacion+', '+muerta+', '+vendida+', '+ano2+')">' + NumPaginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro4('+(NumPaginacion+1)+', '+muerta+', '+vendida+', '+ano2+')">' + (NumPaginacion+1) + '</a></li>';
 				}else if (NumPaginacion == paginacion){
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion-1)+')">' + (NumPaginacion-1) + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+NumPaginacion+')">' + NumPaginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro4('+(NumPaginacion-1)+', '+muerta+', '+vendida+', '+ano2+')">' + (NumPaginacion-1) + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro4('+NumPaginacion+', '+muerta+', '+vendida+', '+ano2+')">' + NumPaginacion + '</a></li>';
 				}else if(NumPaginacion == 2 || NumPaginacion == paginacion-1){
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion-1)+')">' + (NumPaginacion-1) + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+NumPaginacion+')">' + NumPaginacion + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion+1)+')">' + (NumPaginacion+1) + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro4('+(NumPaginacion-1)+', '+muerta+', '+vendida+', '+ano2+')">' + (NumPaginacion-1) + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro4('+NumPaginacion+', '+muerta+', '+vendida+', '+ano2+')">' + NumPaginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro4('+(NumPaginacion+1)+', '+muerta+', '+vendida+', '+ano2+')">' + (NumPaginacion+1) + '</a></li>';
 				}else{
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion(1)">' + 1 + '</a></li>...';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion-1)+')">' + (NumPaginacion-1) + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+NumPaginacion+')">' + NumPaginacion + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion+1)+')">' + (NumPaginacion+1) + '</a></li>...';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+paginacion+')">' + paginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro4(1, '+muerta+', '+vendida+', '+ano2+')">' + 1 + '</a></li>...';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro4('+(NumPaginacion-1)+', '+muerta+', '+vendida+', '+ano2+')">' + (NumPaginacion-1) + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro4('+NumPaginacion+', '+muerta+', '+vendida+', '+ano2+')">' + NumPaginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro4('+(NumPaginacion+1)+', '+muerta+', '+vendida+', '+ano2+')">' + (NumPaginacion+1) + '</a></li>...';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro4('+paginacion+', '+muerta+', '+vendida+', '+ano2+')">' + paginacion + '</a></li>';
 				}
 				
 				txt2.innerHTML = doc2;
@@ -2098,22 +2059,24 @@ function BuscarFiltro2(){
 				
 				NumPaginacion = 1;
 				
-				if(NumPaginacion == 1){
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+NumPaginacion+')">' + NumPaginacion + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion+1)+')">' + (NumPaginacion+1) + '</a></li>';
+				if(NumPaginacion == 1 && paginacion == 1){
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro2('+NumPaginacion+', '+ano+')">' + NumPaginacion + '</a></li>';
+				}else if(NumPaginacion == 1 && paginacion > 1){
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro2('+NumPaginacion+', '+ano+')">' + NumPaginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro2('+(NumPaginacion+1)+', '+ano+')">' + (NumPaginacion+1) + '</a></li>';
 				}else if (NumPaginacion == paginacion){
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion-1)+')">' + (NumPaginacion-1) + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+NumPaginacion+')">' + NumPaginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro2('+(NumPaginacion-1)+', '+ano+')">' + (NumPaginacion-1) + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro2('+NumPaginacion+', '+ano+')">' + NumPaginacion + '</a></li>';
 				}else if(NumPaginacion == 2 || NumPaginacion == paginacion-1){
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion-1)+')">' + (NumPaginacion-1) + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+NumPaginacion+')">' + NumPaginacion + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion+1)+')">' + (NumPaginacion+1) + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro2('+(NumPaginacion-1)+', '+ano+')">' + (NumPaginacion-1) + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro2('+NumPaginacion+', '+ano+')">' + NumPaginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro2('+(NumPaginacion+1)+', '+ano+')">' + (NumPaginacion+1) + '</a></li>';
 				}else{
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion(1)">' + 1 + '</a></li>...';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion-1)+')">' + (NumPaginacion-1) + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+NumPaginacion+')">' + NumPaginacion + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion+1)+')">' + (NumPaginacion+1) + '</a></li>...';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+paginacion+')">' + paginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro2(1, '+ano+')">' + 1 + '</a></li>...';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro2('+(NumPaginacion-1)+', '+ano+')">' + (NumPaginacion-1) + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro2('+NumPaginacion+', '+ano+')">' + NumPaginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro2('+(NumPaginacion+1)+', '+ano+')">' + (NumPaginacion+1) + '</a></li>...';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro2('+paginacion+', '+ano+')">' + paginacion + '</a></li>';
 				}
 				
 				txt2.innerHTML = doc2;
@@ -2239,22 +2202,24 @@ function BuscarFiltro2(){
 				
 				NumPaginacion = 1;
 				
-				if(NumPaginacion == 1){
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+NumPaginacion+')">' + NumPaginacion + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion+1)+')">' + (NumPaginacion+1) + '</a></li>';
+				if(NumPaginacion == 1 && paginacion == 1){
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro2('+NumPaginacion+', '+ano+')">' + NumPaginacion + '</a></li>';
+				}else if(NumPaginacion == 1 && paginacion > 1){
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro2('+NumPaginacion+', '+ano+')">' + NumPaginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro2('+(NumPaginacion+1)+', '+ano+')">' + (NumPaginacion+1) + '</a></li>';
 				}else if (NumPaginacion == paginacion){
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion-1)+')">' + (NumPaginacion-1) + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+NumPaginacion+')">' + NumPaginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro2('+(NumPaginacion-1)+', '+ano+')">' + (NumPaginacion-1) + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro2('+NumPaginacion+', '+ano+')">' + NumPaginacion + '</a></li>';
 				}else if(NumPaginacion == 2 || NumPaginacion == paginacion-1){
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion-1)+')">' + (NumPaginacion-1) + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+NumPaginacion+')">' + NumPaginacion + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion+1)+')">' + (NumPaginacion+1) + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro2('+(NumPaginacion-1)+', '+ano+')">' + (NumPaginacion-1) + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro2('+NumPaginacion+', '+ano+')">' + NumPaginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro2('+(NumPaginacion+1)+', '+ano+')">' + (NumPaginacion+1) + '</a></li>';
 				}else{
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion(1)">' + 1 + '</a></li>...';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion-1)+')">' + (NumPaginacion-1) + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+NumPaginacion+')">' + NumPaginacion + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion+1)+')">' + (NumPaginacion+1) + '</a></li>...';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+paginacion+')">' + paginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro2(1, '+ano+')">' + 1 + '</a></li>...';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro2('+(NumPaginacion-1)+', '+ano+')">' + (NumPaginacion-1) + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro2('+NumPaginacion+', '+ano+')">' + NumPaginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro2('+(NumPaginacion+1)+', '+ano+')">' + (NumPaginacion+1) + '</a></li>...';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro2('+paginacion+', '+ano+')">' + paginacion + '</a></li>';
 				}						
 				
 				txt2.innerHTML = doc2;
@@ -2275,12 +2240,10 @@ function BuscarFiltro2(){
 </script>
 
 <script>
-function paginacionFiltro2(NumPaginacion){
+function paginacionFiltro2(NumPaginacion, ano){
 	
 	var movil = sessionStorage.getItem("Movil");
 	if(movil == "false"){
-		//Buscar apartado 2 (año de nacimiento)
-		var ano = $('#FiltroAnoNacNoMovil').find('option:selected').val();
 		var usuario = sessionStorage.getItem("usuario_activo");
 		var numexplotacion = sessionStorage.getItem("NumeroExplotacion");
 		
@@ -2393,21 +2356,21 @@ function paginacionFiltro2(NumPaginacion){
 				doc2 = "";
 				
 				if(NumPaginacion == 1){
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+NumPaginacion+')">' + NumPaginacion + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion+1)+')">' + (NumPaginacion+1) + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro2('+NumPaginacion+', '+ano+')">' + NumPaginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro2('+(NumPaginacion+1)+', '+ano+')">' + (NumPaginacion+1) + '</a></li>';
 				}else if (NumPaginacion == paginacion){
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion-1)+')">' + (NumPaginacion-1) + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+NumPaginacion+')">' + NumPaginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro2('+(NumPaginacion-1)+', '+ano+')">' + (NumPaginacion-1) + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro2('+NumPaginacion+', '+ano+')">' + NumPaginacion + '</a></li>';
 				}else if(NumPaginacion == 2 || NumPaginacion == paginacion-1){
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion-1)+')">' + (NumPaginacion-1) + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+NumPaginacion+')">' + NumPaginacion + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion+1)+')">' + (NumPaginacion+1) + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro2('+(NumPaginacion-1)+', '+ano+')">' + (NumPaginacion-1) + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro2('+NumPaginacion+', '+ano+')">' + NumPaginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro2('+(NumPaginacion+1)+', '+ano+')">' + (NumPaginacion+1) + '</a></li>';
 				}else{
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion(1)">' + 1 + '</a></li>...';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion-1)+')">' + (NumPaginacion-1) + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+NumPaginacion+')">' + NumPaginacion + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion+1)+')">' + (NumPaginacion+1) + '</a></li>...';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+paginacion+')">' + paginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro2(1, '+ano+')">' + 1 + '</a></li>...';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro2('+(NumPaginacion-1)+', '+ano+')">' + (NumPaginacion-1) + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro2('+NumPaginacion+', '+ano+')">' + NumPaginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro2('+(NumPaginacion+1)+', '+ano+')">' + (NumPaginacion+1) + '</a></li>...';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro2('+paginacion+', '+ano+')">' + paginacion + '</a></li>';
 				}
 				
 				txt2.innerHTML = doc2;
@@ -2422,8 +2385,6 @@ function paginacionFiltro2(NumPaginacion){
 			}
 		});
 	}else{
-		//Buscar apartado 2 (año de nacimiento)
-		var ano = $('#FiltroAnoNacMovil').find('option:selected').val();
 		var usuario = sessionStorage.getItem("usuario_activo");
 		var numexplotacion = sessionStorage.getItem("NumeroExplotacion");
 		
@@ -2536,21 +2497,21 @@ function paginacionFiltro2(NumPaginacion){
 				doc2 = "";
 				
 				if(NumPaginacion == 1){
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+NumPaginacion+')">' + NumPaginacion + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion+1)+')">' + (NumPaginacion+1) + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro2('+NumPaginacion+', '+ano+')">' + NumPaginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro2('+(NumPaginacion+1)+', '+ano+')">' + (NumPaginacion+1) + '</a></li>';
 				}else if (NumPaginacion == paginacion){
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion-1)+')">' + (NumPaginacion-1) + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+NumPaginacion+')">' + NumPaginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro2('+(NumPaginacion-1)+', '+ano+')">' + (NumPaginacion-1) + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro2('+NumPaginacion+', '+ano+')">' + NumPaginacion + '</a></li>';
 				}else if(NumPaginacion == 2 || NumPaginacion == paginacion-1){
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion-1)+')">' + (NumPaginacion-1) + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+NumPaginacion+')">' + NumPaginacion + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion+1)+')">' + (NumPaginacion+1) + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro2('+(NumPaginacion-1)+', '+ano+')">' + (NumPaginacion-1) + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro2('+NumPaginacion+', '+ano+')">' + NumPaginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro2('+(NumPaginacion+1)+', '+ano+')">' + (NumPaginacion+1) + '</a></li>';
 				}else{
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion(1)">' + 1 + '</a></li>...';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion-1)+')">' + (NumPaginacion-1) + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+NumPaginacion+')">' + NumPaginacion + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion+1)+')">' + (NumPaginacion+1) + '</a></li>...';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+paginacion+')">' + paginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro2(1, '+ano+')">' + 1 + '</a></li>...';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro2('+(NumPaginacion-1)+', '+ano+')">' + (NumPaginacion-1) + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro2('+NumPaginacion+', '+ano+')">' + NumPaginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro2('+(NumPaginacion+1)+', '+ano+')">' + (NumPaginacion+1) + '</a></li>...';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltro2('+paginacion+', '+ano+')">' + paginacion + '</a></li>';
 				}
 				
 				txt2.innerHTML = doc2;
@@ -2645,7 +2606,7 @@ function AnadirAnimal(){
 	
 	mensaje = mensaje + "<tr>";
 	mensaje = mensaje + "<td>Número identificación:</td>";
-	mensaje = mensaje + "<td><input id='NumIdentificacion'><p style='font-size:12px;color:red;'>Últimos 7 dígitos</p></td>";
+	mensaje = mensaje + "<td><b>72408000</b><input id='NumIdentificacion'></td>";
 	mensaje = mensaje + "</tr>";
 	
 	mensaje = mensaje + "<tr>";
@@ -2675,7 +2636,7 @@ function AnadirAnimal(){
 	mensaje = mensaje + "</tr>"; 
 	
 	mensaje = mensaje + "<tr>";
-	mensaje = mensaje + "<td>Destino:</td>";
+	mensaje = mensaje + "<td>Procedencia:</td>";
 	mensaje = mensaje + "<td><input id='Destino'></td>";
 	mensaje = mensaje + "</tr>";
 	
@@ -2960,4 +2921,96 @@ function exportarTarifas(param){
 		}
     });
 }
+</script>
+
+<script>
+/*
+function ImportarAnimales(){
+
+	var mensaje = "";
+	
+	mensaje = mensaje + "<p>Por favor, descargue el archivo base mediante el botón que se muestra a continuación</p>";
+	mensaje = mensaje + "<p>Es importate que rellene todos los datos en el Excel para que se guarde la configuración correctamente</p>";	
+	
+	bootbox.confirm({
+		title:"Nuevo bloque de animales", 
+		message: mensaje,
+		onEscape: true,
+		buttons: {
+	        confirm: {
+	            label: 'DESCARGAR PLANTILLA',
+	            className: 'btn-success'
+	        }
+	    },
+	    callback: function (result) {
+	        if (result) {
+	        	descargarPlantilla();
+            } else {
+                
+            }
+	    }
+	});
+}*/
+</script>
+
+<script>
+/*
+function descargarPlantilla(){
+
+		var urlFirma = './PlantillaExcel/';
+	
+	$.ajax({
+			type: 'get',
+			url: urlFirma,
+			contentType: 'application/pdf',
+			success: function(data,textStatus,jqXHR){	
+				url = './PlantillaExcel'
+				jQuery('<form action="' + url + '" method="get"></form>').appendTo('body').submit().remove();
+				ImportarAnimales2();
+			},error: function(jqXHR,exception) {
+				bootbox.alert({
+					title: "DESCARGA DE PLANTILLA",
+					message: "No se puede recuperar el archivo",
+					buttons: {
+						ok: {
+							label: 'Aceptar',
+							className: 'btn btn-primary'
+						}
+					}
+				});
+			},statuscode:{
+				404:function(){ mostrarPantallaError(url); }
+			}
+		});
+}*/
+</script>
+
+<script>
+/*
+function ImportarAnimales2(){
+
+	var mensaje = "";
+	
+	mensaje = mensaje + "<p>Por favor, descargue el archivo base mediante el botón que se muestra a continuación</p>";
+	mensaje = mensaje + "<p>Es importate que rellene todos los datos en el Excel para que se guarde la configuración correctamente</p>";	
+	
+	bootbox.confirm({
+		title:"IMPORTAR ARCHIVO", 
+		message: mensaje,
+		onEscape: true,
+		buttons: {
+	        confirm: {
+	            label: 'Importar',
+	            className: 'btn-success'
+	        }
+	    },
+	    callback: function (result) {
+	        if (result) {
+	        	subirArchivo();
+            } else {
+                
+            }
+	    }
+	});
+}*/
 </script>

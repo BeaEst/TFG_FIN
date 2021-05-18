@@ -219,29 +219,29 @@
 	
 		<h1 style="text-align: center;margin-left:68px">MEDICAMENTOS</h1>
 
-		<nav class="navbar navbar-dark bg-dark" style="margin-left: 65px">
+		<nav class="navbar navbar-dark bg-dark" style="margin-left: 65px;">
 			<div class="container-fluid">
 				<button class="navbar-toggler" type="button"
 					data-bs-toggle="collapse"
 					data-bs-target="#navbarToggleExternalContent"
 					aria-controls="navbarToggleExternalContent" aria-expanded="false"
 					aria-label="Toggle navigation">
-					<span><img src="./desplegable.png" width="20" height="20"></span>
+					<span><img src="./desplegable.png" width="10" height="10"></span>
 				</button>
 			</div>
 		</nav>
 		<div class="collapse" id="navbarToggleExternalContent"
-			style="margin-left: 155px">
+			style="margin-left: 65px; height: 10px;">
 			<div style="background-color: #A9D0F5">
 				<div class="card">
 					<div class="card-body" style="background-color: #A9D0F5">
 						<table>
-							<tr>
-								<td style="width: 25%;">
+								<tr>
+
 									<div>
 										<label style="float: left;">Buscar por año:</label> <select
 											class="form-select" aria-label="Default select example"
-											id="FiltroAnoVentaNoMovil" style="width: 30%; float: left;">
+											id="FiltroAnoVentaMovil" style="width: 35%; float: left;">
 											<option selected>-----</option>
 											<option value="2021">2021</option>
 											<option value="2022">2022</option>
@@ -251,16 +251,16 @@
 
 									<button type="button" class="btn btn-outline-light"
 										onClick="BuscarFiltroAno()">Buscar</button>
-								</td>
+										
+									<hr>
 
-								<td style="width: 25%;">
-									<div class="form-check">
+								<div class="form-check">
 										<img src="./anadir.png" title="Añadir venta cria" height="25"
 											size="25" id="" style="float: left; cursor: pointer;"
 											onClick="AnadirMedicamento()"> <label style="float: left;">&nbsp;
 											Añadir medicamento </label>
 									</div>
-								</td>
+
 							</tr>
 						</table>
 					</div>

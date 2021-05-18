@@ -58,11 +58,11 @@ public class OperationCriasController {
 						List<String> datos = new ArrayList<String>();
 
 						System.out.println("SELECT NGuia, FechaVenta, NAnimales FROM venta_crias WHERE NumExplotacion='"
-								+ numexplotacion + "'");
+								+ numexplotacion + "' ORDER BY FechaVenta");
 
 						ResultSet cont_act = s.executeQuery(
 								"SELECT NGuia, FechaVenta, NAnimales FROM venta_crias WHERE NumExplotacion='"
-										+ numexplotacion + "'");
+										+ numexplotacion + "' ORDER BY FechaVenta");
 
 						ArrayList<String> NumGuia = new ArrayList<>();
 						ArrayList<String> FVenta = new ArrayList<>();

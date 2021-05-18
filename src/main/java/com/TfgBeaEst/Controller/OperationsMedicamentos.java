@@ -59,10 +59,10 @@ public class OperationsMedicamentos {
 						List<String> datos = new ArrayList<String>();
 
 						System.out.println("SELECT FechaCompra, CodigoReceta, Medicamento FROM medicamentos WHERE NumExplotacion='"
-								+ numexplotacion + "'");
+								+ numexplotacion + "' ORDER BY FechaCompra");
 
 						ResultSet cont_act = s.executeQuery("SELECT FechaCompra, CodigoReceta, Medicamento FROM medicamentos WHERE NumExplotacion='"
-								+ numexplotacion + "'");
+								+ numexplotacion + "' ORDER BY FechaCompra");
 
 						ArrayList<String> FechaCompra = new ArrayList<>();
 						ArrayList<String> CodigoReceta = new ArrayList<>();

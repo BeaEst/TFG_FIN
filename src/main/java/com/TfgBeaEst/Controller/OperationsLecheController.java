@@ -55,11 +55,11 @@ public class OperationsLecheController {
 					try {
 
 						System.out.println("SELECT FechaEntrega, CodigoCisterna FROM leche WHERE NumExplotacion='"
-								+ numexplotacion + "'");
+								+ numexplotacion + "' ORDER BY FechaEntrega");
 
 						ResultSet cont_act = s.executeQuery(
 								"SELECT FechaEntrega, CodigoCisterna FROM leche WHERE NumExplotacion='"
-										+ numexplotacion + "'");
+										+ numexplotacion + "' ORDER BY FechaEntrega");
 
 						ArrayList<String> FechaEntrega = new ArrayList<>();
 						ArrayList<String> CodigoCisterna = new ArrayList<>();
