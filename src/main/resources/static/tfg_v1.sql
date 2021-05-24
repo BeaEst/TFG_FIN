@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 18-05-2021 a las 20:21:58
+-- Tiempo de generación: 24-05-2021 a las 19:54:49
 -- Versión del servidor: 10.4.16-MariaDB
 -- Versión de PHP: 7.3.24
 
@@ -196,7 +196,32 @@ CREATE TABLE `explotaciones` (
 
 INSERT INTO `explotaciones` (`NumExplotacion`, `usuario`, `TipoAnimal`) VALUES
 ('ES491011310211', 'admin', 'ovino'),
-('ES491011310212', 'admin', 'caprino');
+('ES491011310212', '', 'caprino');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `inspecciones`
+--
+
+CREATE TABLE `inspecciones` (
+  `Id` int(20) NOT NULL,
+  `Fecha` date NOT NULL,
+  `Oficial` tinyint(1) NOT NULL,
+  `TipoActuacion` varchar(200) NOT NULL,
+  `NumActa` varchar(100) NOT NULL,
+  `NumExplotacion` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `inspecciones`
+--
+
+INSERT INTO `inspecciones` (`Id`, `Fecha`, `Oficial`, `TipoActuacion`, `NumActa`, `NumExplotacion`) VALUES
+(1, '2020-05-18', 1, 'ESTO ES UNA PRUEBA DE ACTUACION', '12345679', 'ES491011310211'),
+(5, '2021-05-17', 0, '2', '2', 'ES491011310211'),
+(6, '2021-05-21', 1, 'ESTA ES LA PRUEBA 3', '3', 'ES491011310211'),
+(7, '2021-05-20', 0, 'ESTO ES UNA PRUEBA DE MOVIL', '4', 'ES491011310211');
 
 -- --------------------------------------------------------
 
@@ -296,6 +321,40 @@ CREATE TABLE `medicamentos` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `pastos`
+--
+
+CREATE TABLE `pastos` (
+  `Id` int(11) NOT NULL,
+  `CodigoPasto` varchar(100) NOT NULL,
+  `FechaInicio` date NOT NULL,
+  `FechaFin` date NOT NULL,
+  `NAnimales` int(11) NOT NULL,
+  `NumExplotacion` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `pastos`
+--
+
+INSERT INTO `pastos` (`Id`, `CodigoPasto`, `FechaInicio`, `FechaFin`, `NAnimales`, `NumExplotacion`) VALUES
+(1, '1234', '2021-05-01', '2021-05-31', 12, 'ES491011310211'),
+(2, '1', '2021-05-01', '2021-05-31', 1, 'ES491011310211'),
+(3, '2', '2021-05-02', '2021-05-31', 2, 'ES491011310211'),
+(4, '3', '2021-05-03', '2021-05-31', 3, 'ES491011310211'),
+(5, '13', '2020-05-03', '2020-05-21', 5, 'ES491011310211'),
+(6, '1000', '2021-05-03', '2021-05-30', 50, 'ES491011310211'),
+(7, '1001', '2021-05-26', '2021-05-30', 95, 'ES491011310211'),
+(8, '1002', '2021-05-01', '2021-05-30', 695, 'ES491011310211'),
+(9, '1004', '2021-05-01', '2021-05-30', 55, 'ES491011310211'),
+(10, '1005', '2021-06-02', '2021-06-30', 36, 'ES491011310211'),
+(11, '1003', '2021-05-01', '2021-05-30', 69, 'ES491011310211'),
+(12, '1006', '2021-05-14', '2021-05-23', 25, 'ES491011310211'),
+(13, '1007', '2021-05-10', '2021-05-11', 5, 'ES491011310211');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `piensos_medicamentosos`
 --
 
@@ -383,6 +442,13 @@ ALTER TABLE `explotaciones`
   ADD KEY `usuario` (`usuario`);
 
 --
+-- Indices de la tabla `inspecciones`
+--
+ALTER TABLE `inspecciones`
+  ADD PRIMARY KEY (`Id`),
+  ADD UNIQUE KEY `NumActa` (`NumActa`);
+
+--
 -- Indices de la tabla `leche`
 --
 ALTER TABLE `leche`
@@ -394,6 +460,13 @@ ALTER TABLE `leche`
 ALTER TABLE `medicamentos`
   ADD PRIMARY KEY (`Id`),
   ADD UNIQUE KEY `CodigoReceta` (`CodigoReceta`);
+
+--
+-- Indices de la tabla `pastos`
+--
+ALTER TABLE `pastos`
+  ADD PRIMARY KEY (`Id`),
+  ADD UNIQUE KEY `CodigoPasto` (`CodigoPasto`);
 
 --
 -- Indices de la tabla `piensos_medicamentosos`
@@ -438,6 +511,12 @@ ALTER TABLE `enfermedades`
   MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
+-- AUTO_INCREMENT de la tabla `inspecciones`
+--
+ALTER TABLE `inspecciones`
+  MODIFY `Id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
 -- AUTO_INCREMENT de la tabla `leche`
 --
 ALTER TABLE `leche`
@@ -448,6 +527,12 @@ ALTER TABLE `leche`
 --
 ALTER TABLE `medicamentos`
   MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+
+--
+-- AUTO_INCREMENT de la tabla `pastos`
+--
+ALTER TABLE `pastos`
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `piensos_medicamentosos`

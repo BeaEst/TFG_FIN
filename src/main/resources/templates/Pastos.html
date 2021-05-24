@@ -19,7 +19,7 @@
 <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 <script src="../js/bootbox.min.js"></script>
 
-<title>Enfermedades Infecciosas</title>
+<title>Pastos</title>
 </head>
 <body>
 
@@ -47,11 +47,11 @@
 						style="padding-left: 10px; width: 150px;"
 						href="./Medicamentos.html">Medicamentos</a></li>
 					<li class="nav-item"><a class="nav-link active"
-						style="padding-left: 10px; background-color: #e3e4e5; width: 150px; color: black"
-						href="./Enfermedades.html"><b>ENFERMEDADES</b></a></li>
-					<li class="nav-item"><a class="nav-link active"
 						style="padding-left: 10px; width: 150px;"
-						href="./Pastos.html">Pastos</a></li>
+						href="./Enfermedades.html">Enfermedades</a></li>
+					<li class="nav-item"><a class="nav-link active"
+						style="padding-left: 10px; background-color: #e3e4e5; width: 150px; color: black; font-size:14px"
+						href="./Pastos.html"><b>PASTOS</b></a></li>
 					<li class="nav-item"><a class="nav-link active"
 						style="padding-left: 10px; width: 150px;"
 						href="./Inspecciones.html">Inspecciones</a></li>
@@ -83,8 +83,8 @@
 			</div>
 		</nav>
 	</div>
-	
-		<h1 style="text-align: center;">ENFERMEDADES</h1>
+
+		<h1 style="text-align: center;">PASTOS</h1>
 
 		<nav class="navbar navbar-dark bg-dark" style="margin-left: 155px">
 			<div class="container-fluid">
@@ -124,8 +124,8 @@
 									<div class="form-check">
 										<img src="./anadir.png" title="Añadir venta cria" height="25"
 											size="25" id="" style="float: left; cursor: pointer;"
-											onClick="AnadirEnfermedad()"> <label style="float: left;">&nbsp;
-											Añadir enfermedad </label>
+											onClick="AnadirPasto()"> <label style="float: left;">&nbsp;
+											Añadir Pasto </label>
 									</div>
 								</td>
 							</tr>
@@ -184,16 +184,17 @@
 						</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link active" style="padding-left: 10px; background-color: #e3e4e5; width: 60px; color: black"href="./Enfermedades.html">
-							<img src="./virusN.png" width="30" height="30" style="display: inline;">
+						<a class="nav-link active" style="padding-left: 10px;" href="./Enfermedades.html">
+							<img src="./virus.png" width="30" height="30" style="display: inline;">
 						</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link active" style="padding-left: 10px;" href="./Pastos.html">
-							<img src="./pastos.png" width="30" height="30" style="display: inline;">
+						<a class="nav-link active" style="padding-left: 10px; background-color: #e3e4e5; width: 60px; color: black" href="./Pastos.html">
+							<img src="./pastosN.png" width="30" height="30" style="display: inline;">
 						</a>
 					</li>
 					<li class="nav-item">
+						<li class="nav-item">
 						<a class="nav-link active" style="padding-left: 10px;" href="./Inspecciones.html">
 							<img src="./inspecciones.png" width="30" height="30" style="display: inline;">
 						</a>
@@ -228,9 +229,9 @@
 			</div>
 		</nav>
 	</div>
-
-		<h1 style="text-align: center;margin-left:68px">ENFERMEDADES</h1>
-
+	
+		<h1 style="text-align: center;margin-left:68px">PASTOS</h1>
+		
 		<nav class="navbar navbar-dark bg-dark" style="margin-left: 65px;">
 			<div class="container-fluid">
 				<button class="navbar-toggler" type="button"
@@ -268,10 +269,10 @@
 									<hr>
 
 									<div class="form-check">
-										<img src="./anadir.png" title="Añadir enfermedad" height="25"
+										<img src="./anadir.png" title="Añadir alimento" height="25"
 											size="25" id="" style="float: left; cursor: pointer;"
-											onClick="AnadirEnfermedad()"> <label style="float: left;">&nbsp;
-											Añadir enfermedad</label>
+											onClick="AnadirPasto()"> <label style="float: left;">&nbsp;
+											Añadir Pasto</label>
 									</div>
 
 							</tr>
@@ -280,8 +281,8 @@
 				</div>
 			</div>
 		</div>
-		<br> 
-		
+		<br>
+
 		<div id="cardMovil"></div>
 
 		<nav aria-label="Page navigation example">
@@ -504,7 +505,7 @@ function paginacion(NumPaginacion){
 	
 		var usuarioLoginJSON = JSON.stringify(usuarioDatos);
 	
-		var url = './cargarenfermedades';
+		var url = './pastos';
 	
 		$.ajax({
 			type : 'post',
@@ -513,14 +514,12 @@ function paginacion(NumPaginacion){
 			dataType : 'json',
 			data : usuarioLoginJSON,
 			success : function(data, textStatus, jqXHR) {
-				var FechaAparicion = data.FechaAparicion;
-				var Diagnostico = data.Diagnostico;
-				var DocAsociado = data.DocAsociado;
+				var CodigoPasto = data.CodigoPasto;
+				var FechaInicio = data.FechaInicio;
+				var FechaFin = data.FechaFin;
 				var NAnimales = data.NAnimales;
-				var MedidasAdoptadas = data.MedidasAdoptadas;
-				var FechaDesaparicion = data.FechaDesaparicion;
 				
-				var size = Object.keys(FechaAparicion).length;
+				var size = Object.keys(CodigoPasto).length;
 	
 				txt = document.getElementById("card");
 				var doc = "";
@@ -563,19 +562,15 @@ function paginacion(NumPaginacion){
 										if(par == 0){
 											if(valor < total && valor < size){
 												doc= doc + '<div class="card text-black bg-light mb-3" style="cursor:pointer;">'
-												+'<div class="card-header" style="margin-top:5px;"><h5>'+DocAsociado[valor]
-												+'</h5><p class="card-text" style="text-align:right;">Desde: '+FechaAparicion[valor]+' Hasta: '+FechaDesaparicion[valor]+'</p>'
-												+'<p class="card-text" style="text-align:right;">'+Diagnostico[valor]+'</p>'
-												+'<p class="card-text" style="text-align:right;">'+MedidasAdoptadas[valor]+'</p>'
+												+'<div class="card-header" style="margin-top:5px;"><h5>'+CodigoPasto[valor]
+												+'</h5><p class="card-text" style="text-align:right;">Desde: '+FechaInicio[valor]+' Hasta: '+FechaFin[valor]+'</p>'
 												+'<p class="card-text" style="text-align:right;">'+NAnimales[valor]+' Animales</p></div></div>';
 											}
 										}else{
 											if(valor < total && valor < size){
 												doc= doc + '<div class="card text-white bg-secondary mb-3" style="cursor:pointer;">'
-												+'<div class="card-header" style="margin-top:5px;"><h5>'+DocAsociado[valor]
-												+'</h5><p class="card-text" style="text-align:right;">Desde: '+FechaAparicion[valor]+' Hasta: '+FechaDesaparicion[valor]+'</p>'
-												+'<p class="card-text" style="text-align:right;">'+Diagnostico[valor]+'</p>'
-												+'<p class="card-text" style="text-align:right;">'+MedidasAdoptadas[valor]+'</p>'
+												+'<div class="card-header" style="margin-top:5px;"><h5>'+CodigoPasto[valor]
+												+'</h5><p class="card-text" style="text-align:right;">Desde: '+FechaInicio[valor]+' Hasta: '+FechaFin[valor]+'</p>'
 												+'<p class="card-text" style="text-align:right;">'+NAnimales[valor]+' Animales</p></div></div>';
 											}
 										}
@@ -634,7 +629,7 @@ function paginacion(NumPaginacion){
 	
 		var usuarioLoginJSON = JSON.stringify(usuarioDatos);
 	
-		var url = './cargarenfermedades';
+		var url = './pastos';
 	
 		$.ajax({
 			type : 'post',
@@ -643,14 +638,12 @@ function paginacion(NumPaginacion){
 			dataType : 'json',
 			data : usuarioLoginJSON,
 			success : function(data, textStatus, jqXHR) {
-				var FechaAparicion = data.FechaAparicion;
-				var Diagnostico = data.Diagnostico;
-				var DocAsociado = data.DocAsociado;
+				var CodigoPasto = data.CodigoPasto;
+				var FechaInicio = data.FechaInicio;
+				var FechaFin = data.FechaFin;
 				var NAnimales = data.NAnimales;
-				var MedidasAdoptadas = data.MedidasAdoptadas;
-				var FechaDesaparicion = data.FechaDesaparicion;
 				
-				var size = Object.keys(FechaAparicion).length;
+				var size = Object.keys(CodigoPasto).length;
 	
 				txt = document.getElementById("cardMovil");
 				var doc = "";
@@ -693,19 +686,15 @@ function paginacion(NumPaginacion){
 										if(par == 0){
 											if(valor < total && valor < size){
 												doc= doc + '<div class="card text-black bg-light mb-3" style="cursor:pointer;">'
-												+'<div class="card-header" style="margin-top:5px;"><h5>'+DocAsociado[valor]
-												+'</h5><p class="card-text" style="text-align:right;">Desde: '+FechaAparicion[valor]+' Hasta: '+FechaDesaparicion[valor]+'</p>'
-												+'<p class="card-text" style="text-align:right;">'+Diagnostico[valor]+'</p>'
-												+'<p class="card-text" style="text-align:right;">'+MedidasAdoptadas[valor]+'</p>'
+												+'<div class="card-header" style="margin-top:5px;"><h5>'+CodigoPasto[valor]
+												+'</h5><p class="card-text" style="text-align:right;">Desde: '+FechaInicio[valor]+' Hasta: '+FechaFin[valor]+'</p>'
 												+'<p class="card-text" style="text-align:right;">'+NAnimales[valor]+' Animales</p></div></div>';
 											}
 										}else{
 											if(valor < total && valor < size){
 												doc= doc + '<div class="card text-white bg-secondary mb-3" style="cursor:pointer;">'
-												+'<div class="card-header" style="margin-top:5px;"><h5>'+DocAsociado[valor]
-												+'</h5><p class="card-text" style="text-align:right;">Desde: '+FechaAparicion[valor]+' Hasta: '+FechaDesaparicion[valor]+'</p>'
-												+'<p class="card-text" style="text-align:right;">'+Diagnostico[valor]+'</p>'
-												+'<p class="card-text" style="text-align:right;">'+MedidasAdoptadas[valor]+'</p>'
+												+'<div class="card-header" style="margin-top:5px;"><h5>'+CodigoPasto[valor]
+												+'</h5><p class="card-text" style="text-align:right;">Desde: '+FechaInicio[valor]+' Hasta: '+FechaFin[valor]+'</p>'
 												+'<p class="card-text" style="text-align:right;">'+NAnimales[valor]+' Animales</p></div></div>';
 											}
 										}
@@ -758,46 +747,36 @@ function paginacion(NumPaginacion){
 </script>
 
 <script>
-function AnadirEnfermedad(){
+function AnadirPasto(){
 
 	var mensaje = "";
 	
 	mensaje = mensaje + "<table>";
 	
 	mensaje = mensaje + "<tr>";
-	mensaje = mensaje + "<td> Fecha de Diagnostico: </td>";
-	mensaje = mensaje + "<td><input id='FechaDiagnostico' type='date'></td>";
+	mensaje = mensaje + "<td> Fecha Inicio: </td>";
+	mensaje = mensaje + "<td><input id='FechaInicio' type='date'></td>";
 	mensaje = mensaje + "</tr>";
 	
 	mensaje = mensaje + "<tr>";
-	mensaje = mensaje + "<td> Fecha de Desaparición: </td>";
-	mensaje = mensaje + "<td><input id='FechaDesaparicion' type='date'></td>";
+	mensaje = mensaje + "<td> Fecha Fin: </td>";
+	mensaje = mensaje + "<td><input id='FechaFin' type='date'></td>";
 	mensaje = mensaje + "</tr>";
 	
 	mensaje = mensaje + "<tr>";
-	mensaje = mensaje + "<td>Documento Asociado:</td>";
-	mensaje = mensaje + "<td><input id='DAsociado' maxlength='200'></td>";
+	mensaje = mensaje + "<td>Código de pasto:</td>";
+	mensaje = mensaje + "<td><input id='CPasto'></td>";
 	mensaje = mensaje + "</tr>";
 	
 	mensaje = mensaje + "<tr>";
-	mensaje = mensaje + "<td>Número de Animales:</td>";
-	mensaje = mensaje + "<td><input id='NAnimales' maxlength='100'></td>";
-	mensaje = mensaje + "</tr>";
-	
-	mensaje = mensaje + "<tr>";
-	mensaje = mensaje + "<td>Diagnostico:</td>";
-	mensaje = mensaje + "<td><textarea id='Diagnostico' rows='5' cols='20'></textarea></td>";
-	mensaje = mensaje + "</tr>";
-	
-	mensaje = mensaje + "<tr>";
-	mensaje = mensaje + "<td>Medidas Adoptadas:</td>";
-	mensaje = mensaje + "<td><textarea id='MAdoptadas' rows='5' cols='20'></textarea></td>";
+	mensaje = mensaje + "<td>Número de animales:</td>";
+	mensaje = mensaje + "<td><input id='NAnimales'></td>";
 	mensaje = mensaje + "</tr>";
 	
 	mensaje = mensaje + "</table>";
 	
 	bootbox.confirm({
-		title:"Nueva venta de leche", 
+		title:"Nuevo pasto", 
 		message: mensaje,
 		onEscape: true,
 		buttons: {
@@ -808,13 +787,11 @@ function AnadirEnfermedad(){
 	    },
 	    callback: function (result) {
 	        if (result) {
-	        	var FechaDiagnostico= document.getElementById("FechaDiagnostico").value;
-	        	var FechaDesaparicion= document.getElementById("FechaDesaparicion").value;
-	        	var DAsociado= document.getElementById("DAsociado").value;
+	        	var FechaInicio= document.getElementById("FechaInicio").value;
+	        	var FechaFin= document.getElementById("FechaFin").value;
+	        	var CPasto= document.getElementById("CPasto").value;
 	        	var NAnimales= document.getElementById("NAnimales").value;
-	        	var Diagnostico= document.getElementById("Diagnostico").value;
-	        	var MAdoptadas= document.getElementById("MAdoptadas").value;
-            	AnadirRegistro(FechaDiagnostico, FechaDesaparicion, DAsociado, NAnimales, Diagnostico, MAdoptadas);
+            	AnadirRegistro(FechaInicio, FechaFin, CPasto, NAnimales);
             } else {
                 
             }
@@ -825,23 +802,21 @@ function AnadirEnfermedad(){
 </script>
 
 <script>
-function AnadirRegistro(FechaDiagnostico, FechaDesaparicion, DAsociado, NAnimales, Diagnostico, MAdoptadas){
+function AnadirRegistro(FechaInicio, FechaFin, CPasto, NAnimales){
 	var usuario = sessionStorage.getItem("usuario_activo");
 	var numexplotacion = sessionStorage.getItem("NumeroExplotacion");
 	
 	var datosNuevoAnimal= {
-		'FechaAparicion' : FechaDiagnostico,
-		'FechaDesaparicion' : FechaDesaparicion,
-		'DocAsociado' : DAsociado,
-		'MedidasAdoptadas' : MAdoptadas,
+		'FechaInicio' : FechaInicio,
+		'FechaFin' : FechaFin,
+		'CodigoPasto' : CPasto,
 		'NAnimales' : NAnimales,
-		'Diagnostico' : Diagnostico,
 		'NumExplotacion' : numexplotacion
 	};
 
 	var datosNuevoAnimalJSON = JSON.stringify(datosNuevoAnimal);
 
-	var url = './nuevaenfermedad';
+	var url = './nuevopasto';
 
 	$.ajax({
 		type : 'post',
@@ -854,7 +829,7 @@ function AnadirRegistro(FechaDiagnostico, FechaDesaparicion, DAsociado, NAnimale
 			
 			if(estado == 'correcto'){
 				bootbox.dialog({
-					title: DAsociado, 
+					title: CPasto, 
 					message: "Se ha añadido correctamente",
 					closeButton: true,
 					onEscape: true
@@ -862,7 +837,7 @@ function AnadirRegistro(FechaDiagnostico, FechaDesaparicion, DAsociado, NAnimale
 			}else if(estado == 'incorrecto'){
 				bootbox.dialog({
 					title:"ERROR", 
-					message: "NO se ha podido añadir el registro de enfermedad",
+					message: "NO se ha podido añadir el registro de pastos",
 					closeButton: true,
 					onEscape: true
 				});
@@ -871,7 +846,7 @@ function AnadirRegistro(FechaDiagnostico, FechaDesaparicion, DAsociado, NAnimale
 		error : function(jqXHR, exception) {
 			bootbox.dialog({
 					title:"ERROR", 
-					message: "NO se ha podido añadir el registro de enfermedad",
+					message: "NO se ha podido añadir el registro de pastos",
 					closeButton: true,
 					onEscape: true
 				});
@@ -893,7 +868,7 @@ function BuscarFiltroAno(){
 		//Buscar apartado 2 (año de nacimiento)
 		var ano = $('#FiltroAnoVentaNoMovil').find('option:selected').val();
 		var numexplotacion = sessionStorage.getItem("NumeroExplotacion");
-		
+		var ano2 = ano;
 		ano = ano + "-01-01";
 		
 		var datosFiltro2= {
@@ -903,7 +878,7 @@ function BuscarFiltroAno(){
 	
 		var datosFiltro2JSON = JSON.stringify(datosFiltro2);
 	
-		var url = './filtroAnEnfermedades';
+		var url = './filtroAnPastos';
 	
 		$.ajax({
 			type : 'post',
@@ -912,14 +887,12 @@ function BuscarFiltroAno(){
 			dataType : 'json',
 			data : datosFiltro2JSON,
 			success : function(data, textStatus, jqXHR) {
-				var FechaAparicion = data.FechaAparicion;
-				var Diagnostico = data.Diagnostico;
-				var DocAsociado = data.DocAsociado;
+				var CodigoPasto = data.CodigoPasto;
+				var FechaInicio = data.FechaInicio;
+				var FechaFin = data.FechaFin;
 				var NAnimales = data.NAnimales;
-				var MedidasAdoptadas = data.MedidasAdoptadas;
-				var FechaDesaparicion = data.FechaDesaparicion;
 				
-				var size = Object.keys(FechaAparicion).length;
+				var size = Object.keys(CodigoPasto).length;
 	
 				txt = document.getElementById("card");
 				var doc = "";
@@ -958,19 +931,15 @@ function BuscarFiltroAno(){
 										if(par == 0){
 											if(valor < total && valor < size){
 												doc= doc + '<div class="card text-black bg-light mb-3" style="cursor:pointer;">'
-												+'<div class="card-header" style="margin-top:5px;"><h5>'+DocAsociado[valor]
-												+'</h5><p class="card-text" style="text-align:right;">Desde: '+FechaAparicion[valor]+' Hasta: '+FechaDesaparicion[valor]+'</p>'
-												+'<p class="card-text" style="text-align:right;">'+Diagnostico[valor]+'</p>'
-												+'<p class="card-text" style="text-align:right;">'+MedidasAdoptadas[valor]+'</p>'
+												+'<div class="card-header" style="margin-top:5px;"><h5>'+CodigoPasto[valor]
+												+'</h5><p class="card-text" style="text-align:right;">Desde: '+FechaInicio[valor]+' Hasta: '+FechaFin[valor]+'</p>'
 												+'<p class="card-text" style="text-align:right;">'+NAnimales[valor]+' Animales</p></div></div>';
 											}
 										}else{
 											if(valor < total && valor < size){
 												doc= doc + '<div class="card text-white bg-secondary mb-3" style="cursor:pointer;">'
-												+'<div class="card-header" style="margin-top:5px;"><h5>'+DocAsociado[valor]
-												+'</h5><p class="card-text" style="text-align:right;">Desde: '+FechaAparicion[valor]+' Hasta: '+FechaDesaparicion[valor]+'</p>'
-												+'<p class="card-text" style="text-align:right;">'+Diagnostico[valor]+'</p>'
-												+'<p class="card-text" style="text-align:right;">'+MedidasAdoptadas[valor]+'</p>'
+												+'<div class="card-header" style="margin-top:5px;"><h5>'+CodigoPasto[valor]
+												+'</h5><p class="card-text" style="text-align:right;">Desde: '+FechaInicio[valor]+' Hasta: '+FechaFin[valor]+'</p>'
 												+'<p class="card-text" style="text-align:right;">'+NAnimales[valor]+' Animales</p></div></div>';
 											}
 										}
@@ -991,21 +960,21 @@ function BuscarFiltroAno(){
 				var NumPaginacion = 1;
 				
 				if(NumPaginacion == 1){
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+NumPaginacion+')">' + NumPaginacion + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion+1)+')">' + (NumPaginacion+1) + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+NumPaginacion+', '+ano2+')">' + NumPaginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+(NumPaginacion+1)+', '+ano2+')">' + (NumPaginacion+1) + '</a></li>';
 				}else if (NumPaginacion == paginacion){
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion-1)+')">' + (NumPaginacion-1) + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+NumPaginacion+')">' + NumPaginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+(NumPaginacion-1)+', '+ano2+')">' + (NumPaginacion-1) + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+NumPaginacion+', '+ano2+')">' + NumPaginacion + '</a></li>';
 				}else if(NumPaginacion == 2 || NumPaginacion == paginacion-1){
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion-1)+')">' + (NumPaginacion-1) + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+NumPaginacion+')">' + NumPaginacion + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion+1)+')">' + (NumPaginacion+1) + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+(NumPaginacion-1)+', '+ano2+')">' + (NumPaginacion-1) + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+NumPaginacion+', '+ano2+')">' + NumPaginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+(NumPaginacion+1)+', '+ano2+')">' + (NumPaginacion+1) + '</a></li>';
 				}else{
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion(1)">' + 1 + '</a></li>...';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion-1)+')">' + (NumPaginacion-1) + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+NumPaginacion+')">' + NumPaginacion + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion+1)+')">' + (NumPaginacion+1) + '</a></li>...';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+paginacion+')">' + paginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno(1, '+ano2+')">' + 1 + '</a></li>...';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+(NumPaginacion-1)+', '+ano2+')">' + (NumPaginacion-1) + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+NumPaginacion+', '+ano2+')">' + NumPaginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+(NumPaginacion+1)+', '+ano2+')">' + (NumPaginacion+1) + '</a></li>...';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+paginacion+', '+ano2+')">' + paginacion + '</a></li>';
 				}
 				
 				txt2.innerHTML = doc2;
@@ -1024,7 +993,7 @@ function BuscarFiltroAno(){
 		//Buscar apartado 2 (año de nacimiento)
 		var ano = $('#FiltroAnoVentaMovil').find('option:selected').val();
 		var numexplotacion = sessionStorage.getItem("NumeroExplotacion");
-		
+		var ano2 = ano;
 		ano = ano + "-01-01";
 		
 		var datosFiltro2= {
@@ -1034,7 +1003,7 @@ function BuscarFiltroAno(){
 	
 		var datosFiltro2JSON = JSON.stringify(datosFiltro2);
 	
-		var url = './filtroAnEnfermedades';
+		var url = './filtroAnPastos';
 	
 		$.ajax({
 			type : 'post',
@@ -1043,14 +1012,12 @@ function BuscarFiltroAno(){
 			dataType : 'json',
 			data : datosFiltro2JSON,
 			success : function(data, textStatus, jqXHR) {
-				var FechaAparicion = data.FechaAparicion;
-				var Diagnostico = data.Diagnostico;
-				var DocAsociado = data.DocAsociado;
+				var CodigoPasto = data.CodigoPasto;
+				var FechaInicio = data.FechaInicio;
+				var FechaFin = data.FechaFin;
 				var NAnimales = data.NAnimales;
-				var MedidasAdoptadas = data.MedidasAdoptadas;
-				var FechaDesaparicion = data.FechaDesaparicion;
 				
-				var size = Object.keys(FechaAparicion).length;
+				var size = Object.keys(CodigoPasto).length;
 	
 				txt = document.getElementById("cardMovil");
 				var doc = "";
@@ -1089,19 +1056,15 @@ function BuscarFiltroAno(){
 										if(par == 0){
 											if(valor < total && valor < size){
 												doc= doc + '<div class="card text-black bg-light mb-3" style="cursor:pointer;">'
-												+'<div class="card-header" style="margin-top:5px;"><h5>'+DocAsociado[valor]
-												+'</h5><p class="card-text" style="text-align:right;">Desde: '+FechaAparicion[valor]+' Hasta: '+FechaDesaparicion[valor]+'</p>'
-												+'<p class="card-text" style="text-align:right;">'+Diagnostico[valor]+'</p>'
-												+'<p class="card-text" style="text-align:right;">'+MedidasAdoptadas[valor]+'</p>'
+												+'<div class="card-header" style="margin-top:5px;"><h5>'+CodigoPasto[valor]
+												+'</h5><p class="card-text" style="text-align:right;">Desde: '+FechaInicio[valor]+' Hasta: '+FechaFin[valor]+'</p>'
 												+'<p class="card-text" style="text-align:right;">'+NAnimales[valor]+' Animales</p></div></div>';
 											}
 										}else{
 											if(valor < total && valor < size){
 												doc= doc + '<div class="card text-white bg-secondary mb-3" style="cursor:pointer;">'
-												+'<div class="card-header" style="margin-top:5px;"><h5>'+DocAsociado[valor]
-												+'</h5><p class="card-text" style="text-align:right;">Desde: '+FechaAparicion[valor]+' Hasta: '+FechaDesaparicion[valor]+'</p>'
-												+'<p class="card-text" style="text-align:right;">'+Diagnostico[valor]+'</p>'
-												+'<p class="card-text" style="text-align:right;">'+MedidasAdoptadas[valor]+'</p>'
+												+'<div class="card-header" style="margin-top:5px;"><h5>'+CodigoPasto[valor]
+												+'</h5><p class="card-text" style="text-align:right;">Desde: '+FechaInicio[valor]+' Hasta: '+FechaFin[valor]+'</p>'
 												+'<p class="card-text" style="text-align:right;">'+NAnimales[valor]+' Animales</p></div></div>';
 											}
 										}
@@ -1122,21 +1085,21 @@ function BuscarFiltroAno(){
 				var NumPaginacion = 1;
 				
 				if(NumPaginacion == 1){
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+NumPaginacion+')">' + NumPaginacion + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion+1)+')">' + (NumPaginacion+1) + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+NumPaginacion+', '+ano2+')">' + NumPaginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+(NumPaginacion+1)+', '+ano2+')">' + (NumPaginacion+1) + '</a></li>';
 				}else if (NumPaginacion == paginacion){
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion-1)+')">' + (NumPaginacion-1) + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+NumPaginacion+')">' + NumPaginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+(NumPaginacion-1)+', '+ano2+')">' + (NumPaginacion-1) + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+NumPaginacion+', '+ano2+')">' + NumPaginacion + '</a></li>';
 				}else if(NumPaginacion == 2 || NumPaginacion == paginacion-1){
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion-1)+')">' + (NumPaginacion-1) + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+NumPaginacion+')">' + NumPaginacion + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion+1)+')">' + (NumPaginacion+1) + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+(NumPaginacion-1)+', '+ano2+')">' + (NumPaginacion-1) + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+NumPaginacion+', '+ano2+')">' + NumPaginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+(NumPaginacion+1)+', '+ano2+')">' + (NumPaginacion+1) + '</a></li>';
 				}else{
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion(1)">' + 1 + '</a></li>...';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion-1)+')">' + (NumPaginacion-1) + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+NumPaginacion+')">' + NumPaginacion + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion+1)+')">' + (NumPaginacion+1) + '</a></li>...';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+paginacion+')">' + paginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno(1, '+ano2+')">' + 1 + '</a></li>...';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+(NumPaginacion-1)+', '+ano2+')">' + (NumPaginacion-1) + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+NumPaginacion+', '+ano2+')">' + NumPaginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+(NumPaginacion+1)+', '+ano2+')">' + (NumPaginacion+1) + '</a></li>...';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+paginacion+', '+ano2+')">' + paginacion + '</a></li>';
 				}
 				
 				txt2.innerHTML = doc2;
@@ -1157,12 +1120,11 @@ function BuscarFiltroAno(){
 </script>
 
 <script>
-function paginacionFiltroAno(NumPaginacion){
+function paginacionFiltroAno(NumPaginacion, ano){
 	
 	var movil = sessionStorage.getItem("Movil");
 	if(movil == "false"){
-		//Buscar apartado 2 (año de nacimiento)
-		var ano = $('#FiltroAnoVentaNoMovil').find('option:selected').val();
+		var ano2 = ano;
 		var numexplotacion = sessionStorage.getItem("NumeroExplotacion");
 		
 		ano = ano + "-01-01";
@@ -1174,7 +1136,7 @@ function paginacionFiltroAno(NumPaginacion){
 	
 		var datosFiltro2JSON = JSON.stringify(datosFiltro2);
 	
-		var url = './filtroAnEnfermedades';
+		var url = './filtroAnPastos';
 	
 		$.ajax({
 			type : 'post',
@@ -1183,14 +1145,12 @@ function paginacionFiltroAno(NumPaginacion){
 			dataType : 'json',
 			data : datosFiltro2JSON,
 			success : function(data, textStatus, jqXHR) {
-				var FechaAparicion = data.FechaAparicion;
-				var Diagnostico = data.Diagnostico;
-				var DocAsociado = data.DocAsociado;
+				var CodigoPasto = data.CodigoPasto;
+				var FechaInicio = data.FechaInicio;
+				var FechaFin = data.FechaFin;
 				var NAnimales = data.NAnimales;
-				var MedidasAdoptadas = data.MedidasAdoptadas;
-				var FechaDesaparicion = data.FechaDesaparicion;
 				
-				var size = Object.keys(FechaAparicion).length;
+				var size = Object.keys(CodigoPasto).length;
 	
 				txt = document.getElementById("card");
 				var doc = "";
@@ -1233,19 +1193,15 @@ function paginacionFiltroAno(NumPaginacion){
 									if(par == 0){
 										if(valor < total && valor < size){
 												doc= doc + '<div class="card text-black bg-light mb-3" style="cursor:pointer;">'
-												+'<div class="card-header" style="margin-top:5px;"><h5>'+DocAsociado[valor]
-												+'</h5><p class="card-text" style="text-align:right;">Desde: '+FechaAparicion[valor]+' Hasta: '+FechaDesaparicion[valor]+'</p>'
-												+'<p class="card-text" style="text-align:right;">'+Diagnostico[valor]+'</p>'
-												+'<p class="card-text" style="text-align:right;">'+MedidasAdoptadas[valor]+'</p>'
+												+'<div class="card-header" style="margin-top:5px;"><h5>'+CodigoPasto[valor]
+												+'</h5><p class="card-text" style="text-align:right;">Desde: '+FechaInicio[valor]+' Hasta: '+FechaFin[valor]+'</p>'
 												+'<p class="card-text" style="text-align:right;">'+NAnimales[valor]+' Animales</p></div></div>';
 											}
 										}else{
 											if(valor < total && valor < size){
 												doc= doc + '<div class="card text-white bg-secondary mb-3" style="cursor:pointer;">'
-												+'<div class="card-header" style="margin-top:5px;"><h5>'+DocAsociado[valor]
-												+'</h5><p class="card-text" style="text-align:right;">Desde: '+FechaAparicion[valor]+' Hasta: '+FechaDesaparicion[valor]+'</p>'
-												+'<p class="card-text" style="text-align:right;">'+Diagnostico[valor]+'</p>'
-												+'<p class="card-text" style="text-align:right;">'+MedidasAdoptadas[valor]+'</p>'
+												+'<div class="card-header" style="margin-top:5px;"><h5>'+CodigoPasto[valor]
+												+'</h5><p class="card-text" style="text-align:right;">Desde: '+FechaInicio[valor]+' Hasta: '+FechaFin[valor]+'</p>'
 												+'<p class="card-text" style="text-align:right;">'+NAnimales[valor]+' Animales</p></div></div>';
 											}
 										}
@@ -1264,21 +1220,21 @@ function paginacionFiltroAno(NumPaginacion){
 				doc2 = "";
 				
 				if(NumPaginacion == 1){
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+NumPaginacion+')">' + NumPaginacion + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+(NumPaginacion+1)+')">' + (NumPaginacion+1) + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+NumPaginacion+', '+ano2+')">' + NumPaginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+(NumPaginacion+1)+', '+ano2+')">' + (NumPaginacion+1) + '</a></li>';
 				}else if (NumPaginacion == paginacion){
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+(NumPaginacion-1)+')">' + (NumPaginacion-1) + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+NumPaginacion+')">' + NumPaginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+(NumPaginacion-1)+', '+ano2+')">' + (NumPaginacion-1) + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+NumPaginacion+', '+ano2+')">' + NumPaginacion + '</a></li>';
 				}else if(NumPaginacion == 2 || NumPaginacion == paginacion-1){
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+(NumPaginacion-1)+')">' + (NumPaginacion-1) + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+NumPaginacion+')">' + NumPaginacion + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+(NumPaginacion+1)+')">' + (NumPaginacion+1) + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+(NumPaginacion-1)+', '+ano2+')">' + (NumPaginacion-1) + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+NumPaginacion+', '+ano2+')">' + NumPaginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+(NumPaginacion+1)+', '+ano2+')">' + (NumPaginacion+1) + '</a></li>';
 				}else{
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno(1)">' + 1 + '</a></li>...';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+(NumPaginacion-1)+')">' + (NumPaginacion-1) + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+NumPaginacion+')">' + NumPaginacion + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+(NumPaginacion+1)+')">' + (NumPaginacion+1) + '</a></li>...';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+paginacion+')">' + paginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno(1, '+ano2+')">' + 1 + '</a></li>...';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+(NumPaginacion-1)+', '+ano2+')">' + (NumPaginacion-1) + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+NumPaginacion+', '+ano2+')">' + NumPaginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+(NumPaginacion+1)+', '+ano2+')">' + (NumPaginacion+1) + '</a></li>...';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+paginacion+', '+ano2+')">' + paginacion + '</a></li>';
 				}
 				
 				txt2.innerHTML = doc2;
@@ -1293,16 +1249,18 @@ function paginacionFiltroAno(NumPaginacion){
 			}
 		});
 	}else{
-		//Buscar apartado 2 (año de nacimiento)
-		var ano = $('#FiltroAnoVentaMovil').find('option:selected').val();
 		var numexplotacion = sessionStorage.getItem("NumeroExplotacion");
-		
+		var ano2 = ano;
+		ano = ano + "-01-01";
+
 		var datosFiltro2= {
-			'AnoNacimiento' : ano,
+			'FechaVentaCria' : ano,
 			'NumExplotacion' : numexplotacion,
 		};
 	
-		var url = './filtroAnEnfermedades';
+		var datosFiltro2JSON = JSON.stringify(datosFiltro2);
+		
+		var url = './filtroAnPastos';
 	
 		$.ajax({
 			type : 'post',
@@ -1311,14 +1269,12 @@ function paginacionFiltroAno(NumPaginacion){
 			dataType : 'json',
 			data : datosFiltro2JSON,
 			success : function(data, textStatus, jqXHR) {
-				var FechaAparicion = data.FechaAparicion;
-				var Diagnostico = data.Diagnostico;
-				var DocAsociado = data.DocAsociado;
+				var CodigoPasto = data.CodigoPasto;
+				var FechaInicio = data.FechaInicio;
+				var FechaFin = data.FechaFin;
 				var NAnimales = data.NAnimales;
-				var MedidasAdoptadas = data.MedidasAdoptadas;
-				var FechaDesaparicion = data.FechaDesaparicion;
 				
-				var size = Object.keys(FechaAparicion).length;
+				var size = Object.keys(CodigoPasto).length;
 	
 				txt = document.getElementById("cardMovil");
 				var doc = "";
@@ -1361,19 +1317,15 @@ function paginacionFiltroAno(NumPaginacion){
 									if(par == 0){
 										if(valor < total && valor < size){
 												doc= doc + '<div class="card text-black bg-light mb-3" style="cursor:pointer;">'
-												+'<div class="card-header" style="margin-top:5px;"><h5>'+DocAsociado[valor]
-												+'</h5><p class="card-text" style="text-align:right;">Desde: '+FechaAparicion[valor]+' Hasta: '+FechaDesaparicion[valor]+'</p>'
-												+'<p class="card-text" style="text-align:right;">'+Diagnostico[valor]+'</p>'
-												+'<p class="card-text" style="text-align:right;">'+MedidasAdoptadas[valor]+'</p>'
+												+'<div class="card-header" style="margin-top:5px;"><h5>'+CodigoPasto[valor]
+												+'</h5><p class="card-text" style="text-align:right;">Desde: '+FechaInicio[valor]+' Hasta: '+FechaFin[valor]+'</p>'
 												+'<p class="card-text" style="text-align:right;">'+NAnimales[valor]+' Animales</p></div></div>';
 											}
 										}else{
 											if(valor < total && valor < size){
 												doc= doc + '<div class="card text-white bg-secondary mb-3" style="cursor:pointer;">'
-												+'<div class="card-header" style="margin-top:5px;"><h5>'+DocAsociado[valor]
-												+'</h5><p class="card-text" style="text-align:right;">Desde: '+FechaAparicion[valor]+' Hasta: '+FechaDesaparicion[valor]+'</p>'
-												+'<p class="card-text" style="text-align:right;">'+Diagnostico[valor]+'</p>'
-												+'<p class="card-text" style="text-align:right;">'+MedidasAdoptadas[valor]+'</p>'
+												+'<div class="card-header" style="margin-top:5px;"><h5>'+CodigoPasto[valor]
+												+'</h5><p class="card-text" style="text-align:right;">Desde: '+FechaInicio[valor]+' Hasta: '+FechaFin[valor]+'</p>'
 												+'<p class="card-text" style="text-align:right;">'+NAnimales[valor]+' Animales</p></div></div>';
 											}
 										}
@@ -1392,21 +1344,21 @@ function paginacionFiltroAno(NumPaginacion){
 				doc2 = "";
 				
 				if(NumPaginacion == 1){
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+NumPaginacion+')">' + NumPaginacion + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+(NumPaginacion+1)+')">' + (NumPaginacion+1) + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+NumPaginacion+', '+ano2+')">' + NumPaginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+(NumPaginacion+1)+', '+ano2+')">' + (NumPaginacion+1) + '</a></li>';
 				}else if (NumPaginacion == paginacion){
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+(NumPaginacion-1)+')">' + (NumPaginacion-1) + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+NumPaginacion+')">' + NumPaginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+(NumPaginacion-1)+', '+ano2+')">' + (NumPaginacion-1) + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+NumPaginacion+', '+ano2+')">' + NumPaginacion + '</a></li>';
 				}else if(NumPaginacion == 2 || NumPaginacion == paginacion-1){
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+(NumPaginacion-1)+')">' + (NumPaginacion-1) + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+NumPaginacion+')">' + NumPaginacion + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+(NumPaginacion+1)+')">' + (NumPaginacion+1) + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+(NumPaginacion-1)+', '+ano2+')">' + (NumPaginacion-1) + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+NumPaginacion+', '+ano2+')">' + NumPaginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+(NumPaginacion+1)+', '+ano2+')">' + (NumPaginacion+1) + '</a></li>';
 				}else{
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno(1)">' + 1 + '</a></li>...';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+(NumPaginacion-1)+')">' + (NumPaginacion-1) + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+NumPaginacion+')">' + NumPaginacion + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+(NumPaginacion+1)+')">' + (NumPaginacion+1) + '</a></li>...';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+paginacion+')">' + paginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno(1, '+ano2+')">' + 1 + '</a></li>...';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+(NumPaginacion-1)+', '+ano2+')">' + (NumPaginacion-1) + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+NumPaginacion+', '+ano2+')">' + NumPaginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+(NumPaginacion+1)+', '+ano2+')">' + (NumPaginacion+1) + '</a></li>...';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+paginacion+', '+ano2+')">' + paginacion + '</a></li>';
 				}
 				
 				txt2.innerHTML = doc2;
