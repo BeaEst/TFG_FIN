@@ -1,0 +1,1436 @@
+<!doctype html>
+<html lang="en">
+<head>
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Bootstrap CSS -->
+<!--
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <script type="text/javascript" src="../js/jquery-1.11.0.min.js"></script>
+    -->
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
+	crossorigin="anonymous">
+
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="../js/bootbox.min.js"></script>
+
+<title>Incidencias</title>
+</head>
+<body>
+
+	<div id="NoMovil" style="display: none;">
+		<div
+			style="width: 150px; float: left; position: absolute; top: 50px; bottom: 0; background-color: #212529;">
+			<nav class="navbar navbar-dark bg-dark">
+				<ul class="navbar-nav">
+					<li class="nav-item"><a class="nav-link active"
+						style="padding-left: 10px; width: 150px;"
+						href="./Animales.html">Animales</a></li>
+					<li class="nav-item"><a class="nav-link active"
+						style="padding-left: 10px; width: 150px;"
+						href="./Crias.html">Venta Crías</a></li>
+					<li class="nav-item"><a class="nav-link active"
+						style="padding-left: 10px; width: 150px;"
+						href="./Leche.html">Leche</a></li>
+					<li class="nav-item"><a class="nav-link active"
+						style="padding-left: 10px; width: 150px;"
+						href="./AlimentosSuministrados.html">Alimentos Suministrados</a></li>
+					<li class="nav-item"><a class="nav-link active"
+						style="padding-left: 10px; width: 150px;"
+						href="./PiensosMedicamentosos.html">Piensos Medicamentosos</a></li>
+					<li class="nav-item"><a class="nav-link active"
+						style="padding-left: 10px; width: 150px;"
+						href="./Medicamentos.html">Medicamentos</a></li>
+					<li class="nav-item"><a class="nav-link active"
+						style="padding-left: 10px; width: 150px;"
+						href="./Enfermedades.html">Enfermedades</a></li>
+					<li class="nav-item"><a class="nav-link active"
+						style="padding-left: 10px; width: 150px;"
+						href="./Pastos.html">Pastos</a></li>
+					<li class="nav-item"><a class="nav-link active"
+						style="padding-left: 10px; width: 150px;"
+						href="./Inspecciones.html">Inspecciones</a></li>
+					<li class="nav-item"><a class="nav-link active"
+						style="padding-left: 10px; background-color: #e3e4e5; width: 150px; color: black; font-size:14px"
+						href="./Pastos.html"><b>INCIDENCIAS</b></a></li>
+					<li class="nav-item"><a class="nav-link active"
+						style="padding-left: 10px; width: 150px;"
+						href="./Exportaciones.html">Exportaciones</a></li>
+				</ul>
+			</nav>
+		</div>
+
+		<div>
+		<nav class="navbar navbar-dark bg-dark justify-content-end">
+			<div class="container-fluid" style="float:left;">
+				<a class="navbar-brand" href="./Inicio.html">OVICAP-DOC</a>
+			
+				<div class="dropdown">
+					<a class="nav-link dropdown-toggle" href="#"
+						id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown"
+						aria-expanded="false"> <b><script>document.write(sessionStorage.getItem("usuario_activo"));</script></b>
+					</a>
+					<ul class="dropdown-menu dropdown-menu-end"
+						aria-labelledby="navbarDropdownMenuLink">
+						<li><a class="dropdown-item" onclick="VerPerfil()">Ver
+								Perfil</a></li>
+						<li><a class="dropdown-item" onclick="CerrarSesion()">Cerrar
+								Sesión</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</div>
+
+		<h1 style="text-align: center;">INCIDENCIAS</h1>
+
+		<nav class="navbar navbar-dark bg-dark" style="margin-left: 155px">
+			<div class="container-fluid">
+				<button class="navbar-toggler" type="button"
+					data-bs-toggle="collapse"
+					data-bs-target="#navbarToggleExternalContent"
+					aria-controls="navbarToggleExternalContent" aria-expanded="false"
+					aria-label="Toggle navigation">
+					<span><img src="./desplegable.png" width="20" height="20"></span>
+				</button>
+			</div>
+		</nav>
+		<div class="collapse" id="navbarToggleExternalContent"
+			style="margin-left: 155px">
+			<div style="background-color: #A9D0F5">
+				<div class="card">
+					<div class="card-body" style="background-color: #A9D0F5">
+						<table>
+							<tr>
+								<td style="width: 25%;">
+									<div>
+										<label style="float: left;">Buscar por año:</label> <select
+											class="form-select" aria-label="Default select example"
+											id="FiltroAnoVentaNoMovil" style="width: 30%; float: left;">
+											<option selected>-----</option>
+											<option value="2021">2021</option>
+											<option value="2022">2022</option>
+											<option value="2023">2023</option>
+										</select>
+									</div> <br> <br>
+
+									<button type="button" class="btn btn-outline-light"
+										onClick="BuscarFiltroAno()">Buscar</button>
+								</td>
+
+								<td style="width: 25%;">
+									<div class="form-check">
+										<img src="./anadir.png" title="Añadir venta cria" height="25"
+											size="25" id="" style="float: left; cursor: pointer;"
+											onClick="AnadirIncidencia()"> <label style="float: left;">&nbsp;
+											Añadir Incidencia </label>
+									</div>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<hr>
+		
+		<div id="card"></div>
+
+		<nav aria-label="Page navigation example">
+			<ul class="pagination justify-content-center" id="paginacion">
+
+			</ul>
+		</nav>
+	</div>
+
+	<div id="Movil" style="display: none;">
+		<div
+			style="width: 60px; float: left; position: fixed; top: 0px; bottom: 0; background-color: #212529; padding-top:50px">
+			<nav class="navbar navbar-dark bg-dark">
+				<ul class="navbar-nav">
+					<li class="nav-item">
+						<a class="nav-link active" style="padding-left: 10px;" href="./Animales.html"> 
+							<img src="./oveja.png" width="20" height="20" style="display: inline;">
+							<img src="./cabra.png" width="20" height="20"style="display: inline;">
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link active" style="padding-left: 10px;" href="./Crias.html"> 
+							<img src="./camion.png" width="30" height="30" style="display: inline;">
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link active" style="padding-left: 10px;" href="./Leche.html"> 
+							<img src="./leche.png" width="30" height="30" style="display: inline;">
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link active" style="padding-left: 10px;" href="./AlimentosSuministrados.html">
+							<img src="./silo.png" width="30" height="30" style="display: inline;">
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link active" style="padding-left: 10px;" href="./PiensosMedicamentosos.html">
+							<img src="./silo.png" width="25" height="25" style="display: inline;">
+							<img src="./pildora.png" width="17" height="17" style="display: inline;">
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link active" style="padding-left: 10px;" href="./Medicamentos.html">
+							<img src="./medicamentos.png" width="25" height="25" style="display: inline;">
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link active" style="padding-left: 10px;" href="./Enfermedades.html">
+							<img src="./virus.png" width="30" height="30" style="display: inline;">
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link active" style="padding-left: 10px;" href="./Pastos.html">
+							<img src="./pastos.png" width="30" height="30" style="display: inline;">
+						</a>
+					</li>
+					<li class="nav-item">
+						<li class="nav-item">
+						<a class="nav-link active" style="padding-left: 10px;" href="./Inspecciones.html">
+							<img src="./inspecciones.png" width="30" height="30" style="display: inline;">
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link active" style="padding-left: 10px; background-color: #e3e4e5; width: 60px; color: black" href="./Incidencias.html">
+							<img src="./incidenciasN.png" width="30" height="30" style="display: inline;">
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link active" style="padding-left: 10px;" href="./Exportaciones.html"> 
+							<img src="./exportaciones.png" width="30" height="30" style="display: inline;">
+						</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+
+		<div>
+		<nav class="navbar navbar-dark bg-dark justify-content-end">
+			<div class="container-fluid" style="float:left;">
+				<a class="navbar-brand" href="./Inicio.html">OVICAP-DOC</a>
+			
+				<div class="dropdown">
+					<a class="nav-link dropdown-toggle" href="#"
+						id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown"
+						aria-expanded="false"> <b><script>document.write(sessionStorage.getItem("usuario_activo"));</script></b>
+					</a>
+					<ul class="dropdown-menu dropdown-menu-end"
+						aria-labelledby="navbarDropdownMenuLink">
+						<li><a class="dropdown-item" onclick="VerPerfil()">Ver
+								Perfil</a></li>
+						<li><a class="dropdown-item" onclick="CerrarSesion()">Cerrar
+								Sesión</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</div>
+	
+		<h1 style="text-align: center;margin-left:68px">INCIDENCIAS</h1>
+		
+		<nav class="navbar navbar-dark bg-dark" style="margin-left: 65px;">
+			<div class="container-fluid">
+				<button class="navbar-toggler" type="button"
+					data-bs-toggle="collapse"
+					data-bs-target="#navbarToggleExternalContent"
+					aria-controls="navbarToggleExternalContent" aria-expanded="false"
+					aria-label="Toggle navigation">
+					<span><img src="./desplegable.png" width="10" height="10"></span>
+				</button>
+			</div>
+		</nav>
+		<div class="collapse" id="navbarToggleExternalContent"
+			style="margin-left: 65px; height: 10px;">
+			<div style="background-color: #A9D0F5">
+				<div class="card">
+					<div class="card-body" style="background-color: #A9D0F5">
+						<table>
+							<tr>
+
+									<div>
+									
+										<label style="float: left;">Buscar por año:</label> <select
+											class="form-select" aria-label="Default select example"
+											id="FiltroAnoVentaMovil" style="width: 30%; float: left;">
+											<option selected>-----</option>
+											<option value="2021">2021</option>
+											<option value="2022">2022</option>
+											<option value="2023">2023</option>
+										</select>
+									</div> <br> <br>
+
+									<button type="button" class="btn btn-outline-light"
+										onClick="BuscarFiltroAno()">Buscar</button>
+										
+									<hr>
+
+									<div class="form-check">
+										<img src="./anadir.png" title="Añadir alimento" height="25"
+											size="25" id="" style="float: left; cursor: pointer;"
+											onClick="AnadirIncidencia()"> <label style="float: left;">&nbsp;
+											Añadir Incidencia</label>
+									</div>
+
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		<br>
+
+		<div id="cardMovil"></div>
+
+		<nav aria-label="Page navigation example">
+			<ul class="pagination justify-content-center" id="paginacionMovil" style="margin-left:60px">
+				<!-- 
+		    <li class="page-item"><a class="page-link" href="#">1</a></li>
+		    <li class="page-item"><a class="page-link" href="#">2</a></li>
+		    <li class="page-item"><a class="page-link" href="#">3</a></li>
+		     -->
+			</ul>
+		</nav>
+
+
+	</div>
+	<!-- Optional JavaScript; choose one of the two! -->
+
+	<!-- Option 1: Bootstrap Bundle with Popper -->
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+		crossorigin="anonymous"></script>
+
+	<!-- Option 2: Separate Popper and Bootstrap JS -->
+	<!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js" integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>
+    -->
+</body>
+</html>
+
+<script>
+$(function() {
+
+	var usuario = sessionStorage.getItem("usuario_activo");
+	
+	if(usuario == null){
+		sessionStorage.clear();
+		var url = "./IniciarSesion.html";
+	    window.location.href = url;
+	}else{
+	
+  		//Comprobar si es telefono u ordenador
+	
+	    try{ 
+	        document.createEvent("TouchEvent"); 
+	        document.getElementById('Movil').style.display='block';
+	        sessionStorage.setItem('Movil', "true");
+	        var parar;
+	        parar = 1;
+	        return true; 
+	    }
+	    catch(e){ 
+	    	document.getElementById('NoMovil').style.display='block';
+	    	sessionStorage.setItem('Movil', "false");
+	        return false;
+	    }
+	}
+  
+});
+</script>
+
+<script>
+function CerrarSesion(){
+	sessionStorage.clear();
+	var url = "./IniciarSesion.html";
+    window.location.href = url;
+}
+</script>
+
+<script>
+function VerPerfil(){
+	//Primero hay que sacar los datos de base de datos de el usuario que se encuentra conectado
+	var usuario = sessionStorage.getItem("usuario_activo");
+	
+	var usuarioDatos= {
+		'usuario' : usuario,
+	};
+
+	var usuarioLoginJSON = JSON.stringify(usuarioDatos);
+
+	var url = './sacardatos';
+
+	$.ajax({
+		type : 'post',
+		url : url,
+		contentType : 'application/json',
+		dataType : 'json',
+		data : usuarioLoginJSON,
+		success : function(data, textStatus, jqXHR) {
+			//Guardar las variables globales para mostrarlas en los input de Ver Perfil
+			sessionStorage.setItem('Nombre', data.Nombre);
+			sessionStorage.setItem('PApellido', data.PApellido);
+			sessionStorage.setItem('SApellido', data.SApellido);
+			sessionStorage.setItem('DNINIF', data.DNINIF);
+			sessionStorage.setItem('CElectronico', data.CElectronico);
+			sessionStorage.setItem('NumExplotacion', data.NumExplotacion);
+			
+			//Luego redirigir a la página
+			var url = "./VerPerfil.html";
+		    window.location.href = url;
+		},
+		error : function(jqXHR, exception) {
+			// mostrarPantallaError(url, jqXHR);
+		},
+		statuscode : {
+			404 : function() {
+				//mostrarPantallaError(url);
+			}
+		}
+	});
+	
+	
+}
+</script>
+
+<script>
+$(function() {
+	
+	var usuario = sessionStorage.getItem("usuario_activo");
+	
+		var usuarioDatos= {
+		'usuario' : usuario,
+	};
+
+	var usuarioLoginJSON = JSON.stringify(usuarioDatos);
+
+	var url = './recogerExplotaciones';
+
+	$.ajax({
+		type : 'post',
+		url : url,
+		contentType : 'application/json',
+		dataType : 'json',
+		data : usuarioLoginJSON,
+		success : function(data, textStatus, jqXHR) {
+			var numExplotaciones = data.ListaExplotaciones;
+			var size = Object.keys(numExplotaciones).length;
+			
+			if(size == 1){
+				sessionStorage.setItem('NumeroExplotacion', data.ListaExplotaciones[0]);
+				paginacion(1);
+			}else{
+				txt = document.getElementById("listadoExplotaciones");
+				var mensaje = "";
+				mensaje = mensaje + "<table>";
+					mensaje = mensaje + "<tr>";	
+						mensaje = mensaje + "<th style='border: 1px solid black;'>Número Explotación</th>";
+						mensaje = mensaje + "<th style='border: 1px solid black;'>Tipo de animal</th>";		
+					mensaje = mensaje + "</tr>";
+				for(var i=0; i<size; i++){
+					mensaje = mensaje + "<tr>";	
+						mensaje = mensaje + "<td style='border: 1px solid black;'>" + data.ListaExplotaciones[i] + "</td>";
+						mensaje = mensaje + "<td style='border: 1px solid black;'>" + data.ListaTipoAnimal[i] + "</td>";		
+					mensaje = mensaje + "</tr>";
+				}
+				mensaje = mensaje + "</table>";
+			
+				bootbox.confirm({
+					title:"¿Qué listado deseas ver?", 
+					message: mensaje,
+					onEscape: true,
+					buttons: {
+				        confirm: {
+				            label: 'OVINO',
+				            className: 'btn-primary'
+				        },
+				        cancel: {
+				            label: 'CAPRINO',
+				            className: 'btn-primary'
+				        }
+				    },
+				    callback: function (result) {
+				        if (result) {
+				        	for(var i=0; i<size; i++){
+								if(data.ListaTipoAnimal[i] == 'ovino'){
+									sessionStorage.setItem('NumeroExplotacion', data.ListaExplotaciones[i]);
+								}
+							}
+				        	paginacion(1);
+			            } else {
+			            	for(var i=0; i<size; i++){
+								if(data.ListaTipoAnimal[i] == 'caprino'){
+									sessionStorage.setItem('NumeroExplotacion', data.ListaExplotaciones[i]);
+								}
+							}
+			                paginacion(1);
+			            }
+				    }
+				});
+			}
+			
+			
+		},
+		error : function(jqXHR, exception) {
+			// mostrarPantallaError(url, jqXHR);
+		},
+		statuscode : {
+			404 : function() {
+				//mostrarPantallaError(url);
+			}
+		}
+	});
+
+});
+</script>
+
+<script>
+function paginacion(NumPaginacion){
+
+	var movil = sessionStorage.getItem("Movil");
+	if(sessionStorage.getItem("Movil") == "false"){
+		//Primero hay que sacar los datos de base de datos de el usuario que se encuentra conectado
+		var usuario = sessionStorage.getItem("usuario_activo");
+		var NumExplotacion = sessionStorage.getItem("NumeroExplotacion");
+		
+		var usuarioDatos= {
+			'usuario' : usuario,
+			'NumExplotacion' : NumExplotacion,
+		};
+	
+		var usuarioLoginJSON = JSON.stringify(usuarioDatos);
+	
+		var url = './incidencias';
+	
+		$.ajax({
+			type : 'post',
+			url : url,
+			contentType : 'application/json',
+			dataType : 'json',
+			data : usuarioLoginJSON,
+			success : function(data, textStatus, jqXHR) {
+				var Fecha = data.Fecha;
+				var Descripcion = data.Descripcion;
+				var NAnimales = data.NAnimales;
+				var CodIdentAnt = data.CodIdentAnt;
+				var CodIdentNew = data.CodIdentNew;
+				var NDocumento = data.NDocumento;
+						
+				var size = Object.keys(NDocumento).length;
+	
+				txt = document.getElementById("card");
+				var doc = "";
+				
+				//Sacar el número de paginaciones que va a haber de animales.
+				var paginacion = size / 9;
+				
+				if(Number.isInteger(paginacion)){
+					paginacion = paginacion;
+				}else{
+					paginacion = parseInt(paginacion, 10);
+					paginacion = paginacion + 1;
+				}
+				
+				if(NumPaginacion == 1){
+					var valor = 0;	
+				}else{
+					var valor = (NumPaginacion - 1) * 9;	
+				}
+					
+				var total = (NumPaginacion * 9) + 9;
+				doc = doc + '<p style="margin-left: 155px;"><em>Página '+NumPaginacion+' de '+paginacion+'</em></p>';
+				//for(var i=1; i<=paginacion; i++){
+					doc = doc + '<table style="margin-left: 155px;">';
+						for(var j=0; j<3; j++){
+							doc = doc + '<tr style="width: 100%">';
+								for(var x=0; x<3; x++){
+									if(x==0){
+										var par = 1;
+									}else{
+										if(x % 2 == 0) {
+											var par = 1;
+										}else{
+											var par = 0;
+										}
+									}
+								
+									
+									doc = doc + '<td style="width: 1000px;">';
+										if(par == 0){
+											if(valor < total && valor < size){
+												doc= doc + '<div class="card text-black bg-light mb-3" style="cursor:pointer;">'
+												+'<div class="card-header" style="margin-top:5px;"><h5>'+NDocumento[valor]
+												+'</h5><p class="card-text" style="text-align:right;">'+Fecha[valor]+'</p>'
+												+'<p class="card-text" style="text-align:right;">'+NAnimales[valor]+' Animales</p>'
+												+'<p class="card-text" style="text-align:right;">Código Anterior: '+CodIdentAnt[valor]+' - Código Actual: '+CodIdentNew[valor]+'</p>'
+												+'<p class="card-text" style="text-align:right;">'+Descripcion[valor]+'</p></div></div>';
+											}
+										}else{
+											if(valor < total && valor < size){
+												doc= doc + '<div class="card text-white bg-secondary mb-3" style="cursor:pointer;">'
+												+'<div class="card-header" style="margin-top:5px;"><h5>'+NDocumento[valor]
+												+'</h5><p class="card-text" style="text-align:right;">'+Fecha[valor]+'</p>'
+												+'<p class="card-text" style="text-align:right;">'+NAnimales[valor]+' Animales</p>'
+												+'<p class="card-text" style="text-align:right;">Código Anterior: '+CodIdentAnt[valor]+' - Código Actual: '+CodIdentNew[valor]+'</p>'
+												+'<p class="card-text" style="text-align:right;">'+Descripcion[valor]+'</p></div></div>';
+											}
+										}
+										valor = valor + 1;
+									doc = doc + '</td>';
+								}
+							doc = doc + '</tr>';
+						}
+					doc = doc + '</table>';
+				//}
+				
+				txt.innerHTML = doc;
+				
+				txt2 = document.getElementById("paginacion");
+				
+				doc2 = "";
+				
+				if(NumPaginacion == 1){
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+NumPaginacion+')">' + NumPaginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion+1)+')">' + (NumPaginacion+1) + '</a></li>';
+				}else if (NumPaginacion == paginacion){
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion-1)+')">' + (NumPaginacion-1) + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+NumPaginacion+')">' + NumPaginacion + '</a></li>';
+				}else if(NumPaginacion == 2 || NumPaginacion == paginacion-1){
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion-1)+')">' + (NumPaginacion-1) + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+NumPaginacion+')">' + NumPaginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion+1)+')">' + (NumPaginacion+1) + '</a></li>';
+				}else{
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion(1)">' + 1 + '</a></li>...';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion-1)+')">' + (NumPaginacion-1) + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+NumPaginacion+')">' + NumPaginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion+1)+')">' + (NumPaginacion+1) + '</a></li>...';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+paginacion+')">' + paginacion + '</a></li>';
+				}
+				
+				txt2.innerHTML = doc2;
+			},
+			error : function(jqXHR, exception) {
+				// mostrarPantallaError(url, jqXHR);
+			},
+			statuscode : {
+				404 : function() {
+					//mostrarPantallaError(url);
+				}
+			}
+		});
+	}else{
+		//Primero hay que sacar los datos de base de datos de el usuario que se encuentra conectado
+		var usuario = sessionStorage.getItem("usuario_activo");
+		var NumExplotacion = sessionStorage.getItem("NumeroExplotacion");
+		
+		var usuarioDatos= {
+			'usuario' : usuario,
+			'NumExplotacion' : NumExplotacion,
+		};
+	
+		var usuarioLoginJSON = JSON.stringify(usuarioDatos);
+	
+		var url = './incidencias';
+	
+		$.ajax({
+			type : 'post',
+			url : url,
+			contentType : 'application/json',
+			dataType : 'json',
+			data : usuarioLoginJSON,
+			success : function(data, textStatus, jqXHR) {
+				var Fecha = data.Fecha;
+				var Descripcion = data.Descripcion;
+				var NAnimales = data.NAnimales;
+				var CodIdentAnt = data.CodIdentAnt;
+				var CodIdentNew = data.CodIdentNew;
+				var NDocumento = data.NDocumento;
+						
+				var size = Object.keys(NDocumento).length;
+	
+				txt = document.getElementById("cardMovil");
+				var doc = "";
+				
+				//Sacar el número de paginaciones que va a haber de animales.
+				var paginacion = size / 5;
+				
+				if(Number.isInteger(paginacion)){
+					paginacion = paginacion;
+				}else{
+					paginacion = parseInt(paginacion, 10);
+					paginacion = paginacion + 1;
+				}
+				
+				if(NumPaginacion == 1){
+					var valor = 0;	
+				}else{
+					var valor = (NumPaginacion - 1) * 5;	
+				}
+					
+				var total = (NumPaginacion * 5) + 5;
+				doc = doc + '<p style="margin-left: 68px;"><em>Página '+NumPaginacion+' de '+paginacion+'</em></p>';
+				//for(var i=1; i<=paginacion; i++){
+					doc = doc + '<table style="margin-left: 68px;">';
+						for(var j=0; j<5; j++){
+							doc = doc + '<tr style="width: 100%">';
+								for(var x=0; x<1; x++){
+									if(x==0){
+										var par = 1;
+									}else{
+										if(x % 2 == 0) {
+											var par = 1;
+										}else{
+											var par = 0;
+										}
+									}
+								
+									
+									doc = doc + '<td style="width: 1000px;">';
+										if(par == 0){
+											if(valor < total && valor < size){
+												doc= doc + '<div class="card text-black bg-light mb-3" style="cursor:pointer;">'
+												+'<div class="card-header" style="margin-top:5px;"><h5>'+NDocumento[valor]
+												+'</h5><p class="card-text" style="text-align:right;">'+Fecha[valor]+'</p>'
+												+'<p class="card-text" style="text-align:right;">'+NAnimales[valor]+' Animales</p>'
+												+'<p class="card-text" style="text-align:right;">Código Anterior: '+CodIdentAnt[valor]+' - Código Actual: '+CodIdentNew[valor]+'</p>'
+												+'<p class="card-text" style="text-align:right;">'+Descripcion[valor]+'</p></div></div>';
+											}
+										}else{
+											if(valor < total && valor < size){
+												doc= doc + '<div class="card text-white bg-secondary mb-3" style="cursor:pointer;">'
+												+'<div class="card-header" style="margin-top:5px;"><h5>'+NDocumento[valor]
+												+'</h5><p class="card-text" style="text-align:right;">'+Fecha[valor]+'</p>'
+												+'<p class="card-text" style="text-align:right;">'+NAnimales[valor]+' Animales</p>'
+												+'<p class="card-text" style="text-align:right;">Código Anterior: '+CodIdentAnt[valor]+' - Código Actual: '+CodIdentNew[valor]+'</p>'
+												+'<p class="card-text" style="text-align:right;">'+Descripcion[valor]+'</p></div></div>';
+											}
+										}
+										valor = valor + 1;
+									doc = doc + '</td>';
+								}
+							doc = doc + '</tr>';
+						}
+					doc = doc + '</table>';
+				//}
+				
+				txt.innerHTML = doc;
+				
+				txt2 = document.getElementById("paginacionMovil");
+				
+				doc2 = "";
+				
+				if(NumPaginacion == 1){
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+NumPaginacion+')">' + NumPaginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion+1)+')">' + (NumPaginacion+1) + '</a></li>';
+				}else if (NumPaginacion == paginacion){
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion-1)+')">' + (NumPaginacion-1) + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+NumPaginacion+')">' + NumPaginacion + '</a></li>';
+				}else if(NumPaginacion == 2 || NumPaginacion == paginacion-1){
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion-1)+')">' + (NumPaginacion-1) + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+NumPaginacion+')">' + NumPaginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion+1)+')">' + (NumPaginacion+1) + '</a></li>';
+				}else{
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion(1)">' + 1 + '</a></li>...';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion-1)+')">' + (NumPaginacion-1) + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+NumPaginacion+')">' + NumPaginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion+1)+')">' + (NumPaginacion+1) + '</a></li>...';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+paginacion+')">' + paginacion + '</a></li>';
+				}
+				
+				txt2.innerHTML = doc2;
+			},
+			error : function(jqXHR, exception) {
+				// mostrarPantallaError(url, jqXHR);
+			},
+			statuscode : {
+				404 : function() {
+					//mostrarPantallaError(url);
+				}
+			}
+		});
+	}
+  
+}
+</script>
+
+<script>
+function AnadirIncidencia(){
+
+	var mensaje = "";
+	
+	mensaje = mensaje + "<table>";
+	
+	mensaje = mensaje + "<tr>";
+	mensaje = mensaje + "<td> Fecha: </td>";
+	mensaje = mensaje + "<td><input id='Fecha' type='date'></td>";
+	mensaje = mensaje + "</tr>";
+	
+	mensaje = mensaje + "<tr>";
+	mensaje = mensaje + "<td>Descripcion:</td>";
+	mensaje = mensaje + "<td><textarea id='Descripcion' rows='5' cols='20'></textarea></td>";
+	mensaje = mensaje + "</tr>";
+	
+	mensaje = mensaje + "<tr>";
+	mensaje = mensaje + "<td>Codigo Identificacion Anterior:</td>";
+	mensaje = mensaje + "<td><input id='CodIdentAnt'></td>";
+	mensaje = mensaje + "</tr>";
+	
+	mensaje = mensaje + "<tr>";
+	mensaje = mensaje + "<td>Codigo Actual:</td>";
+	mensaje = mensaje + "<td><input id='CodIdentNew'></td>";
+	mensaje = mensaje + "</tr>";
+	
+	mensaje = mensaje + "<tr>";
+	mensaje = mensaje + "<td>Número de animales:</td>";
+	mensaje = mensaje + "<td><input id='NAnimales'></td>";
+	mensaje = mensaje + "</tr>";
+	
+	mensaje = mensaje + "<tr>";
+	mensaje = mensaje + "<td>Número de documento:</td>";
+	mensaje = mensaje + "<td><input id='NDocumento'></td>";
+	mensaje = mensaje + "</tr>";
+	
+	mensaje = mensaje + "</table>";
+	
+	bootbox.confirm({
+		title:"Nuevo pasto", 
+		message: mensaje,
+		onEscape: true,
+		buttons: {
+	        confirm: {
+	            label: 'CONFIRMAR',
+	            className: 'btn-success'
+	        }
+	    },
+	    callback: function (result) {
+	        if (result) {
+	        	var Fecha= document.getElementById("Fecha").value;
+	        	var Descripcion= document.getElementById("Descripcion").value;
+	        	var CodIdentAnt= document.getElementById("CodIdentAnt").value;
+	        	var CodIdentNew= document.getElementById("CodIdentNew").value;
+	        	var NAnimales= document.getElementById("NAnimales").value;
+	        	var NDocumento= document.getElementById("NDocumento").value;
+            	AnadirRegistro(Fecha, Descripcion, CodIdentAnt, CodIdentNew, NAnimales, NDocumento);
+            } else {
+                
+            }
+	    }
+	});
+	
+}
+</script>
+
+<script>
+function AnadirRegistro(Fecha, Descripcion, CodIdentAnt, CodIdentNew, NAnimales, NDocumento){
+	var usuario = sessionStorage.getItem("usuario_activo");
+	var numexplotacion = sessionStorage.getItem("NumeroExplotacion");
+	
+	var datosNuevoAnimal= {
+		'Fecha' : Fecha,
+		'Descripcion' : Descripcion,
+		'CodIdentAnt' : CodIdentAnt,
+		'CodIdentNew' : CodIdentNew,
+		'NDocumento' : NDocumento,
+		'NAnimales' : NAnimales,
+		'NumExplotacion' : numexplotacion
+	};
+
+	var datosNuevoAnimalJSON = JSON.stringify(datosNuevoAnimal);
+
+	var url = './nuevaincidencia';
+
+	$.ajax({
+		type : 'post',
+		url : url,
+		contentType : 'application/json',
+		dataType : 'json',
+		data : datosNuevoAnimalJSON,
+		success : function(data, textStatus, jqXHR) {
+			var estado = data.QueryOk;
+			
+			if(estado == 'correcto'){
+				bootbox.dialog({
+					title: NDocumento, 
+					message: "Se ha añadido correctamente",
+					closeButton: true,
+					onEscape: true
+				});
+			}else if(estado == 'incorrecto'){
+				bootbox.dialog({
+					title:"ERROR", 
+					message: "NO se ha podido añadir el registro de incidencias",
+					closeButton: true,
+					onEscape: true
+				});
+			}
+		},
+		error : function(jqXHR, exception) {
+			bootbox.dialog({
+					title:"ERROR", 
+					message: "NO se ha podido añadir el registro de pastos",
+					closeButton: true,
+					onEscape: true
+				});
+		},
+		statuscode : {
+			404 : function() {
+				//mostrarPantallaError(url);
+			}
+		}
+	});
+}
+</script>
+
+<script>
+function BuscarFiltroAno(){
+
+	var movil = sessionStorage.getItem("Movil");
+	if(sessionStorage.getItem("Movil") == "false"){
+		//Buscar apartado 2 (año de nacimiento)
+		var ano = $('#FiltroAnoVentaNoMovil').find('option:selected').val();
+		var numexplotacion = sessionStorage.getItem("NumeroExplotacion");
+		var ano2 = ano;
+		ano = ano + "-01-01";
+		
+		var datosFiltro2= {
+			'FechaVentaCria' : ano,
+			'NumExplotacion' : numexplotacion,
+		};
+	
+		var datosFiltro2JSON = JSON.stringify(datosFiltro2);
+	
+		var url = './filtroAnIncidencia';
+	
+		$.ajax({
+			type : 'post',
+			url : url,
+			contentType : 'application/json',
+			dataType : 'json',
+			data : datosFiltro2JSON,
+			success : function(data, textStatus, jqXHR) {
+				var Fecha = data.Fecha;
+				var Descripcion = data.Descripcion;
+				var NAnimales = data.NAnimales;
+				var CodIdentAnt = data.CodIdentAnt;
+				var CodIdentNew = data.CodIdentNew;
+				var NDocumento = data.NDocumento;
+						
+				var size = Object.keys(NDocumento).length;
+	
+				txt = document.getElementById("card");
+				var doc = "";
+				
+				//Sacar el número de paginaciones que va a haber de animales.
+				var paginacion = size / 9;
+				
+				if(Number.isInteger(paginacion)){
+					paginacion = paginacion;
+				}else{
+					paginacion = parseInt(paginacion, 10);
+					paginacion = paginacion + 1;
+				}
+				
+				valor = 0;
+					
+				var total = (valor * 9) + 9;
+				doc = doc + '<p style="margin-left: 155px;"><em>Página '+valor+' de '+paginacion+'</em></p>';
+				//for(var i=1; i<=paginacion; i++){
+					doc = doc + '<table style="margin-left: 155px;">';
+						for(var j=0; j<3; j++){
+							doc = doc + '<tr style="width: 100%">';
+								for(var x=0; x<3; x++){
+									if(x==0){
+										var par = 1;
+									}else{
+										if(x % 2 == 0) {
+											var par = 1;
+										}else{
+											var par = 0;
+										}
+									}
+								
+									
+									doc = doc + '<td style="width: 1000px;">';
+										if(par == 0){
+											if(valor < total && valor < size){
+												doc= doc + '<div class="card text-black bg-light mb-3" style="cursor:pointer;">'
+												+'<div class="card-header" style="margin-top:5px;"><h5>'+NDocumento[valor]
+												+'</h5><p class="card-text" style="text-align:right;">'+Fecha[valor]+'</p>'
+												+'<p class="card-text" style="text-align:right;">'+NAnimales[valor]+' Animales</p>'
+												+'<p class="card-text" style="text-align:right;">Código Anterior: '+CodIdentAnt[valor]+' - Código Actual: '+CodIdentNew[valor]+'</p>'
+												+'<p class="card-text" style="text-align:right;">'+Descripcion[valor]+'</p></div></div>';
+											}
+										}else{
+											if(valor < total && valor < size){
+												doc= doc + '<div class="card text-white bg-secondary mb-3" style="cursor:pointer;">'
+												+'<div class="card-header" style="margin-top:5px;"><h5>'+NDocumento[valor]
+												+'</h5><p class="card-text" style="text-align:right;">'+Fecha[valor]+'</p>'
+												+'<p class="card-text" style="text-align:right;">'+NAnimales[valor]+' Animales</p>'
+												+'<p class="card-text" style="text-align:right;">Código Anterior: '+CodIdentAnt[valor]+' - Código Actual: '+CodIdentNew[valor]+'</p>'
+												+'<p class="card-text" style="text-align:right;">'+Descripcion[valor]+'</p></div></div>';
+											}
+										}
+										valor = valor + 1;
+									doc = doc + '</td>';
+								}
+							doc = doc + '</tr>';
+						}
+					doc = doc + '</table>';
+				//}
+				
+				txt.innerHTML = doc;
+				
+				txt2 = document.getElementById("paginacion");
+				
+				doc2 = "";
+				
+				var NumPaginacion = 1;
+				
+				if(NumPaginacion == 1){
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+NumPaginacion+', '+ano2+')">' + NumPaginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+(NumPaginacion+1)+', '+ano2+')">' + (NumPaginacion+1) + '</a></li>';
+				}else if (NumPaginacion == paginacion){
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+(NumPaginacion-1)+', '+ano2+')">' + (NumPaginacion-1) + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+NumPaginacion+', '+ano2+')">' + NumPaginacion + '</a></li>';
+				}else if(NumPaginacion == 2 || NumPaginacion == paginacion-1){
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+(NumPaginacion-1)+', '+ano2+')">' + (NumPaginacion-1) + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+NumPaginacion+', '+ano2+')">' + NumPaginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+(NumPaginacion+1)+', '+ano2+')">' + (NumPaginacion+1) + '</a></li>';
+				}else{
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno(1, '+ano2+')">' + 1 + '</a></li>...';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+(NumPaginacion-1)+', '+ano2+')">' + (NumPaginacion-1) + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+NumPaginacion+', '+ano2+')">' + NumPaginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+(NumPaginacion+1)+', '+ano2+')">' + (NumPaginacion+1) + '</a></li>...';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+paginacion+', '+ano2+')">' + paginacion + '</a></li>';
+				}
+				
+				txt2.innerHTML = doc2;
+			},
+			error : function(jqXHR, exception) {
+				// mostrarPantallaError(url, jqXHR);
+			},
+			statuscode : {
+				404 : function() {
+					//mostrarPantallaError(url);
+				}
+			}
+		});
+	}else{
+	
+		//Buscar apartado 2 (año de nacimiento)
+		var ano = $('#FiltroAnoVentaMovil').find('option:selected').val();
+		var numexplotacion = sessionStorage.getItem("NumeroExplotacion");
+		var ano2 = ano;
+		ano = ano + "-01-01";
+		
+		var datosFiltro2= {
+			'FechaVentaCria' : ano,
+			'NumExplotacion' : numexplotacion,
+		};
+	
+		var datosFiltro2JSON = JSON.stringify(datosFiltro2);
+	
+		var url = './filtroAnIncidencia';
+	
+		$.ajax({
+			type : 'post',
+			url : url,
+			contentType : 'application/json',
+			dataType : 'json',
+			data : datosFiltro2JSON,
+			success : function(data, textStatus, jqXHR) {
+				var Fecha = data.Fecha;
+				var Descripcion = data.Descripcion;
+				var NAnimales = data.NAnimales;
+				var CodIdentAnt = data.CodIdentAnt;
+				var CodIdentNew = data.CodIdentNew;
+				var NDocumento = data.NDocumento;
+						
+				var size = Object.keys(NDocumento).length;
+	
+				txt = document.getElementById("cardMovil");
+				var doc = "";
+				
+				//Sacar el número de paginaciones que va a haber de animales.
+				var paginacion = size / 5;
+				
+				if(Number.isInteger(paginacion)){
+					paginacion = paginacion;
+				}else{
+					paginacion = parseInt(paginacion, 10);
+					paginacion = paginacion + 1;
+				}
+				
+				valor = 0;
+					
+				var total = (valor * 5) + 5;
+				doc = doc + '<p style="margin-left: 155px;"><em>Página '+valor+' de '+paginacion+'</em></p>';
+				//for(var i=1; i<=paginacion; i++){
+					doc = doc + '<table style="margin-left: 68px;">';
+						for(var j=0; j<5; j++){
+							doc = doc + '<tr style="width: 100%">';
+								for(var x=0; x<1; x++){
+									if(x==0){
+										var par = 1;
+									}else{
+										if(x % 2 == 0) {
+											var par = 1;
+										}else{
+											var par = 0;
+										}
+									}
+								
+									
+									doc = doc + '<td style="width: 500px;">';
+										if(par == 0){
+											if(valor < total && valor < size){
+												doc= doc + '<div class="card text-black bg-light mb-3" style="cursor:pointer;">'
+												+'<div class="card-header" style="margin-top:5px;"><h5>'+NDocumento[valor]
+												+'</h5><p class="card-text" style="text-align:right;">'+Fecha[valor]+'</p>'
+												+'<p class="card-text" style="text-align:right;">'+NAnimales[valor]+' Animales</p>'
+												+'<p class="card-text" style="text-align:right;">Código Anterior: '+CodIdentAnt[valor]+' - Código Actual: '+CodIdentNew[valor]+'</p>'
+												+'<p class="card-text" style="text-align:right;">'+Descripcion[valor]+'</p></div></div>';
+											}
+										}else{
+											if(valor < total && valor < size){
+												doc= doc + '<div class="card text-white bg-secondary mb-3" style="cursor:pointer;">'
+												+'<div class="card-header" style="margin-top:5px;"><h5>'+NDocumento[valor]
+												+'</h5><p class="card-text" style="text-align:right;">'+Fecha[valor]+'</p>'
+												+'<p class="card-text" style="text-align:right;">'+NAnimales[valor]+' Animales</p>'
+												+'<p class="card-text" style="text-align:right;">Código Anterior: '+CodIdentAnt[valor]+' - Código Actual: '+CodIdentNew[valor]+'</p>'
+												+'<p class="card-text" style="text-align:right;">'+Descripcion[valor]+'</p></div></div>';
+											}
+										}
+										valor = valor + 1;
+									doc = doc + '</td>';
+								}
+							doc = doc + '</tr>';
+						}
+					doc = doc + '</table>';
+				//}
+				
+				txt.innerHTML = doc;
+				
+				txt2 = document.getElementById("paginacionMovil");
+				
+				doc2 = "";
+				
+				var NumPaginacion = 1;
+				
+				if(NumPaginacion == 1){
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+NumPaginacion+', '+ano2+')">' + NumPaginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+(NumPaginacion+1)+', '+ano2+')">' + (NumPaginacion+1) + '</a></li>';
+				}else if (NumPaginacion == paginacion){
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+(NumPaginacion-1)+', '+ano2+')">' + (NumPaginacion-1) + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+NumPaginacion+', '+ano2+')">' + NumPaginacion + '</a></li>';
+				}else if(NumPaginacion == 2 || NumPaginacion == paginacion-1){
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+(NumPaginacion-1)+', '+ano2+')">' + (NumPaginacion-1) + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+NumPaginacion+', '+ano2+')">' + NumPaginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+(NumPaginacion+1)+', '+ano2+')">' + (NumPaginacion+1) + '</a></li>';
+				}else{
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno(1, '+ano2+')">' + 1 + '</a></li>...';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+(NumPaginacion-1)+', '+ano2+')">' + (NumPaginacion-1) + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+NumPaginacion+', '+ano2+')">' + NumPaginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+(NumPaginacion+1)+', '+ano2+')">' + (NumPaginacion+1) + '</a></li>...';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+paginacion+', '+ano2+')">' + paginacion + '</a></li>';
+				}
+				
+				txt2.innerHTML = doc2;
+			},
+			error : function(jqXHR, exception) {
+				// mostrarPantallaError(url, jqXHR);
+			},
+			statuscode : {
+				404 : function() {
+					//mostrarPantallaError(url);
+				}
+			}
+		});
+	}
+	
+	
+}
+</script>
+
+<script>
+function paginacionFiltroAno(NumPaginacion, ano){
+	
+	var movil = sessionStorage.getItem("Movil");
+	if(movil == "false"){
+		var ano2 = ano;
+		var numexplotacion = sessionStorage.getItem("NumeroExplotacion");
+		
+		ano = ano + "-01-01";
+		
+		var datosFiltro2= {
+			'FechaVentaCria' : ano,
+			'NumExplotacion' : numexplotacion,
+		};
+	
+		var datosFiltro2JSON = JSON.stringify(datosFiltro2);
+	
+		var url = './filtroAnIncidencia';
+	
+		$.ajax({
+			type : 'post',
+			url : url,
+			contentType : 'application/json',
+			dataType : 'json',
+			data : datosFiltro2JSON,
+			success : function(data, textStatus, jqXHR) {
+				var Fecha = data.Fecha;
+				var Descripcion = data.Descripcion;
+				var NAnimales = data.NAnimales;
+				var CodIdentAnt = data.CodIdentAnt;
+				var CodIdentNew = data.CodIdentNew;
+				var NDocumento = data.NDocumento;
+						
+				var size = Object.keys(NDocumento).length;
+	
+				txt = document.getElementById("card");
+				var doc = "";
+				
+				//Sacar el número de paginaciones que va a haber de animales.
+				var paginacion = size / 9;
+				
+				if(Number.isInteger(paginacion)){
+					paginacion = paginacion;
+				}else{
+					paginacion = parseInt(paginacion, 10);
+					paginacion = paginacion + 1;
+				}
+				
+				if(NumPaginacion == 1){
+					var valor = 0;	
+				}else{
+					var valor = (NumPaginacion - 1) * 9;	
+				}
+					
+				var total = (NumPaginacion * 9) + 9;
+				doc = doc + '<p style="margin-left: 155px;"><em>Página '+NumPaginacion+' de '+paginacion+'</em></p>';
+				//for(var i=1; i<=paginacion; i++){
+					doc = doc + '<table style="margin-left: 155px;">';
+						for(var j=0; j<3; j++){
+							doc = doc + '<tr style="width: 100%">';
+								for(var x=0; x<3; x++){
+									if(x==0){
+										var par = 1;
+									}else{
+										if(x % 2 == 0) {
+											var par = 1;
+										}else{
+											var par = 0;
+										}
+									}
+								
+									
+									doc = doc + '<td style="width: 1000px;">';
+									if(par == 0){
+										if(valor < total && valor < size){
+												doc= doc + '<div class="card text-black bg-light mb-3" style="cursor:pointer;">'
+												+'<div class="card-header" style="margin-top:5px;"><h5>'+NDocumento[valor]
+												+'</h5><p class="card-text" style="text-align:right;">'+Fecha[valor]+'</p>'
+												+'<p class="card-text" style="text-align:right;">'+NAnimales[valor]+' Animales</p>'
+												+'<p class="card-text" style="text-align:right;">Código Anterior: '+CodIdentAnt[valor]+' - Código Actual: '+CodIdentNew[valor]+'</p>'
+												+'<p class="card-text" style="text-align:right;">'+Descripcion[valor]+'</p></div></div>';
+											}
+										}else{
+											if(valor < total && valor < size){
+												doc= doc + '<div class="card text-white bg-secondary mb-3" style="cursor:pointer;">'
+												+'<div class="card-header" style="margin-top:5px;"><h5>'+NDocumento[valor]
+												+'</h5><p class="card-text" style="text-align:right;">'+Fecha[valor]+'</p>'
+												+'<p class="card-text" style="text-align:right;">'+NAnimales[valor]+' Animales</p>'
+												+'<p class="card-text" style="text-align:right;">Código Anterior: '+CodIdentAnt[valor]+' - Código Actual: '+CodIdentNew[valor]+'</p>'
+												+'<p class="card-text" style="text-align:right;">'+Descripcion[valor]+'</p></div></div>';
+											}
+										}
+										valor = valor + 1;
+									doc = doc + '</td>';
+								}
+							doc = doc + '</tr>';
+						}
+					doc = doc + '</table>';
+				//}
+				
+				txt.innerHTML = doc;
+				
+				txt2 = document.getElementById("paginacion");
+				
+				doc2 = "";
+				
+				if(NumPaginacion == 1){
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+NumPaginacion+', '+ano2+')">' + NumPaginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+(NumPaginacion+1)+', '+ano2+')">' + (NumPaginacion+1) + '</a></li>';
+				}else if (NumPaginacion == paginacion){
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+(NumPaginacion-1)+', '+ano2+')">' + (NumPaginacion-1) + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+NumPaginacion+', '+ano2+')">' + NumPaginacion + '</a></li>';
+				}else if(NumPaginacion == 2 || NumPaginacion == paginacion-1){
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+(NumPaginacion-1)+', '+ano2+')">' + (NumPaginacion-1) + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+NumPaginacion+', '+ano2+')">' + NumPaginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+(NumPaginacion+1)+', '+ano2+')">' + (NumPaginacion+1) + '</a></li>';
+				}else{
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno(1, '+ano2+')">' + 1 + '</a></li>...';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+(NumPaginacion-1)+', '+ano2+')">' + (NumPaginacion-1) + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+NumPaginacion+', '+ano2+')">' + NumPaginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+(NumPaginacion+1)+', '+ano2+')">' + (NumPaginacion+1) + '</a></li>...';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+paginacion+', '+ano2+')">' + paginacion + '</a></li>';
+				}
+				
+				txt2.innerHTML = doc2;
+			},
+			error : function(jqXHR, exception) {
+				// mostrarPantallaError(url, jqXHR);
+			},
+			statuscode : {
+				404 : function() {
+					//mostrarPantallaError(url);
+				}
+			}
+		});
+	}else{
+		var numexplotacion = sessionStorage.getItem("NumeroExplotacion");
+		var ano2 = ano;
+		ano = ano + "-01-01";
+
+		var datosFiltro2= {
+			'FechaVentaCria' : ano,
+			'NumExplotacion' : numexplotacion,
+		};
+	
+		var datosFiltro2JSON = JSON.stringify(datosFiltro2);
+		
+		var url = './filtroAnIncidencia';
+	
+		$.ajax({
+			type : 'post',
+			url : url,
+			contentType : 'application/json',
+			dataType : 'json',
+			data : datosFiltro2JSON,
+			success : function(data, textStatus, jqXHR) {
+				var Fecha = data.Fecha;
+				var Descripcion = data.Descripcion;
+				var NAnimales = data.NAnimales;
+				var CodIdentAnt = data.CodIdentAnt;
+				var CodIdentNew = data.CodIdentNew;
+				var NDocumento = data.NDocumento;
+						
+				var size = Object.keys(NDocumento).length;
+	
+				txt = document.getElementById("cardMovil");
+				var doc = "";
+				
+				//Sacar el número de paginaciones que va a haber de animales.
+				var paginacion = size / 5;
+				
+				if(Number.isInteger(paginacion)){
+					paginacion = paginacion;
+				}else{
+					paginacion = parseInt(paginacion, 10);
+					paginacion = paginacion + 1;
+				}
+				
+				if(NumPaginacion == 1){
+					var valor = 0;	
+				}else{
+					var valor = (NumPaginacion - 1) * 5;	
+				}
+					
+				var total = (NumPaginacion * 5) + 5;
+				doc = doc + '<p style="margin-left: 68px;"><em>Página '+NumPaginacion+' de '+paginacion+'</em></p>';
+				//for(var i=1; i<=paginacion; i++){
+					doc = doc + '<table style="margin-left: 68px;">';
+						for(var j=0; j<5; j++){
+							doc = doc + '<tr style="width: 100%">';
+								for(var x=0; x<1; x++){
+									if(x==0){
+										var par = 1;
+									}else{
+										if(x % 2 == 0) {
+											var par = 1;
+										}else{
+											var par = 0;
+										}
+									}
+								
+									
+									doc = doc + '<td style="width: 500px;">';
+									if(par == 0){
+										if(valor < total && valor < size){
+												doc= doc + '<div class="card text-black bg-light mb-3" style="cursor:pointer;">'
+												+'<div class="card-header" style="margin-top:5px;"><h5>'+NDocumento[valor]
+												+'</h5><p class="card-text" style="text-align:right;">'+Fecha[valor]+'</p>'
+												+'<p class="card-text" style="text-align:right;">'+NAnimales[valor]+' Animales</p>'
+												+'<p class="card-text" style="text-align:right;">Código Anterior: '+CodIdentAnt[valor]+' - Código Actual: '+CodIdentNew[valor]+'</p>'
+												+'<p class="card-text" style="text-align:right;">'+Descripcion[valor]+'</p></div></div>';
+											}
+										}else{
+											if(valor < total && valor < size){
+												doc= doc + '<div class="card text-white bg-secondary mb-3" style="cursor:pointer;">'
+												+'<div class="card-header" style="margin-top:5px;"><h5>'+NDocumento[valor]
+												+'</h5><p class="card-text" style="text-align:right;">'+Fecha[valor]+'</p>'
+												+'<p class="card-text" style="text-align:right;">'+NAnimales[valor]+' Animales</p>'
+												+'<p class="card-text" style="text-align:right;">Código Anterior: '+CodIdentAnt[valor]+' - Código Actual: '+CodIdentNew[valor]+'</p>'
+												+'<p class="card-text" style="text-align:right;">'+Descripcion[valor]+'</p></div></div>';
+											}
+										}
+										valor = valor + 1;
+									doc = doc + '</td>';
+								}
+							doc = doc + '</tr>';
+						}
+					doc = doc + '</table>';
+				//}
+				
+				txt.innerHTML = doc;
+				
+				txt2 = document.getElementById("paginacionMovil");
+				
+				doc2 = "";
+				
+				if(NumPaginacion == 1){
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+NumPaginacion+', '+ano2+')">' + NumPaginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+(NumPaginacion+1)+', '+ano2+')">' + (NumPaginacion+1) + '</a></li>';
+				}else if (NumPaginacion == paginacion){
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+(NumPaginacion-1)+', '+ano2+')">' + (NumPaginacion-1) + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+NumPaginacion+', '+ano2+')">' + NumPaginacion + '</a></li>';
+				}else if(NumPaginacion == 2 || NumPaginacion == paginacion-1){
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+(NumPaginacion-1)+', '+ano2+')">' + (NumPaginacion-1) + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+NumPaginacion+', '+ano2+')">' + NumPaginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+(NumPaginacion+1)+', '+ano2+')">' + (NumPaginacion+1) + '</a></li>';
+				}else{
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno(1, '+ano2+')">' + 1 + '</a></li>...';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+(NumPaginacion-1)+', '+ano2+')">' + (NumPaginacion-1) + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+NumPaginacion+', '+ano2+')">' + NumPaginacion + '</a></li>';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+(NumPaginacion+1)+', '+ano2+')">' + (NumPaginacion+1) + '</a></li>...';
+					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacionFiltroAno('+paginacion+', '+ano2+')">' + paginacion + '</a></li>';
+				}
+				
+				txt2.innerHTML = doc2;
+			},
+			error : function(jqXHR, exception) {
+				// mostrarPantallaError(url, jqXHR);
+			},
+			statuscode : {
+				404 : function() {
+					//mostrarPantallaError(url);
+				}
+			}
+		});
+	}
+  
+}
+</script>

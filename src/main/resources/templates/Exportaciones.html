@@ -131,6 +131,18 @@
 					<td id="E_Caprino"><img src="./pdf.png" alt="Enfermedades"
 						width="50" height="50" id="E_CaprinoE">Exportación de registros de enfermedades</td>
 				</tr>
+				<tr>
+					<td id="P_Ovino"><img src="./pdf.png" alt="Pastos"
+						width="50" height="50" id="P_OvinoE">Exportación de registros de pastos</td>
+					<td id="P_Caprino"><img src="./pdf.png" alt="Pastos"
+						width="50" height="50" id="P_CaprinoE">Exportación de registros de pastos</td>
+				</tr>
+				<tr>
+					<td id="I_Ovino"><img src="./pdf.png" alt="Inspecciones"
+						width="50" height="50" id="I_OvinoE">Exportación de registros de inspecciones</td>
+					<td id="I_Caprino"><img src="./pdf.png" alt="Inspecciones"
+						width="50" height="50" id="I_CaprinoE">Exportación de registros de inspecciones</td>
+				</tr>
 			</tbody>
 		</table>
 	</div>
@@ -252,6 +264,14 @@
 						<td id="E_Ovino"><img src="./pdf.png" alt="Enfermedades"
 							width="30" height="30" id="E_OvinoE">Exportación de registros de enfermedades</td>
 					</tr>
+					<tr>
+						<td id="P_Ovino"><img src="./pdf.png" alt="Pastos"
+							width="30" height="30" id="P_OvinoE">Exportación de registros de pastos</td>
+					</tr>
+					<tr>
+						<td id="I_Ovino"><img src="./pdf.png" alt="Inspecciones"
+							width="30" height="30" id="I_OvinoE">Exportación de registros de inspecciones</td>
+					</tr>
 				</tbody>
 			</table>
 			
@@ -285,6 +305,14 @@
 					<tr>
 						<td id="E_Caprino"><img src="./pdf.png" alt="Enfermedades"
 							width="30" height="30" id="E_CaprinoE">Exportación de registros de enfermedades</td>
+					</tr>
+					<tr>
+						<td id="P_Caprino"><img src="./pdf.png" alt="Pastos"
+							width="30" height="30" id="P_CaprinoE">Exportación de registros de pastos</td>
+					</tr>
+					<tr>
+						<td id="I_Caprino"><img src="./pdf.png" alt="Inspecciones"
+							width="30" height="30" id="I_CaprinoE">Exportación de registros de inspecciones</td>
 					</tr>
 				</tbody>
 			</table>
@@ -404,6 +432,18 @@ $(function() {
 							E_C.style.backgroundColor = "grey";
 							var E_CE = document.getElementById("E_CaprinoE");
 							E_CE.onclick="";
+							
+						//Registros de pastos
+							var P_C = document.getElementById("P_Caprino");
+							P_C.style.backgroundColor = "grey";
+							var P_CE = document.getElementById("P_CaprinoE");
+							P_CE.onclick="";
+							
+						//Registros de inspecciones
+							var I_C = document.getElementById("I_Caprino");
+							I_C.style.backgroundColor = "grey";
+							var I_CE = document.getElementById("I_CaprinoE");
+							I_CE.onclick="";
 						
 					//Ovino habilitado
 						//Altas y Bajas de animales
@@ -440,6 +480,18 @@ $(function() {
 							var E_OE = document.getElementById("E_OvinoE");
 							E_OE.addEventListener('click', function() {
 							    ExportacionEnfermedades(numExplotaciones[0]);
+							}, false);
+							
+						//Registros de pastos
+							var P_OE = document.getElementById("P_OvinoE");
+							P_OE.addEventListener('click', function() {
+							    ExportacionPastos(numExplotaciones[0]);
+							}, false);
+							
+						//Registros de inspecciones
+							var I_OE = document.getElementById("I_OvinoE");
+							I_OE.addEventListener('click', function() {
+							    ExportacionInspecciones(numExplotaciones[0]);
 							}, false);
 						
 				}else{
@@ -479,6 +531,18 @@ $(function() {
 							E_O.style.backgroundColor = "grey";
 							var E_OE = document.getElementById("E_OvinoE");
 							E_OE.onclick="";
+							
+						//Registros de pastos
+							var P_O = document.getElementById("P_Ovino");
+							P_O.style.backgroundColor = "grey";
+							var P_OE = document.getElementById("P_OvinoE");
+							P_OE.onclick="";
+							
+						//Registros de inspecciones
+							var I_O = document.getElementById("I_Ovino");
+							I_O.style.backgroundColor = "grey";
+							var I_OE = document.getElementById("I_OvinoE");
+							I_OE.onclick="";
 						
 					//Caprino habilitado
 						//Altas y Bajas de animales
@@ -515,6 +579,18 @@ $(function() {
 							var E_CE = document.getElementById("E_CaprinoE");
 							E_CE.addEventListener('click', function() {
 							     ExportacionEnfermedades(numExplotaciones[0]);
+							}, false);
+							
+						//Registros de pastos
+							var P_CE = document.getElementById("P_CaprinoE");
+							P_CE.addEventListener('click', function() {
+							     ExportacionPastos(numExplotaciones[0]);
+							}, false);
+							
+						//Registros de inspecciones
+							var I_CE = document.getElementById("I_CaprinoE");
+							I_CE.addEventListener('click', function() {
+							     ExportacionInspecciones(numExplotaciones[0]);
 							}, false);
 				}
 				
@@ -557,6 +633,18 @@ $(function() {
 						     ExportacionEnfermedades(numExplotaciones[0]);
 						}, false);
 						
+					//Registros de pastos
+						var P_OE = document.getElementById("P_OvinoE");
+						P_OE.addEventListener('click', function() {
+						     ExportacionPastos(numExplotaciones[0]);
+						}, false);
+						
+					//Registros de inspecciones
+						var I_OE = document.getElementById("I_OvinoE");
+						I_OE.addEventListener('click', function() {
+						     ExportacionInspecciones(numExplotaciones[0]);
+						}, false);
+						
 				}else if(TipoAnimal[1] == "ovino"){
 					//Altas y Bajas de animales
 						var ABA_OE = document.getElementById("ABA_OvinoE");
@@ -592,6 +680,18 @@ $(function() {
 						var E_OE = document.getElementById("E_OvinoE");
 						E_OE.addEventListener('click', function() {
 						     ExportacionEnfermedades(numExplotaciones[1]);
+						}, false);
+						
+					//Registros de pastos
+						var P_OE = document.getElementById("P_OvinoE");
+						P_OE.addEventListener('click', function() {
+						     ExportacionPastos(numExplotaciones[1]);
+						}, false);
+						
+					//Registros de inspecciones
+						var I_OE = document.getElementById("I_OvinoE");
+						I_OE.addEventListener('click', function() {
+						     ExportacionInspecciones(numExplotaciones[1]);
 						}, false);
 				}
 				
@@ -633,6 +733,18 @@ $(function() {
 						     ExportacionEnfermedades(numExplotaciones[0]);
 						}, false);
 						
+					//Registros de pastos
+						var P_CE = document.getElementById("P_CaprinoE");
+						P_CE.addEventListener('click', function() {
+						     ExportacionPastos(numExplotaciones[0]);
+						}, false);
+						
+					//Registros de inspecciones
+						var I_CE = document.getElementById("I_CaprinoE");
+						I_CE.addEventListener('click', function() {
+						     ExportacionInspecciones(numExplotaciones[0]);
+						}, false);
+						
 				}else if(TipoAnimal[1] == "caprino"){
 					//Altas y Bajas de animales
 						var ABA_CE = document.getElementById("ABA_CaprinoE");
@@ -668,6 +780,18 @@ $(function() {
 						var E_CE = document.getElementById("E_CaprinoE");
 						E_CE.addEventListener('click', function() {
 						     ExportacionEnfermedades(numExplotaciones[1]);
+						}, false);
+						
+					//Registros de pastos
+						var P_CE = document.getElementById("P_CaprinoE");
+						P_CE.addEventListener('click', function() {
+						     ExportacionPastos(numExplotaciones[1]);
+						}, false);
+						
+					//Registros de pastos
+						var I_CE = document.getElementById("I_CaprinoE");
+						I_CE.addEventListener('click', function() {
+						     ExportacionInspecciones(numExplotaciones[1]);
 						}, false);
 				}
 				
@@ -1655,6 +1779,316 @@ function ExportacionEnfermedadesDescarga(NumExplotacion, num, Busqueda){
 			},error: function(jqXHR,exception) {
 				bootbox.alert({
 					title: "EXPORTACIÓN ENFERMEDADES",
+					message: "No se puede recuperar el archivo",
+					buttons: {
+						ok: {
+							label: 'Aceptar',
+							className: 'btn btn-primary'
+						}
+					}
+				});
+			},statuscode:{
+				404:function(){ mostrarPantallaError(url); }
+			}
+		});
+}
+</script>
+
+<script>
+function ExportacionPastos(NumExplotacion){
+	
+	
+		var mensaje = "<h5>BÚSQUEDA DE DOCUMENTOS:</h5>"
+		
+		mensaje = mensaje + "<table>";
+			mensaje = mensaje + "<tr>";
+				mensaje = mensaje + "<td>";
+					mensaje = mensaje + "<p>Selecciona el año de búsqueda</p>";
+				mensaje = mensaje + "</td>";
+				mensaje = mensaje + "<td>";
+					mensaje = mensaje + "<select class='form-select' aria-label='Default select example' id='AnoBusqueda' style='float: center;'>";
+						mensaje = mensaje + "<option selected>-----</option>";
+						mensaje = mensaje + "<option value='2021'>2021</option>";
+						mensaje = mensaje + "<option value='2022'>2022</option>";
+						mensaje = mensaje + "<option value='2023'>2023</option>";
+					mensaje = mensaje + "</select>";
+				mensaje = mensaje + "</td>";
+			mensaje = mensaje + "</tr>";
+		mensaje = mensaje + "</table>";
+							
+		
+		bootbox.confirm({
+			title:"REGISTROS DE PASTOS", 
+			message: mensaje,
+			buttons: {
+				confirm: {
+		            label: 'BUSCAR'
+		        }
+		    },
+		    callback: function (result) {
+		        if (result) {
+		        	var Busqueda = document.getElementById("AnoBusqueda").value;
+		        	ExportacionPastosListado(Busqueda, NumExplotacion);
+		        	
+	            } else {
+	                    
+	            }
+		    }
+		});
+}
+</script>
+
+<script>
+function ExportacionPastosListado(Busqueda, NumExplotacion){
+	
+		var busqueda = Busqueda + "-01-01";
+		
+		var datos= {
+			'NumExplotacion' : NumExplotacion,
+			'FechaVenta' : busqueda
+		};
+	
+		var datos = JSON.stringify(datos);
+	
+		var url = './exportacionPastosListado';
+	
+		$.ajax({
+			type : 'post',
+			url : url,
+			contentType : 'application/json',
+			dataType : 'json',
+			data : datos,
+			success : function(data, textStatus, jqXHR) {
+				var Recuento = data.recuento;
+
+				ExportacionPastosEnlaces(Recuento, Busqueda, NumExplotacion);
+
+			},error: function(jqXHR,exception) {
+				
+			},statuscode:{
+				404:function(){ mostrarPantallaError(url); }
+			}
+		});
+}
+</script>
+
+<script>
+function ExportacionPastosEnlaces(Recuento, Busqueda, NumExplotacion){
+	
+		var NDocumentos = Recuento / 25;
+				
+		var NEnlaces;
+		if(NDocumentos % 1 == 0){
+			NEnlaces = parseInt(NDocumentos);
+		}else{
+			NEnlaces = parseInt(NDocumentos + 1);
+		}
+				
+		var mensaje = "<h5>LISTADO DE DOCUMENTOS:</h5>"
+		
+		mensaje = mensaje + "<table>";
+			for(var i=0; i<NEnlaces; i++){
+				var uno = "'" + NumExplotacion + "'";
+				var dos = "'" + i + "'";
+				var busqueda = Busqueda + "-01-01";
+				var tres = "'" + busqueda + "'";
+				var url = "ExportacionPastosDescarga(" + uno + "," + dos + ", "+tres+")";
+				
+				mensaje = mensaje + "<tr>";
+					mensaje = mensaje + "<td>";
+						mensaje = mensaje + "<p>Documento número "+i+ ": </p>";
+					mensaje = mensaje + "</td>";
+					mensaje = mensaje + "<td style='text-align: center;'>";
+						mensaje = mensaje + "<button type='button' class='btn btn-success' onClick=\""+url+"\">Descargar</button>";
+					mensaje = mensaje + "</td>";
+				mensaje = mensaje + "</tr>";		
+			} 			
+		mensaje = mensaje + "</table>";
+		
+								
+		bootbox.dialog({
+	        title: "ENLACES DE DESCARGAS",
+	        message: mensaje,
+	        buttons: {
+	            sucess:{
+	                label: "Cancelar",
+	            	className: 'btn-secondary' 
+	            }
+	        }       
+	    });
+}
+</script>
+
+<script>
+function ExportacionPastosDescarga(NumExplotacion, num, Busqueda){
+	//var NumExplotacion = sessionStorage.getItem("NumeroExplotacion");
+	var urlFirma = './exportacionPastos/'+NumExplotacion+'/'+num+'/'+Busqueda;
+	
+	$.ajax({
+			type: 'get',
+			url: urlFirma,
+			contentType: 'application/pdf',
+			success: function(data,textStatus,jqXHR){	
+				url = './exportacionPastosDescarga'
+				jQuery('<form action="' + url + '" method="get"></form>').appendTo('body').submit().remove();
+			},error: function(jqXHR,exception) {
+				bootbox.alert({
+					title: "EXPORTACIÓN PASTOS",
+					message: "No se puede recuperar el archivo",
+					buttons: {
+						ok: {
+							label: 'Aceptar',
+							className: 'btn btn-primary'
+						}
+					}
+				});
+			},statuscode:{
+				404:function(){ mostrarPantallaError(url); }
+			}
+		});
+}
+</script>
+
+<script>
+function ExportacionInspecciones(NumExplotacion){
+	
+	
+		var mensaje = "<h5>BÚSQUEDA DE DOCUMENTOS:</h5>"
+		
+		mensaje = mensaje + "<table>";
+			mensaje = mensaje + "<tr>";
+				mensaje = mensaje + "<td>";
+					mensaje = mensaje + "<p>Selecciona el año de búsqueda</p>";
+				mensaje = mensaje + "</td>";
+				mensaje = mensaje + "<td>";
+					mensaje = mensaje + "<select class='form-select' aria-label='Default select example' id='AnoBusqueda' style='float: center;'>";
+						mensaje = mensaje + "<option selected>-----</option>";
+						mensaje = mensaje + "<option value='2021'>2021</option>";
+						mensaje = mensaje + "<option value='2022'>2022</option>";
+						mensaje = mensaje + "<option value='2023'>2023</option>";
+					mensaje = mensaje + "</select>";
+				mensaje = mensaje + "</td>";
+			mensaje = mensaje + "</tr>";
+		mensaje = mensaje + "</table>";
+							
+		
+		bootbox.confirm({
+			title:"REGISTROS DE INSPECCIONES", 
+			message: mensaje,
+			buttons: {
+				confirm: {
+		            label: 'BUSCAR'
+		        }
+		    },
+		    callback: function (result) {
+		        if (result) {
+		        	var Busqueda = document.getElementById("AnoBusqueda").value;
+		        	ExportacionInspeccionesListado(Busqueda, NumExplotacion);
+		        	
+	            } else {
+	                    
+	            }
+		    }
+		});
+}
+</script>
+
+<script>
+function ExportacionInspeccionesListado(Busqueda, NumExplotacion){
+	
+		var busqueda = Busqueda + "-01-01";
+		
+		var datos= {
+			'NumExplotacion' : NumExplotacion,
+			'FechaVenta' : busqueda
+		};
+	
+		var datos = JSON.stringify(datos);
+	
+		var url = './exportacionInspeccionesListado';
+	
+		$.ajax({
+			type : 'post',
+			url : url,
+			contentType : 'application/json',
+			dataType : 'json',
+			data : datos,
+			success : function(data, textStatus, jqXHR) {
+				var Recuento = data.recuento;
+
+				ExportacionInspeccionesEnlaces(Recuento, Busqueda, NumExplotacion);
+
+			},error: function(jqXHR,exception) {
+				
+			},statuscode:{
+				404:function(){ mostrarPantallaError(url); }
+			}
+		});
+}
+</script>
+
+<script>
+function ExportacionInspeccionesEnlaces(Recuento, Busqueda, NumExplotacion){
+	
+		var NDocumentos = Recuento / 12;
+				
+		var NEnlaces;
+		if(NDocumentos % 1 == 0){
+			NEnlaces = parseInt(NDocumentos);
+		}else{
+			NEnlaces = parseInt(NDocumentos + 1);
+		}
+				
+		var mensaje = "<h5>LISTADO DE DOCUMENTOS:</h5>"
+		
+		mensaje = mensaje + "<table>";
+			for(var i=0; i<NEnlaces; i++){
+				var uno = "'" + NumExplotacion + "'";
+				var dos = "'" + i + "'";
+				var busqueda = Busqueda + "-01-01";
+				var tres = "'" + busqueda + "'";
+				var url = "ExportacionInspeccionesDescarga(" + uno + "," + dos + ", "+tres+")";
+				
+				mensaje = mensaje + "<tr>";
+					mensaje = mensaje + "<td>";
+						mensaje = mensaje + "<p>Documento número "+i+ ": </p>";
+					mensaje = mensaje + "</td>";
+					mensaje = mensaje + "<td style='text-align: center;'>";
+						mensaje = mensaje + "<button type='button' class='btn btn-success' onClick=\""+url+"\">Descargar</button>";
+					mensaje = mensaje + "</td>";
+				mensaje = mensaje + "</tr>";		
+			} 			
+		mensaje = mensaje + "</table>";
+		
+								
+		bootbox.dialog({
+	        title: "ENLACES DE DESCARGAS",
+	        message: mensaje,
+	        buttons: {
+	            sucess:{
+	                label: "Cancelar",
+	            	className: 'btn-secondary' 
+	            }
+	        }       
+	    });
+}
+</script>
+
+<script>
+function ExportacionInspeccionesDescarga(NumExplotacion, num, Busqueda){
+	//var NumExplotacion = sessionStorage.getItem("NumeroExplotacion");
+	var urlFirma = './exportacionInspecciones/'+NumExplotacion+'/'+num+'/'+Busqueda;
+	
+	$.ajax({
+			type: 'get',
+			url: urlFirma,
+			contentType: 'application/pdf',
+			success: function(data,textStatus,jqXHR){	
+				url = './exportacionInspeccionesDescarga'
+				jQuery('<form action="' + url + '" method="get"></form>').appendTo('body').submit().remove();
+			},error: function(jqXHR,exception) {
+				bootbox.alert({
+					title: "EXPORTACIÓN INSPECCIONES",
 					message: "No se puede recuperar el archivo",
 					buttons: {
 						ok: {
