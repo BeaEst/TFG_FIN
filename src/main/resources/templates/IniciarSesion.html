@@ -27,7 +27,7 @@
 	<div id="NoMovil" style="display:none;">
 		<div style="display:inline;">
 			<div align="center">
-				<img src="./Icon.jpg" width="250" height="150" style="display:inline; text-align:center;">
+				<img src="./facebook_cover_photo_1.png" width="40%" height="40%" style="display:inline; text-align:center;">
 			</div>
 		</div>
 		
@@ -57,13 +57,23 @@
 					</div>
 				</form>
 			</div>
+			
+			</br>
+			
+			<div class="card" style="margin:0% 40%">
+				<div style="text-align: right; margin-right: 2%" class="blockquote-footer">
+					<p><b>¿Desea registrarse?</b></p>
+					<p><em>Descargue el formulario y envíelo a la siguiente dirección de correo: beaest@usal.es</em></p>
+					<button type="button" class="btn btn-outline-success btn-sm" onClick="DescargarFormulario()">Descargar</button>
+				</div>
+			</div>
 		</div>
 	</div>
 	
 	<div id="Movil" style="display:none;">
 		<div style="display:inline;">
 			<div align="center">
-				<img src="./Icon.jpg" width="250" height="150" style="display:inline; text-align:center;">
+				<img src="./facebook_cover_photo_1.png" width="70%" height="70%" style="display:inline; text-align:center;">
 			</div>
 		</div>
 		
@@ -93,6 +103,16 @@
 					</div>
 				</form>
 			</div>
+			
+			</br>
+			
+			<div class="card">
+				<div style="text-align: right; margin-right: 2%" class="blockquote-footer">
+					<p><b>¿Desea registrarse?</b></p>
+					<p><em>Descargue el formulario y envíelo a la siguiente dirección de correo: beaest@usal.es</em></p>
+					<button type="button" class="btn btn-outline-success btn-sm" onClick="DescargarFormulario()">Descargar</button>
+				</div>
+			</div>
 		</div>
 	</div>
 	
@@ -107,6 +127,18 @@
     -->
   </body>
 </html>
+
+<script>
+$(function() {
+	var usuario = sessionStorage.getItem("usuario_activo");
+	
+	if(usuario != null){
+		var url = "./Inicio.html";
+    	window.location.href = url;
+	}
+  
+});
+</script>
 
 <script>
 $(function() {
@@ -198,4 +230,33 @@ $(function(){
 		 $("#noLoginNoMovil").hide();
 	 }
 });
+</script>
+
+<script>
+function DescargarFormulario(){
+	var urlFirma = './DescargarFormulario/';
+	
+	$.ajax({
+			type: 'get',
+			url: urlFirma,
+			contentType: 'application/pdf',
+			success: function(data,textStatus,jqXHR){	
+				url = './DescargarFormulario';
+				jQuery('<form action="' + url + '" method="get"></form>').appendTo('body').submit().remove();
+			},error: function(jqXHR,exception) {
+				bootbox.alert({
+					title: "EXPORTACIÓN REGISTROS DE LECHE",
+					message: "No se puede recuperar el archivo",
+					buttons: {
+						ok: {
+							label: 'Aceptar',
+							className: 'btn btn-primary'
+						}
+					}
+				});
+			},statuscode:{
+				404:function(){ mostrarPantallaError(url); }
+			}
+		});
+}
 </script>

@@ -312,7 +312,7 @@ public class OperationsExportacionesPDFController {
 
 				contents.beginText();
 				contents.newLineAtOffset(265, y);
-				contents.setFont(font, 12);
+				contents.setFont(font, 7);
 				contents.showText("" + Procedencia_Destino.get(i) + "");
 				contents.endText();
 
@@ -2780,10 +2780,10 @@ public class OperationsExportacionesPDFController {
 
 					try {
 						// Seleccionar todos los registros
-						System.out.println("SELECT Fecha, Oficial, TipoActuacion, NumActa FROM inspecciones WHERE NumExplotacion='"
+						System.out.println("SELECT Fecha, Oficial, TipoActuacion, NumActa FROM inspecciones WHERE (Fecha BETWEEN '" + strDate + "' AND '" + strDate2 + "') AND NumExplotacion='"
 								+ NumExplotacion + "' ORDER BY Fecha");
 
-						ResultSet cont_act = s.executeQuery("SELECT Fecha, Oficial, TipoActuacion, NumActa FROM inspecciones WHERE NumExplotacion='"
+						ResultSet cont_act = s.executeQuery("SELECT Fecha, Oficial, TipoActuacion, NumActa FROM inspecciones WHERE (Fecha BETWEEN '" + strDate + "' AND '" + strDate2 + "') AND NumExplotacion='"
 								+ NumExplotacion + "' ORDER BY Fecha");
 
 						
@@ -3086,5 +3086,392 @@ public class OperationsExportacionesPDFController {
 		System.out.println("FIN sacar número de archivos de inspecciones");
 		return responseEntity;
 
+	}
+	
+	@RequestMapping(value = "/exportacionIncidencias/{NumExplotacion}/{num}/{Busqueda}", method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseEntity<byte[]> ExportacionIncidencias(HttpServletRequest request, HttpServletResponse response,
+			@PathVariable String NumExplotacion, @PathVariable int num, @PathVariable String Busqueda) throws ServletException, IOException {
+		System.out.println("INICIO creación del archivo de inspecciones");
+
+		// Sacar los datos de altas y bajas de la explotacion
+		// Consulta a base de datos para comprobar si existe en la tabla usuarios.
+		Connection conexion = null;
+		
+		ArrayList<String> Fecha = new ArrayList<>();
+		ArrayList<String> Descripcion = new ArrayList<>();
+		ArrayList<String> NAnimales = new ArrayList<>();
+		ArrayList<String> CodIdentAnt = new ArrayList<>();
+		ArrayList<String> CodIdentNew = new ArrayList<>();
+		ArrayList<String> NDocumento = new ArrayList<>();
+		
+		String tipoAnimal = null;
+		String NumHoja = null;
+		ArrayList<String> AnimalesHojAnt = new ArrayList<>();
+		int tam1 = 0;
+		
+		/**/
+		DateFormat fechaHora = new SimpleDateFormat("yyyy-MM-dd");
+		Date convertido = null;
+		try {
+			convertido = fechaHora.parse(Busqueda);
+		} catch (ParseException e4) {
+			// TODO Auto-generated catch block
+			e4.printStackTrace();
+		}
+		
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(convertido);
+		calendar.add(calendar.YEAR, 1);
+		Date Busqueda2 = calendar.getTime();
+		String strDate = fechaHora.format(convertido);
+		String strDate2 = fechaHora.format(Busqueda2);
+		
+		// Cargar el driver
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+
+			try {
+				conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/tfg_v1", "root", "");
+
+				Statement s = null;
+				try {
+					s = conexion.createStatement();
+
+					try {
+						// Seleccionar todos los registros
+						System.out.println("SELECT Fecha, Descripcion, NAnimales, CodIdentAnt, CodIdentNew, NDocumento FROM incidencias WHERE (Fecha BETWEEN '" + strDate + "' AND '" + strDate2 + "') AND NumExplotacion='"
+								+ NumExplotacion + "' ORDER BY Fecha");
+
+						
+						ResultSet cont_act = s.executeQuery("SELECT Fecha, Descripcion, NAnimales, CodIdentAnt, CodIdentNew, NDocumento FROM incidencias WHERE (Fecha BETWEEN '" + strDate + "' AND '" + strDate2 + "') AND NumExplotacion='"
+								+ NumExplotacion + "' ORDER BY Fecha");
+
+						while (cont_act.next()) {
+							String dato1;
+							String dato2;
+							String dato3;
+							String dato4;
+							
+							dato1 = cont_act.getString("Fecha");
+							dato2 = cont_act.getString("Descripcion");
+							dato3 = cont_act.getString("NAnimales");
+							dato4 = cont_act.getString("CodIdentAnt");
+							dato3 = cont_act.getString("CodIdentNew");
+							dato4 = cont_act.getString("NDocumento");
+							
+							Fecha.add(dato1);
+							Descripcion.add(dato2);
+							NAnimales.add(dato3);
+							CodIdentAnt.add(dato4);
+							CodIdentNew.add(dato3);
+							NDocumento.add(dato4);
+						}
+
+						// Seleccionar el tipo de animal
+						ResultSet datostipoanimal = s.executeQuery(
+								"SELECT TipoAnimal FROM explotaciones WHERE NumExplotacion='" + NumExplotacion + "'");
+
+						System.out.println(
+								"SELECT TipoAnimal FROM explotaciones WHERE NumExplotacion='" + NumExplotacion + "'");
+
+						while (datostipoanimal.next()) {
+							tipoAnimal = datostipoanimal.getString("TipoAnimal");
+						}
+
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+
+						System.out.println("ERROR al hacer las consultas SQL");
+					}
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+
+					System.out.println("ERROR al crear el estamento de la consulta sql");
+				}
+			} catch (SQLException e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+				System.out.println("ERROR al hacer la conexión a la base de datos");
+			}
+
+		} catch (ClassNotFoundException e3) {
+			// TODO Auto-generated catch block
+			e3.printStackTrace();
+			System.out.println("ERROR al cargar el driver de sql");
+		}
+		// Fin sacar los datos de altas y bajas de la explotacion
+
+		// Creación del archivo
+		File resourcesDirectory = new File("./src/main/resources/static/HojaIncidencias.pdf");
+
+		PDDocument pd = PDDocument.load(resourcesDirectory);
+		PDPage pg = pd.getPage(0);
+		PDPageContentStream contents = new PDPageContentStream(pd, pg, AppendMode.PREPEND, false);
+		PDFont font = PDType1Font.HELVETICA;
+
+		// Campo código de explotacion
+		contents.beginText();
+		contents.newLineAtOffset(142, 460);
+		contents.setFont(font, 12);
+		contents.showText("" + NumExplotacion + "");
+		contents.endText();
+
+		// Campo Especie
+		contents.beginText();
+		contents.newLineAtOffset(457, 460);
+		contents.setFont(font, 12);
+		contents.showText("" + tipoAnimal + "");
+		contents.endText();
+
+		// Campo Número de hoja
+		contents.beginText();
+		contents.newLineAtOffset(720, 460);
+		contents.setFont(font, 12);
+		contents.showText(""+(num+1)+"");
+		contents.endText();
+
+		
+
+		// Rellenar tabla
+		// Posiciones y
+		int y1 = 390;int y9 = 204;
+		int y2 = 364;int y10 = 179;
+		int y3 = 343;int y11 = 155;
+		int y4 = 318;int y12 = 135;
+		int y5 = 295;
+		int y6 = 273;
+		int y7 = 250;
+		int y8 = 227;
+
+		// Sacar tamaño
+		int tam = Fecha.size();
+
+		int y = 0;
+
+		int doc;
+		if(num == 0) {
+			doc = 0;
+		}else {
+			doc = (num * 12);
+		}
+		
+		int total;
+ 		total = doc + 12;
+		
+		for (int i = doc; i < total; i++) {
+
+			if(i < tam) {
+				if ((i-doc) == 0) {
+					y = y1;
+				} else if ((i-doc) == 1) {
+					y = y2;
+				} else if ((i-doc) == 2) {
+					y = y3;
+				} else if ((i-doc) == 3) {
+					y = y4;
+				} else if ((i-doc) == 4) {
+					y = y5;
+				} else if ((i-doc) == 5) {
+					y = y6;
+				} else if ((i-doc) == 6) {
+					y = y7;
+				} else if ((i-doc) == 7) {
+					y = y8;
+				} else if ((i-doc) == 8) {
+					y = y9;
+				} else if ((i-doc) == 9) {
+					y = y10;
+				} else if ((i-doc) == 10) {
+					y = y11;
+				} else if ((i-doc) == 11) {
+					y = y12;
+				} 
+
+			
+				contents.beginText();
+				contents.newLineAtOffset(43, y);
+				contents.setFont(font, 12);
+				contents.showText("" + Fecha.get(i) + "");
+				contents.endText();
+
+				contents.beginText();
+				contents.newLineAtOffset(110, y);
+				contents.setFont(font, 7);
+				contents.showText("" + Descripcion.get(i) + "");
+				contents.endText();
+
+				contents.beginText();
+				contents.newLineAtOffset(305, y);
+				contents.setFont(font, 12);
+				contents.showText("" + NAnimales.get(i) + "");
+				contents.endText();
+
+				contents.beginText();
+				contents.newLineAtOffset(405, y);
+				contents.setFont(font, 12);
+				contents.showText("" + CodIdentAnt.get(i) + "");
+				contents.endText();
+				
+				contents.beginText();
+				contents.newLineAtOffset(565, y);
+				contents.setFont(font, 12);
+				contents.showText("" + CodIdentNew.get(i) + "");
+				contents.endText();
+				
+				contents.beginText();
+				contents.newLineAtOffset(680, y);
+				contents.setFont(font, 12);
+				contents.showText("" + NDocumento.get(i) + "");
+				contents.endText();
+			}
+			
+		}
+
+		contents.close();
+		// pd.save ("x.pdf");
+
+		// FileOutputStream fOut = new FileOutputStream();
+		pd.save("./src/main/resources/static/HojaIncidencias2.pdf");
+
+		ResponseEntity<byte[]> result = null;
+		HttpHeaders header = new HttpHeaders();
+		byte[] Archivo = null;
+
+		result = new ResponseEntity<>(Archivo, header, HttpStatus.OK);
+		System.out.println("FIN  creación del archivo de incidencias");
+		return result;
+	}
+
+	@RequestMapping(value = "/exportacionIncidenciasDescarga", method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseEntity<byte[]> ExportacionIncidenciasDescarga(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("INICIO descarga incidencias");
+
+		ResponseEntity<byte[]> result = null;
+		HttpHeaders header = new HttpHeaders();
+		header.setContentType(new MediaType("application", "x-download"));
+		String date = new SimpleDateFormat().format(new Date());
+		header.set("Content-Disposition", "attachment; filename=Incidencias_" + date + ".pdf");
+
+		// Recoger los bytes del archivo
+		File file = new File("./src/main/resources/static/HojaIncidencias2.pdf");
+		byte[] Archivo = Files.readAllBytes(file.toPath());
+
+		result = new ResponseEntity<>(Archivo, header, HttpStatus.OK);
+		System.out.println("FIN descarga incidencias");
+		return result;
+	}
+	
+	@RequestMapping(value = "/exportacionIncidenciasListado", method = RequestMethod.POST)
+	public ResponseEntity<Map<String, String>> exportacionIncidenciasListado(@RequestBody Animales animal) {
+
+		System.out.println("INICIO sacar número de archivos de incidencias");
+
+		ResponseEntity<Map<String, String>> responseEntity = null;
+		Map<String, String> result = new HashMap<>();
+
+		// Consulta a base de datos para comprobar si existe en la tabla usuarios.
+		Connection conexion = null;
+
+		String NumExplotacion = animal.getNumExplotacion();
+		Date fecha = animal.getFechaVenta();
+		
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(fecha);
+		calendar.add(calendar.YEAR, 1);
+		Date fechaMuerte2Filtro = calendar.getTime();
+
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
+		String strDate = dateFormat.format(fecha);
+		String strDate2 = dateFormat.format(fechaMuerte2Filtro);
+		
+		// Cargar el driver
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+
+			try {
+				conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/tfg_v1", "root", "");
+
+				Statement s = null;
+				try {
+					s = conexion.createStatement();
+
+					try {
+
+						System.out.println("SELECT COUNT(Id) AS NumHojas FROM incidencias "
+								+ "WHERE (Fecha BETWEEN '" + strDate + "' AND '" + strDate2 + "') AND NumExplotacion='"
+								+ NumExplotacion + "'");
+						
+						ResultSet recuento = s
+								.executeQuery("SELECT COUNT(Id) AS NumHojas FROM incidencias "
+										+ "WHERE (Fecha BETWEEN '" + strDate + "' AND '" + strDate2 + "') AND NumExplotacion='"
+										+ NumExplotacion + "'");
+
+						String recuento_ = null;
+						while (recuento.next()) {
+							recuento_ = recuento.getString("NumHojas");
+						}
+
+						result.put("recuento", recuento_);
+
+						responseEntity = new ResponseEntity<>(result, HttpStatus.OK);
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+						responseEntity = new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+						// result.put("QueryOk", "incorrecto");
+						System.out.println("ERROR al hacer las consultas SQL");
+					}
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+					// result.put("QueryOk", "incorrecto");
+					responseEntity = new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+					System.out.println("ERROR al crear el estamento de la consulta sql");
+				}
+			} catch (SQLException e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+				// result.put("QueryOk", "incorrecto");
+				responseEntity = new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+				System.out.println("ERROR al hacer la conexión a la base de datos");
+			}
+
+		} catch (ClassNotFoundException e3) {
+			// TODO Auto-generated catch block
+			e3.printStackTrace();
+			// result.put("QueryOk", "incorrecto");
+			responseEntity = new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+			System.out.println("ERROR al cargar el driver de sql");
+		}
+
+		System.out.println("FIN sacar número de archivos de incidencias");
+		return responseEntity;
+
+	}
+	
+	@RequestMapping(value = "/DescargarFormulario", method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseEntity<byte[]> DescargarFormulario(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("INICIO descarga formulario registro");
+
+		ResponseEntity<byte[]> result = null;
+		HttpHeaders header = new HttpHeaders();
+		header.setContentType(new MediaType("application", "x-download"));
+		String date = new SimpleDateFormat().format(new Date());
+		header.set("Content-Disposition", "attachment; filename=FormularioRegistro.pdf");
+
+		// Recoger los bytes del archivo
+		File file = new File("./src/main/resources/static/LIBRO_DE_REGISTRO.pdf");
+		byte[] Archivo = Files.readAllBytes(file.toPath());
+
+		result = new ResponseEntity<>(Archivo, header, HttpStatus.OK);
+		System.out.println("FIN descarga formulario registro");
+		return result;
 	}
 }
