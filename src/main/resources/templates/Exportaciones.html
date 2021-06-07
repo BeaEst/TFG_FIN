@@ -52,9 +52,11 @@
 					<li class="nav-item"><a class="nav-link active"
 						style="padding-left: 10px; width: 150px;"
 						href="./Pastos.html">Pastos</a></li>
+					<!-- 
 					<li class="nav-item"><a class="nav-link active"
 						style="padding-left: 10px; width: 150px;"
 						href="./Inspecciones.html">Inspecciones</a></li>
+					 -->
 					<li class="nav-item"><a class="nav-link active"
 						style="padding-left: 10px; width: 150px;"
 						href="./Incidencias.html">Incidencias</a></li>
@@ -140,12 +142,14 @@
 					<td id="P_Caprino"><img src="./pdf.png" alt="Pastos"
 						width="50" height="50" id="P_CaprinoE">Exportación de registros de pastos</td>
 				</tr>
+				<!-- 
 				<tr>
 					<td id="I_Ovino"><img src="./pdf.png" alt="Inspecciones"
 						width="50" height="50" id="I_OvinoE">Exportación de registros de inspecciones</td>
 					<td id="I_Caprino"><img src="./pdf.png" alt="Inspecciones"
 						width="50" height="50" id="I_CaprinoE">Exportación de registros de inspecciones</td>
 				</tr>
+				 -->
 				<tr>
 					<td id="IN_Ovino"><img src="./pdf.png" alt="Incidencias"
 						width="50" height="50" id="IN_OvinoE">Exportación de registros de incidencias</td>
@@ -203,11 +207,13 @@
 							<img src="./pastos.png" width="30" height="30" style="display: inline;">
 						</a>
 					</li>
+					<!-- 
 					<li class="nav-item">
 						<a class="nav-link active" style="padding-left: 10px;" href="./Inspecciones.html">
 							<img src="./inspecciones.png" width="30" height="30" style="display: inline;">
 						</a>
 					</li>
+					 -->
 					<li class="nav-item">
 						<a class="nav-link active" style="padding-left: 10px;" href="./Incidencias.html">
 							<img src="./incidencias.png" width="30" height="30" style="display: inline;">
@@ -282,10 +288,12 @@
 						<td id="P_OvinoM"><img src="./pdf.png" alt="Pastos"
 							width="30" height="30" id="P_OvinoEM">Exportación de registros de pastos</td>
 					</tr>
+					<!-- 
 					<tr>
 						<td id="I_OvinoM"><img src="./pdf.png" alt="Inspecciones"
 							width="30" height="30" id="I_OvinoEM">Exportación de registros de inspecciones</td>
 					</tr>
+					 -->
 					<tr>
 						<td id="IN_OvinoM"><img src="./pdf.png" alt="Incidencias"
 							width="30" height="30" id="IN_OvinoEM">Exportación de registros de incidencias</td>
@@ -328,10 +336,12 @@
 						<td id="P_CaprinoM"><img src="./pdf.png" alt="Pastos"
 							width="30" height="30" id="P_CaprinoEM">Exportación de registros de pastos</td>
 					</tr>
+					<!-- 
 					<tr>
 						<td id="I_CaprinoM"><img src="./pdf.png" alt="Inspecciones"
 							width="30" height="30" id="I_CaprinoEM">Exportación de registros de inspecciones</td>
 					</tr>
+					 -->
 					<tr>
 						<td id="IN_CaprinoM"><img src="./pdf.png" alt="Incidencias"
 							width="30" height="30" id="IN_CaprinoEM">Exportación de registros de incidencias</td>
@@ -1299,7 +1309,7 @@ function ExportacionAltasBajas(NumExplotacion, num, Busqueda){
 			url: urlFirma,
 			contentType: 'application/pdf',
 			success: function(data,textStatus,jqXHR){	
-				url = './exportacionAltasyBajasDescarga'
+				url = './exportacionAltasyBajasDescarga/'+num;
 				jQuery('<form action="' + url + '" method="get"></form>').appendTo('body').submit().remove();
 			},error: function(jqXHR,exception) {
 				bootbox.alert({
@@ -1579,7 +1589,7 @@ function ExportacionRegistrosLecheDescarga(NumExplotacion, num, Busqueda){
 			url: urlFirma,
 			contentType: 'application/pdf',
 			success: function(data,textStatus,jqXHR){	
-				url = './exportacionRegistroLecheDescarga'
+				url = './exportacionRegistroLecheDescarga/'+num;
 				jQuery('<form action="' + url + '" method="get"></form>').appendTo('body').submit().remove();
 			},error: function(jqXHR,exception) {
 				bootbox.alert({
@@ -1734,7 +1744,7 @@ function ExportacionAlimentosSuministradosDescarga(NumExplotacion, num, Busqueda
 			url: urlFirma,
 			contentType: 'application/pdf',
 			success: function(data,textStatus,jqXHR){	
-				url = './ExportacionAlimentosSuministradosDescarga'
+				url = './ExportacionAlimentosSuministradosDescarga/'+num;
 				jQuery('<form action="' + url + '" method="get"></form>').appendTo('body').submit().remove();
 			},error: function(jqXHR,exception) {
 				bootbox.alert({
@@ -1889,7 +1899,7 @@ function ExportacionPiensosMedicamentososDescarga(NumExplotacion, num, Busqueda)
 			url: urlFirma,
 			contentType: 'application/pdf',
 			success: function(data,textStatus,jqXHR){	
-				url = './ExportacionPiensosMedicamentososDescarga'
+				url = './ExportacionPiensosMedicamentososDescarga/'+num;
 				jQuery('<form action="' + url + '" method="get"></form>').appendTo('body').submit().remove();
 			},error: function(jqXHR,exception) {
 				bootbox.alert({
@@ -2044,7 +2054,7 @@ function ExportacionMedicamentosDescarga(NumExplotacion, num, Busqueda){
 			url: urlFirma,
 			contentType: 'application/pdf',
 			success: function(data,textStatus,jqXHR){	
-				url = './ExportacionMedicamentosDescarga'
+				url = './ExportacionMedicamentosDescarga/'+num;
 				jQuery('<form action="' + url + '" method="get"></form>').appendTo('body').submit().remove();
 			},error: function(jqXHR,exception) {
 				bootbox.alert({
@@ -2199,7 +2209,7 @@ function ExportacionEnfermedadesDescarga(NumExplotacion, num, Busqueda){
 			url: urlFirma,
 			contentType: 'application/pdf',
 			success: function(data,textStatus,jqXHR){	
-				url = './exportacionEnfermedadesDescarga'
+				url = './exportacionEnfermedadesDescarga/'+num;
 				jQuery('<form action="' + url + '" method="get"></form>').appendTo('body').submit().remove();
 			},error: function(jqXHR,exception) {
 				bootbox.alert({
@@ -2354,7 +2364,7 @@ function ExportacionPastosDescarga(NumExplotacion, num, Busqueda){
 			url: urlFirma,
 			contentType: 'application/pdf',
 			success: function(data,textStatus,jqXHR){	
-				url = './exportacionPastosDescarga'
+				url = './exportacionPastosDescarga/'+num;
 				jQuery('<form action="' + url + '" method="get"></form>').appendTo('body').submit().remove();
 			},error: function(jqXHR,exception) {
 				bootbox.alert({
@@ -2509,7 +2519,7 @@ function ExportacionInspeccionesDescarga(NumExplotacion, num, Busqueda){
 			url: urlFirma,
 			contentType: 'application/pdf',
 			success: function(data,textStatus,jqXHR){	
-				url = './exportacionInspeccionesDescarga'
+				url = './exportacionInspeccionesDescarga/'+num;
 				jQuery('<form action="' + url + '" method="get"></form>').appendTo('body').submit().remove();
 			},error: function(jqXHR,exception) {
 				bootbox.alert({
@@ -2664,7 +2674,7 @@ function ExportacionIncidenciasDescarga(NumExplotacion, num, Busqueda){
 			url: urlFirma,
 			contentType: 'application/pdf',
 			success: function(data,textStatus,jqXHR){	
-				url = './exportacionIncidenciasDescarga'
+				url = './exportacionIncidenciasDescarga/'+num;
 				jQuery('<form action="' + url + '" method="get"></form>').appendTo('body').submit().remove();
 			},error: function(jqXHR,exception) {
 				bootbox.alert({

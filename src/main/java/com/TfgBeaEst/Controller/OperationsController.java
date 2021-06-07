@@ -1192,6 +1192,258 @@ public class OperationsController {
 		return responseEntity;
 
 	}
+	
+	@RequestMapping(value = "/marcarventabloque", method = RequestMethod.POST)
+	public ResponseEntity<Map<String, String>> MarcarVentaBloque(@RequestBody Animales animal) {
+
+		System.out.println("INICIO marcar oveja como vendida");
+
+		ResponseEntity<Map<String, String>> responseEntity = null;
+		Map<String, String> result = new HashMap<>();
+
+		// Consulta a base de datos para comprobar si existe en la tabla usuarios.
+		Connection conexion = null;
+
+		Date fechaVenta = animal.getFechaVenta();
+		String NumIdentificacion = animal.getNumIdentificacion();
+
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		String date = dateFormat.format(fechaVenta);
+
+		String NDocumento = animal.getNDocumento();
+		String Destino = animal.getProcDestino();
+		String NumExplotacion = animal.getNumExplotacion();
+		
+		Integer limite = animal.getLimite();
+		Integer totalA = animal.getTotal();
+
+		// Cargar el driver
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+
+			try {
+				conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/tfg_v1", "root", "");
+
+				Statement s = null;
+				try {
+					s = conexion.createStatement();
+
+					try {
+
+						System.out.println("UPDATE `animales` SET `Venta`='1' AND `FechaBaja`='" + date
+								+ "' WHERE NumIdentificacion = '" + NumIdentificacion + "'");
+
+						int resultado = s.executeUpdate("UPDATE `animales` SET `Venta`=1, `FechaBaja`='" + date
+								+ "' WHERE NumIdentificacion = '" + NumIdentificacion + "'");
+
+						if((limite+1) == totalA) {
+							// Sacar el balance final de la explotación
+							// Seleccionar todos los registros
+							ResultSet balancetotal = s.executeQuery(
+									"SELECT COUNT(NumIdentificacion) AS BalanceTotal FROM animales WHERE Venta = '0' AND Muerta = '0' AND NumExplotacion='"
+											+ NumExplotacion + "'");
+
+							System.out.println(
+									"SELECT COUNT(NumIdentificacion) AS BalanceTotal FROM animales WHERE Venta = '0' AND Muerta = '0' AND NumExplotacion='"
+											+ NumExplotacion + "'");
+
+							String balance_total = null;
+							while (balancetotal.next()) {
+
+								balance_total = balancetotal.getString("BalanceTotal");
+							}
+							
+							System.out.println("INSERT INTO `altas_bajas_animales` (`Fecha`, `Motivo`, `Procedencia_Destino`, `NDocumento`, `NAnimales`, `BalanceFinal`, `NumExplotacion`) "
+									+ "VALUES ('"+ date + "', 'BAJA - SALIDA', '"+Destino+"', '" + NDocumento + "', '" + totalA + "', '" + balance_total
+									+ "', '" + NumExplotacion + "')");
+
+							int resultado1 = s.executeUpdate(
+									"INSERT INTO `altas_bajas_animales` (`Fecha`, `Motivo`, `Procedencia_Destino`, `NDocumento`, `NAnimales`, `BalanceFinal`, `NumExplotacion`) "
+											+ "VALUES ('"+ date + "', 'BAJA - SALIDA', '"+Destino+"', '" + NDocumento + "', '" + totalA + "', '" + balance_total
+											+ "', '" + NumExplotacion + "')");
+						}
+
+
+						// Comprobar si se ha insertado correctamente el update.
+						if (resultado == 1) {
+							System.out.println("Se han modificado los datos correctamente");
+							result.put("QueryOk", "correcto");
+							/*// Guardamos los datos en la tabla altas_bajas
+							
+							if (resultado1 == 1) {
+								
+							}else{
+								System.out.println("ERROR al modificar los datos");
+								result.put("QueryOk", "incorrecto");
+							}*/
+							
+
+						} else {
+							System.out.println("ERROR al modificar los datos");
+							result.put("QueryOk", "incorrecto");
+						}
+
+						responseEntity = new ResponseEntity<>(result, HttpStatus.OK);
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+						responseEntity = new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+						result.put("QueryOk", "incorrecto");
+						System.out.println("ERROR al hacer las consultas SQL");
+					}
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+					result.put("QueryOk", "incorrecto");
+					responseEntity = new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+					System.out.println("ERROR al crear el estamento de la consulta sql");
+				}
+			} catch (SQLException e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+				result.put("QueryOk", "incorrecto");
+				responseEntity = new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+				System.out.println("ERROR al hacer la conexión a la base de datos");
+			}
+
+		} catch (ClassNotFoundException e3) {
+			// TODO Auto-generated catch block
+			e3.printStackTrace();
+			result.put("QueryOk", "incorrecto");
+			responseEntity = new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+			System.out.println("ERROR al cargar el driver de sql");
+		}
+
+		System.out.println("INICIO marcar oveja como vendida");
+		return responseEntity;
+
+	}
+	
+	@RequestMapping(value = "/marcarmuertabloque", method = RequestMethod.POST)
+	public ResponseEntity<Map<String, String>> MarcarMuertaBloque(@RequestBody Animales animal) {
+
+		System.out.println("INICIO marcar oveja como vendida");
+
+		ResponseEntity<Map<String, String>> responseEntity = null;
+		Map<String, String> result = new HashMap<>();
+
+		// Consulta a base de datos para comprobar si existe en la tabla usuarios.
+		Connection conexion = null;
+
+		Date fechaVenta = animal.getFechaVenta();
+		String NumIdentificacion = animal.getNumIdentificacion();
+
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		String date = dateFormat.format(fechaVenta);
+
+		String NDocumento = animal.getNDocumento();
+		String Destino = animal.getProcDestino();
+		String NumExplotacion = animal.getNumExplotacion();
+		
+		Integer limite = animal.getLimite();
+		Integer totalA = animal.getTotal();
+
+		// Cargar el driver
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+
+			try {
+				conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/tfg_v1", "root", "");
+
+				Statement s = null;
+				try {
+					s = conexion.createStatement();
+
+					try {
+
+						System.out.println("UPDATE `animales` SET `Muerta`='1' AND `FechaBaja`='" + date
+								+ "' WHERE NumIdentificacion = '" + NumIdentificacion + "'");
+
+						int resultado = s.executeUpdate("UPDATE `animales` SET `Muerta`=1, `FechaBaja`='" + date
+								+ "' WHERE NumIdentificacion = '" + NumIdentificacion + "'");
+
+						if((limite+1) == totalA) {
+							// Sacar el balance final de la explotación
+							// Seleccionar todos los registros
+							ResultSet balancetotal = s.executeQuery(
+									"SELECT COUNT(NumIdentificacion) AS BalanceTotal FROM animales WHERE Venta = '0' AND Muerta = '0' AND NumExplotacion='"
+											+ NumExplotacion + "'");
+
+							System.out.println(
+									"SELECT COUNT(NumIdentificacion) AS BalanceTotal FROM animales WHERE Venta = '0' AND Muerta = '0' AND NumExplotacion='"
+											+ NumExplotacion + "'");
+
+							String balance_total = null;
+							while (balancetotal.next()) {
+
+								balance_total = balancetotal.getString("BalanceTotal");
+							}
+							
+							System.out.println("INSERT INTO `altas_bajas_animales` (`Fecha`, `Motivo`, `Procedencia_Destino`, `NDocumento`, `NAnimales`, `BalanceFinal`, `NumExplotacion`) "
+									+ "VALUES ('"+ date + "', 'BAJA - SALIDA', '-', '" + NDocumento + "', '" + totalA + "', '" + balance_total
+									+ "', '" + NumExplotacion + "')");
+
+							int resultado1 = s.executeUpdate(
+									"INSERT INTO `altas_bajas_animales` (`Fecha`, `Motivo`, `Procedencia_Destino`, `NDocumento`, `NAnimales`, `BalanceFinal`, `NumExplotacion`) "
+											+ "VALUES ('"+ date + "', 'BAJA - SALIDA', '-', '" + NDocumento + "', '" + totalA + "', '" + balance_total
+											+ "', '" + NumExplotacion + "')");
+						}
+
+
+						// Comprobar si se ha insertado correctamente el update.
+						if (resultado == 1) {
+							System.out.println("Se han modificado los datos correctamente");
+							result.put("QueryOk", "correcto");
+							/*// Guardamos los datos en la tabla altas_bajas
+							
+							if (resultado1 == 1) {
+								
+							}else{
+								System.out.println("ERROR al modificar los datos");
+								result.put("QueryOk", "incorrecto");
+							}*/
+							
+
+						} else {
+							System.out.println("ERROR al modificar los datos");
+							result.put("QueryOk", "incorrecto");
+						}
+
+						responseEntity = new ResponseEntity<>(result, HttpStatus.OK);
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+						responseEntity = new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+						result.put("QueryOk", "incorrecto");
+						System.out.println("ERROR al hacer las consultas SQL");
+					}
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+					result.put("QueryOk", "incorrecto");
+					responseEntity = new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+					System.out.println("ERROR al crear el estamento de la consulta sql");
+				}
+			} catch (SQLException e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+				result.put("QueryOk", "incorrecto");
+				responseEntity = new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+				System.out.println("ERROR al hacer la conexión a la base de datos");
+			}
+
+		} catch (ClassNotFoundException e3) {
+			// TODO Auto-generated catch block
+			e3.printStackTrace();
+			result.put("QueryOk", "incorrecto");
+			responseEntity = new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+			System.out.println("ERROR al cargar el driver de sql");
+		}
+
+		System.out.println("INICIO marcar oveja como vendida");
+		return responseEntity;
+
+	}
 
 	@RequestMapping(value = "/filtro4", method = RequestMethod.POST)
 	public ResponseEntity<Map<String, ArrayList<String>>> Filtro4(@RequestBody Animales animal) {
@@ -1776,6 +2028,146 @@ public class OperationsController {
 								result.put("QueryOk", "incorrecto");
 							}
 							
+
+						} else {
+							System.out.println("ERROR al modificar los datos");
+							result.put("QueryOk", "incorrecto");
+						}
+
+						responseEntity = new ResponseEntity<>(result, HttpStatus.OK);
+					} catch (SQLException e) {
+						result.put("QueryOk", "incorrecto");
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+						responseEntity = new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+
+						System.out.println("ERROR al hacer las consultas SQL");
+					}
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+					// result.put("QueryOk", "incorrecto");
+					responseEntity = new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+					System.out.println("ERROR al crear el estamento de la consulta sql");
+				}
+			} catch (SQLException e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+				// result.put("QueryOk", "incorrecto");
+				responseEntity = new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+				System.out.println("ERROR al hacer la conexión a la base de datos");
+			}
+
+		} catch (ClassNotFoundException e3) {
+			// TODO Auto-generated catch block
+			e3.printStackTrace();
+			// result.put("QueryOk", "incorrecto");
+			responseEntity = new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+			System.out.println("ERROR al cargar el driver de sql");
+		}
+
+		System.out.println("FIN añadir un nuevo animal");
+		return responseEntity;
+
+	}
+	
+	@RequestMapping(value = "/altabloque", method = RequestMethod.POST)
+	public ResponseEntity<Map<String, String>> NuevoAnimalBloque(@RequestBody Animales oveja) {
+
+		System.out.println("INICIO añadir un nuevo animal");
+
+		ResponseEntity<Map<String, String>> responseEntity = null;
+		Map<String, String> result = new HashMap<>();
+
+		// Consulta a base de datos para comprobar si existe en la tabla usuarios.
+		Connection conexion = null;
+
+		String NumExplotacion = oveja.getNumExplotacion();
+		String NumIdentificacion = oveja.getNumIdentificacion();
+		String Destino = oveja.getProcDestino();
+		String usuario = oveja.getUsuario();
+		String sexo = oveja.getSexo();
+		Integer anonacimiento = oveja.getAnoNacimiento();
+		Boolean tienebolo = oveja.getTieneBolo();
+		Integer v_tienebolo;
+		if (tienebolo) {
+			v_tienebolo = 1;
+		} else {
+			v_tienebolo = 0;
+		}
+		Boolean tienecrotal = oveja.getTieneCrotal();
+		Integer v_tienecrotal;
+		if (tienecrotal) {
+			v_tienecrotal = 1;
+		} else {
+			v_tienecrotal = 0;
+		}
+
+		Integer limite = oveja.getLimite();
+		Integer totalA = oveja.getTotal();
+		
+		Date fechaMuerte = oveja.getFechaBaja();
+
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		String date = dateFormat.format(fechaMuerte);
+		// Cargar el driver
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+
+			try {
+				conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/tfg_v1", "root", "");
+
+				Statement s = null;
+				try {
+					s = conexion.createStatement();
+
+					try {
+						// Guardamos los datos en la tabla animales
+						System.out.println("INSERT INTO animales "
+								+ "(NumIdentificacion, Sexo, AnoNacimiento, Usuario, Muerta, Venta, TieneBolo, TieneCrotal,NumExplotacion)"
+								+ " VALUES ('" + NumIdentificacion + "','" + sexo + "','" + anonacimiento + "','"
+								+ usuario + "','0','0','" + v_tienebolo + "','" + v_tienecrotal + "','" + NumExplotacion
+								+ "')");
+
+						int resultado = s.executeUpdate("INSERT INTO animales "
+								+ "(NumIdentificacion, Sexo, AnoNacimiento, Usuario, Muerta, Venta, TieneBolo, TieneCrotal,NumExplotacion)"
+								+ " VALUES ('" + NumIdentificacion + "','" + sexo + "','" + anonacimiento + "','"
+								+ usuario + "','0','0','" + v_tienebolo + "','" + v_tienecrotal + "','" + NumExplotacion
+								+ "')");
+
+						if((limite+1) == totalA) {
+							// Sacar el balance final de la explotación
+							// Seleccionar todos los registros
+							System.out.println(
+									"SELECT COUNT(NumIdentificacion) AS BalanceTotal FROM animales WHERE Venta = '0' AND Muerta = '0' AND NumExplotacion='"
+											+ NumExplotacion + "'");
+							
+							ResultSet balancetotal = s.executeQuery(
+									"SELECT COUNT(NumIdentificacion) AS BalanceTotal FROM animales WHERE Venta = '0' AND Muerta = '0' AND NumExplotacion='"
+											+ NumExplotacion + "'");
+
+							String balance_total = null;
+							while (balancetotal.next()) {
+
+								balance_total = balancetotal.getString("BalanceTotal");
+							}
+							
+							// Guardamos los datos en la tabla altas_bajas
+							System.out.println("INSERT INTO `altas_bajas_animales` (`Fecha`, `Motivo`, `Procedencia_Destino`, `NDocumento`, `NAnimales`, `BalanceFinal`, `NumExplotacion`) "
+									+ "VALUES ('"+ date + "', 'ALTA', '"+Destino+"', '-', '"+totalA+"', '" + balance_total
+									+ "', '" + NumExplotacion + "')");
+
+							int resultado1 = s.executeUpdate(
+									"INSERT INTO `altas_bajas_animales` (`Fecha`, `Motivo`, `Procedencia_Destino`, `NDocumento`, `NAnimales`, `BalanceFinal`, `NumExplotacion`) "
+											+ "VALUES ('"+ date + "', 'ALTA', '"+Destino+"', '-', '"+totalA+"', '" + balance_total
+											+ "', '" + NumExplotacion + "')");
+						}
+						
+						// Comprobar si se ha insertado correctamente el update.
+						if (resultado == 1) {
+							
+							System.out.println("Se han modificado los datos correctamente");
+							result.put("QueryOk", "correcto");							
 
 						} else {
 							System.out.println("ERROR al modificar los datos");

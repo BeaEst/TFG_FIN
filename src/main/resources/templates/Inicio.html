@@ -46,9 +46,11 @@
 					<li class="nav-item"><a class="nav-link active"
 						style="padding-left: 10px; width: 150px;"
 						href="./Pastos.html">Pastos</a></li>
+					<!-- 
 					<li class="nav-item"><a class="nav-link active"
 						style="padding-left: 10px; width: 150px;"
 						href="./Inspecciones.html">Inspecciones</a></li>
+					 -->
 					<li class="nav-item"><a class="nav-link active"
 						style="padding-left: 10px; width: 150px;"
 						href="./Incidencias.html">Incidencias</a></li>
@@ -82,19 +84,19 @@
 	</div>
 
 		<div class="card" style="text-align:center;">
-		  <div class="card-body" style="margin-left: 150px;position: absolute; text-align:left;">
-		    <h5 class="card-title">¡BIENVENIDO <script>document.write(sessionStorage.getItem("usuario_activo"));</script>! </h5>
-		    <p class="card-text">Añadir icono aplicacion en navegación en todas las paginas (tambien vista movil)</p>
-		    <p class="card-text">Añadir icono en inicar sesión (tambien vista movil)</p>
-		    <p class="card-text">Evitar que se pueda volver a la pestaña de Iniciar Sesión una vez que ya se ha iniciado sesión</p>
-		    <p class="card-text">Descargar formulario de registro</p>
-		    <p class="card-text"></p>
-		    <p class="card-text"></p>
-		    <p class="card-text"></p>
-		    
-		    <div>
+		  <div class="card-body" style="margin-left: 150px;position: absolute; text-align:center; width: 80%">
+		    <h3 class="card-title">¡BIENVENIDO <script>document.write(sessionStorage.getItem("usuario_activo"));</script>! </h3>
+		    <img src="./facebook_cover_photo_1.png" width="70%" height="70%" style="display:inline; text-align:center;">
+		    </br>
+		    <p class="card-text"><em>En esta aplicación podrás realizar todas las gestiones para rellenar el libro de registro de tu explotación ganadera</em></p>
+		    <p class="card-text"><em>A continuación se mostrarán las explotaciones dadas de alta para su usuario:</em></p>
+		    <p class="card-text">
+		    <div style="text-align:center;">
 				<div id="listadoExplotaciones"></div>
 			</div>
+			</p>
+		    
+		    
 		  </div>
 		  
 		  
@@ -152,11 +154,13 @@
 							<img src="./pastos.png" width="30" height="30" style="display: inline;">
 						</a>
 					</li>
+					<!-- 
 					<li class="nav-item">
 						<a class="nav-link active" style="padding-left: 10px;" href="./Inspecciones.html">
 							<img src="./inspecciones.png" width="30" height="30" style="display: inline;">
 						</a>
 					</li>
+					 -->
 					<li class="nav-item">
 						<a class="nav-link active" style="padding-left: 10px;" href="./Incidencias.html">
 							<img src="./incidencias.png" width="30" height="30" style="display: inline;">
@@ -195,13 +199,15 @@
 
 		<div class="card" style="text-align:center;">
 		  <div class="card-body" style="margin-left: 65px;position: absolute; text-align:left;">
-		    <h5 class="card-title">¡BIENVENIDO <script>document.write(sessionStorage.getItem("usuario_activo"));</script>! </h5>
-		    <p class="card-text">VERSION 1.0.2</p>
-		    <p class="card-text">Adaptación a dispositivos moviles y ordenadores</p>
-		    <p class="card-text">Página animales:</p>
-		    <p class="card-text">Visualización, falta poder editar</p>
-		    <p class="card-text">Muerte, se cambian los datos en la base de datos correctamente</p>
-		    <p class="card-text">Venta, falta la funcionalidad</p>
+		    <h3 class="card-title">¡BIENVENIDO <script>document.write(sessionStorage.getItem("usuario_activo"));</script>! </h3>
+		    <img src="./facebook_cover_photo_1.png" width="90%" height="90%" style="display:inline; text-align:center;">
+		    <p class="card-text"><em>En esta aplicación podrás realizar todas las gestiones para rellenar el libro de registro de tu explotación ganadera</em></p>
+		    <p class="card-text"><em>A continuación se mostrarán las explotaciones dadas de alta para su usuario:</em></p>
+		    <p class="card-text">
+		    <div style="text-align:center;">
+				<div id="listadoExplotacionesMovil"></div>
+			</div>
+			</p>
 		  </div>
 		</div>
 	</div>
@@ -220,7 +226,7 @@
 
 <script>
 $(function() {
-  
+
 	var usuario = sessionStorage.getItem("usuario_activo");
 	
 	if(usuario == null){
@@ -228,6 +234,32 @@ $(function() {
 		var url = "./IniciarSesion.html";
 	    window.location.href = url;
 	}else{
+	
+  		//Comprobar si es telefono u ordenador
+	
+	    try{ 
+	        document.createEvent("TouchEvent"); 
+	        document.getElementById('Movil').style.display='block';
+	        sessionStorage.setItem('Movil', "true");
+	        var parar;
+	        parar = 1;
+	        return true; 
+	    }
+	    catch(e){ 
+	    	document.getElementById('NoMovil').style.display='block';
+	    	sessionStorage.setItem('Movil', "false");
+	        return false;
+	    }
+	}
+  
+});
+</script>
+
+<script>
+$(function() {
+  	var usuario = sessionStorage.getItem("usuario_activo");
+	var movil = sessionStorage.getItem("Movil");
+	if(sessionStorage.getItem("Movil") == "false"){
 		var usuarioDatos= {
 			'usuario' : usuario,
 		};
@@ -249,15 +281,15 @@ $(function() {
 				txt = document.getElementById("listadoExplotaciones");
 				var doc = "";
 				
-				doc = doc + "<table>";
+				doc = doc + "<table class='table' style='margin: 0 auto;'>";
 					doc = doc + "<tr>";	
-						doc = doc + "<th style='border: 1px solid black;'>Número Explotación</th>";
-						doc = doc + "<th style='border: 1px solid black;'>Tipo de animal</th>";		
+						doc = doc + "<th scope='col'>Número de explotación</th>";
+						doc = doc + "<th scope='col'>Tipo de animal</th>";		
 					doc = doc + "</tr>";
 				for(var i=0; i<size; i++){
 					doc = doc + "<tr>";	
-						doc = doc + "<td style='border: 1px solid black;'>" + data.ListaExplotaciones[i] + "</td>";
-						doc = doc + "<td style='border: 1px solid black;'>" + data.ListaTipoAnimal[i] + "</td>";		
+						doc = doc + "<td class='table-primary'>" + data.ListaExplotaciones[i] + "</td>";
+						doc = doc + "<td class='table-primary'>" + data.ListaTipoAnimal[i] + "</td>";		
 					doc = doc + "</tr>";
 				}
 				doc = doc + "</table>";
@@ -273,26 +305,59 @@ $(function() {
 				}
 			}
 		});
+	}else{
 		
-		//Comprobar si es telefono u ordenador
-		    try{ 
-		        document.createEvent("TouchEvent"); 
-		        document.getElementById('Movil').style.display='block';
-		        var parar;
-		        parar = 1;
-		        return true; 
-		    }
-		    catch(e){ 
-		    	document.getElementById('NoMovil').style.display='block';
-		        return false;
-		    }
+		var usuarioDatos= {
+			'usuario' : usuario,
+		};
+	
+		var usuarioLoginJSON = JSON.stringify(usuarioDatos);
+	
+		var url = './recogerExplotaciones';
+	
+		$.ajax({
+			type : 'post',
+			url : url,
+			contentType : 'application/json',
+			dataType : 'json',
+			data : usuarioLoginJSON,
+			success : function(data, textStatus, jqXHR) {
+				var numExplotaciones = data.ListaExplotaciones;
+				var size = Object.keys(numExplotaciones).length;
+				
+				txt = document.getElementById("listadoExplotacionesMovil");
+				var doc = "";
+				
+				doc = doc + "<table class='table' style='margin: 0 auto;'>";
+					doc = doc + "<tr>";	
+						doc = doc + "<th scope='col'>Número de explotación</th>";
+						doc = doc + "<th scope='col'>Tipo de animal</th>";		
+					doc = doc + "</tr>";
+				for(var i=0; i<size; i++){
+					doc = doc + "<tr>";	
+						doc = doc + "<td class='table-primary'>" + data.ListaExplotaciones[i] + "</td>";
+						doc = doc + "<td class='table-primary'>" + data.ListaTipoAnimal[i] + "</td>";		
+					doc = doc + "</tr>";
+				}
+				doc = doc + "</table>";
+				
+				txt.innerHTML = doc;
+			},
+			error : function(jqXHR, exception) {
+				// mostrarPantallaError(url, jqXHR);
+			},
+			statuscode : {
+				404 : function() {
+					//mostrarPantallaError(url);
+				}
+			}
+		});
 	}
 	
 	
 
 });
 </script>
-
 
 <script>
 function CerrarSesion(){

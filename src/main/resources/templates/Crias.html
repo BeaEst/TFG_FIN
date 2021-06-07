@@ -52,9 +52,11 @@
 					<li class="nav-item"><a class="nav-link active"
 						style="padding-left: 10px; width: 150px;"
 						href="./Pastos.html">Pastos</a></li>
+					<!-- 
 					<li class="nav-item"><a class="nav-link active"
 						style="padding-left: 10px; width: 150px;"
 						href="./Inspecciones.html">Inspecciones</a></li>
+					 -->
 					<li class="nav-item"><a class="nav-link active"
 						style="padding-left: 10px; width: 150px;"
 						href="./Incidencias.html">Incidencias</a></li>
@@ -210,11 +212,13 @@
 							<img src="./pastos.png" width="30" height="30" style="display: inline;">
 						</a>
 					</li>
+					<!-- 
 					<li class="nav-item">
 						<a class="nav-link active" style="padding-left: 10px;" href="./Inspecciones.html">
 							<img src="./inspecciones.png" width="30" height="30" style="display: inline;">
 						</a>
 					</li>
+					 -->
 					<li class="nav-item">
 						<a class="nav-link active" style="padding-left: 10px;" href="./Incidencias.html">
 							<img src="./incidencias.png" width="30" height="30" style="display: inline;">
@@ -552,90 +556,96 @@ function paginacion(NumPaginacion){
 				
 				var size = Object.keys(NumGuia).length;
 	
-				txt = document.getElementById("card");
-				var doc = "";
-				
-				//Sacar el número de paginaciones que va a haber de animales.
-				var paginacion = size / 20;
-				
-				if(Number.isInteger(paginacion)){
-					paginacion = paginacion;
+				if(size == 0){
+					txt = document.getElementById("card");
+					doc = doc + '<p style="margin-left: 155px;"><em>No hay registros</em></p>';
+					txt.innerHTML = doc;
 				}else{
-					paginacion = parseInt(paginacion, 10);
-					paginacion = paginacion + 1;
-				}
-				
-				if(NumPaginacion == 1){
-					var valor = 0;	
-				}else{
-					var valor = (NumPaginacion - 1) * 20;	
-				}
+					txt = document.getElementById("card");
+					var doc = "";
 					
-				var total = (NumPaginacion * 20) + 20;
-				doc = doc + '<p style="margin-left: 155px;"><em>Página '+NumPaginacion+' de '+paginacion+'</em></p>';
-				//for(var i=1; i<=paginacion; i++){
-					doc = doc + '<table style="margin-left: 155px;">';
-						for(var j=0; j<4; j++){
-							doc = doc + '<tr style="width: 100%">';
-								for(var x=0; x<5; x++){
-									if(x==0){
-										var par = 1;
-									}else{
-										if(x % 2 == 0) {
+					//Sacar el número de paginaciones que va a haber de animales.
+					var paginacion = size / 20;
+					
+					if(Number.isInteger(paginacion)){
+						paginacion = paginacion;
+					}else{
+						paginacion = parseInt(paginacion, 10);
+						paginacion = paginacion + 1;
+					}
+					
+					if(NumPaginacion == 1){
+						var valor = 0;	
+					}else{
+						var valor = (NumPaginacion - 1) * 20;	
+					}
+						
+					var total = (NumPaginacion * 20) + 20;
+					doc = doc + '<p style="margin-left: 155px;"><em>Página '+NumPaginacion+' de '+paginacion+'</em></p>';
+					//for(var i=1; i<=paginacion; i++){
+						doc = doc + '<table style="margin-left: 155px;">';
+							for(var j=0; j<4; j++){
+								doc = doc + '<tr style="width: 100%">';
+									for(var x=0; x<5; x++){
+										if(x==0){
 											var par = 1;
 										}else{
-											var par = 0;
+											if(x % 2 == 0) {
+												var par = 1;
+											}else{
+												var par = 0;
+											}
 										}
-									}
-								
 									
-									doc = doc + '<td style="width: 1000px;">';
-										if(par == 0){
-											if(valor < total && valor < size){
-												doc= doc + '<div class="card text-black bg-light mb-3" style="cursor:pointer;">'
-												+'<div class="card-header" style="margin-top:5px;"><h5>'+NumGuia[valor]
-												+'</h5><p class="card-text" style="text-align:right;">Fecha de Venta: '+FVenta[valor]+'</p>'
-												+'<p class="card-text" style="text-align:right;">Se han vendido '+NumAnimales[valor]+' crias</p></div></div>';
+										
+										doc = doc + '<td style="width: 1000px;">';
+											if(par == 0){
+												if(valor < total && valor < size){
+													doc= doc + '<div class="card text-black bg-light mb-3" style="cursor:pointer;">'
+													+'<div class="card-header" style="margin-top:5px;"><h5>'+NumGuia[valor]
+													+'</h5><p class="card-text" style="text-align:right;">Fecha de Venta: '+FVenta[valor]+'</p>'
+													+'<p class="card-text" style="text-align:right;">Se han vendido '+NumAnimales[valor]+' crias</p></div></div>';
+												}
+											}else{
+												if(valor < total && valor < size){
+													doc= doc + '<div class="card text-white bg-secondary mb-3" style="cursor:pointer;">'
+													+'<div class="card-header" style="margin-top:5px;"><h5>'+NumGuia[valor]
+													+'</h5><p class="card-text" style="text-align:right;">Fecha de Venta: '+FVenta[valor]+'</p>'
+													+'<p class="card-text" style="text-align:right;">Se han vendido '+NumAnimales[valor]+' crias</p></div></div>';
+												}
 											}
-										}else{
-											if(valor < total && valor < size){
-												doc= doc + '<div class="card text-white bg-secondary mb-3" style="cursor:pointer;">'
-												+'<div class="card-header" style="margin-top:5px;"><h5>'+NumGuia[valor]
-												+'</h5><p class="card-text" style="text-align:right;">Fecha de Venta: '+FVenta[valor]+'</p>'
-												+'<p class="card-text" style="text-align:right;">Se han vendido '+NumAnimales[valor]+' crias</p></div></div>';
-											}
-										}
-										valor = valor + 1;
-									doc = doc + '</td>';
-								}
-							doc = doc + '</tr>';
-						}
-					doc = doc + '</table>';
-				//}
-				
-				txt.innerHTML = doc;
-				
-				txt2 = document.getElementById("paginacion");
-				
-				doc2 = "";
-				
-				if(NumPaginacion == 1){
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+NumPaginacion+')">' + NumPaginacion + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion+1)+')">' + (NumPaginacion+1) + '</a></li>';
-				}else if (NumPaginacion == paginacion){
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion-1)+')">' + (NumPaginacion-1) + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+NumPaginacion+')">' + NumPaginacion + '</a></li>';
-				}else if(NumPaginacion == 2 || NumPaginacion == paginacion-1){
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion-1)+')">' + (NumPaginacion-1) + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+NumPaginacion+')">' + NumPaginacion + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion+1)+')">' + (NumPaginacion+1) + '</a></li>';
-				}else{
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion(1)">' + 1 + '</a></li>...';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion-1)+')">' + (NumPaginacion-1) + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+NumPaginacion+')">' + NumPaginacion + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion+1)+')">' + (NumPaginacion+1) + '</a></li>...';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+paginacion+')">' + paginacion + '</a></li>';
-				} 
+											valor = valor + 1;
+										doc = doc + '</td>';
+									}
+								doc = doc + '</tr>';
+							}
+						doc = doc + '</table>';
+					//}
+					
+					txt.innerHTML = doc;
+					
+					txt2 = document.getElementById("paginacion");
+					
+					doc2 = "";
+					
+					if(NumPaginacion == 1){
+						doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+NumPaginacion+')">' + NumPaginacion + '</a></li>';
+						doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion+1)+')">' + (NumPaginacion+1) + '</a></li>';
+					}else if (NumPaginacion == paginacion){
+						doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion-1)+')">' + (NumPaginacion-1) + '</a></li>';
+						doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+NumPaginacion+')">' + NumPaginacion + '</a></li>';
+					}else if(NumPaginacion == 2 || NumPaginacion == paginacion-1){
+						doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion-1)+')">' + (NumPaginacion-1) + '</a></li>';
+						doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+NumPaginacion+')">' + NumPaginacion + '</a></li>';
+						doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion+1)+')">' + (NumPaginacion+1) + '</a></li>';
+					}else{
+						doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion(1)">' + 1 + '</a></li>...';
+						doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion-1)+')">' + (NumPaginacion-1) + '</a></li>';
+						doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+NumPaginacion+')">' + NumPaginacion + '</a></li>';
+						doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion+1)+')">' + (NumPaginacion+1) + '</a></li>...';
+						doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+paginacion+')">' + paginacion + '</a></li>';
+					} 
+				}
 				
 				txt2.innerHTML = doc2;
 			},
@@ -675,92 +685,98 @@ function paginacion(NumPaginacion){
 				
 				var size = Object.keys(NumGuia).length;
 	
-				txt = document.getElementById("cardMovil");
-				var doc = "";
-				
-				//Sacar el número de paginaciones que va a haber de animales.
-				var paginacion = size / 5;
-				
-				if(Number.isInteger(paginacion)){
-					paginacion = paginacion;
+				if(size == 0){
+					txt = document.getElementById("card");
+					doc = doc + '<p style="margin-left: 155px;"><em>No hay registros</em></p>';
+					txt.innerHTML = doc;
 				}else{
-					paginacion = parseInt(paginacion, 10);
-					paginacion = paginacion + 1;
-				}
-				
-				if(NumPaginacion == 1){
-					var valor = 0;	
-				}else{
-					var valor = (NumPaginacion - 1) * 5;	
-				}
+					txt = document.getElementById("cardMovil");
+					var doc = "";
 					
-				var total = (NumPaginacion * 5) + 5;
-				doc = doc + '<p style="margin-left: 68px;"><em>Página '+NumPaginacion+' de '+paginacion+'</em></p>';
-				//for(var i=1; i<=paginacion; i++){
-					doc = doc + '<table style="margin-left: 68px;">';
-						for(var j=0; j<5; j++){
-							doc = doc + '<tr style="width: 100%">';
-								for(var x=0; x<1; x++){
-									if(x==0){
-										var par = 1;
-									}else{
-										if(x % 2 == 0) {
+					//Sacar el número de paginaciones que va a haber de animales.
+					var paginacion = size / 5;
+					
+					if(Number.isInteger(paginacion)){
+						paginacion = paginacion;
+					}else{
+						paginacion = parseInt(paginacion, 10);
+						paginacion = paginacion + 1;
+					}
+					
+					if(NumPaginacion == 1){
+						var valor = 0;	
+					}else{
+						var valor = (NumPaginacion - 1) * 5;	
+					}
+						
+					var total = (NumPaginacion * 5) + 5;
+					doc = doc + '<p style="margin-left: 68px;"><em>Página '+NumPaginacion+' de '+paginacion+'</em></p>';
+					//for(var i=1; i<=paginacion; i++){
+						doc = doc + '<table style="margin-left: 68px;">';
+							for(var j=0; j<5; j++){
+								doc = doc + '<tr style="width: 100%">';
+									for(var x=0; x<1; x++){
+										if(x==0){
 											var par = 1;
 										}else{
-											var par = 0;
+											if(x % 2 == 0) {
+												var par = 1;
+											}else{
+												var par = 0;
+											}
 										}
-									}
-								
 									
-									doc = doc + '<td style="width: 1000px;">';
-										if(par == 0){
-											if(valor < total && valor < size){
-												doc= doc + '<div class="card text-black bg-light mb-3" style="cursor:pointer;">'
-												+'<div class="card-header" style="margin-top:5px;"><h5>'+NumGuia[valor]
-												+'</h5><p class="card-text" style="text-align:right;">Fecha de Venta: '+FVenta[valor]+'</p>'
-												+'<p class="card-text" style="text-align:right;">Se han vendido '+NumAnimales[valor]+' crias</p></div></div>';
+										
+										doc = doc + '<td style="width: 1000px;">';
+											if(par == 0){
+												if(valor < total && valor < size){
+													doc= doc + '<div class="card text-black bg-light mb-3" style="cursor:pointer;">'
+													+'<div class="card-header" style="margin-top:5px;"><h5>'+NumGuia[valor]
+													+'</h5><p class="card-text" style="text-align:right;">Fecha de Venta: '+FVenta[valor]+'</p>'
+													+'<p class="card-text" style="text-align:right;">Se han vendido '+NumAnimales[valor]+' crias</p></div></div>';
+												}
+											}else{
+												if(valor < total && valor < size){
+													doc= doc + '<div class="card text-white bg-secondary mb-3" style="cursor:pointer;">'
+													+'<div class="card-header" style="margin-top:5px;"><h5>'+NumGuia[valor]
+													+'</h5><p class="card-text" style="text-align:right;">Fecha de Venta: '+FVenta[valor]+'</p>'
+													+'<p class="card-text" style="text-align:right;">Se han vendido '+NumAnimales[valor]+' crias</p></div></div>';
+												}
 											}
-										}else{
-											if(valor < total && valor < size){
-												doc= doc + '<div class="card text-white bg-secondary mb-3" style="cursor:pointer;">'
-												+'<div class="card-header" style="margin-top:5px;"><h5>'+NumGuia[valor]
-												+'</h5><p class="card-text" style="text-align:right;">Fecha de Venta: '+FVenta[valor]+'</p>'
-												+'<p class="card-text" style="text-align:right;">Se han vendido '+NumAnimales[valor]+' crias</p></div></div>';
-											}
-										}
-										valor = valor + 1;
-									doc = doc + '</td>';
-								}
-							doc = doc + '</tr>';
-						}
-					doc = doc + '</table>';
-				//}
-				
-				txt.innerHTML = doc;
-				
-				txt2 = document.getElementById("paginacionMovil");
-				
-				doc2 = "";
-				
-				if(NumPaginacion == 1){
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+NumPaginacion+')">' + NumPaginacion + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion+1)+')">' + (NumPaginacion+1) + '</a></li>';
-				}else if (NumPaginacion == paginacion){
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion-1)+')">' + (NumPaginacion-1) + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+NumPaginacion+')">' + NumPaginacion + '</a></li>';
-				}else if(NumPaginacion == 2 || NumPaginacion == paginacion-1){
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion-1)+')">' + (NumPaginacion-1) + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+NumPaginacion+')">' + NumPaginacion + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion+1)+')">' + (NumPaginacion+1) + '</a></li>';
-				}else{
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion(1)">' + 1 + '</a></li>...';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion-1)+')">' + (NumPaginacion-1) + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+NumPaginacion+')">' + NumPaginacion + '</a></li>';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion+1)+')">' + (NumPaginacion+1) + '</a></li>...';
-					doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+paginacion+')">' + paginacion + '</a></li>';
+											valor = valor + 1;
+										doc = doc + '</td>';
+									}
+								doc = doc + '</tr>';
+							}
+						doc = doc + '</table>';
+					//}
+					
+					txt.innerHTML = doc;
+					
+					txt2 = document.getElementById("paginacionMovil");
+					
+					doc2 = "";
+					
+					if(NumPaginacion == 1){
+						doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+NumPaginacion+')">' + NumPaginacion + '</a></li>';
+						doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion+1)+')">' + (NumPaginacion+1) + '</a></li>';
+					}else if (NumPaginacion == paginacion){
+						doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion-1)+')">' + (NumPaginacion-1) + '</a></li>';
+						doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+NumPaginacion+')">' + NumPaginacion + '</a></li>';
+					}else if(NumPaginacion == 2 || NumPaginacion == paginacion-1){
+						doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion-1)+')">' + (NumPaginacion-1) + '</a></li>';
+						doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+NumPaginacion+')">' + NumPaginacion + '</a></li>';
+						doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion+1)+')">' + (NumPaginacion+1) + '</a></li>';
+					}else{
+						doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion(1)">' + 1 + '</a></li>...';
+						doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion-1)+')">' + (NumPaginacion-1) + '</a></li>';
+						doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+NumPaginacion+')">' + NumPaginacion + '</a></li>';
+						doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+(NumPaginacion+1)+')">' + (NumPaginacion+1) + '</a></li>...';
+						doc2 = doc2 + '<li class="page-item"><a class="page-link" onClick="paginacion('+paginacion+')">' + paginacion + '</a></li>';
+					}
+					
+					txt2.innerHTML = doc2;
 				}
-				
-				txt2.innerHTML = doc2;
 			},
 			error : function(jqXHR, exception) {
 				// mostrarPantallaError(url, jqXHR);

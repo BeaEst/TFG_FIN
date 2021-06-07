@@ -52,9 +52,11 @@
 					<li class="nav-item"><a class="nav-link active"
 						style="padding-left: 10px; width: 150px;"
 						href="./Pastos.html">Pastos</a></li>
+					<!-- 
 					<li class="nav-item"><a class="nav-link active"
 						style="padding-left: 10px; width: 150px;"
 						href="./Inspecciones.html">Inspecciones</a></li>
+					 -->
 					<li class="nav-item"><a class="nav-link active"
 						style="padding-left: 10px; width: 150px;"
 						href="./Incidencias.html">Incidencias</a></li>
@@ -201,6 +203,19 @@
 											onClick="DescargarSinBolo()"> <label
 											style="float: left;">&nbsp; Descargar sin bolo</label>
 									</div>
+									<div class="form-check">
+										<img src="./eliminar.png" title="Dar de baja Animales en bloque" height="25" size="25"
+											id="" style="float: left; cursor: pointer;"
+											onClick="MarcarBloqueVentaMuerta()"> <label
+											style="float: left;">&nbsp; Marcar Venta/Muerta Bloque Animales</label>
+									</div>
+									
+									<div class="form-check">
+										<img src="./anadir.png" title="Añadir Animales en bloque" height="25" size="25"
+											id="" style="float: left; cursor: pointer;"
+											onClick="AltaBloque()"> <label
+											style="float: left;">&nbsp; Alta de animales en Bloque</label>
+									</div>
 									<!--
 									<div class="form-check">
 										<img src="./subir-archivo.png" title="Importar Animales" height="25" size="25"
@@ -281,11 +296,13 @@
 							<img src="./pastos.png" width="30" height="30" style="display: inline;">
 						</a>
 					</li>
+					<!-- 
 					<li class="nav-item">
 						<a class="nav-link active" style="padding-left: 10px;" href="./Inspecciones.html">
 							<img src="./inspecciones.png" width="30" height="30" style="display: inline;">
 						</a>
 					</li>
+					 -->
 					<li class="nav-item">
 						<a class="nav-link active" style="padding-left: 10px;" href="./Incidencias.html">
 							<img src="./incidencias.png" width="30" height="30" style="display: inline;">
@@ -3027,4 +3044,81 @@ function ImportarAnimales2(){
 	    }
 	});
 }*/
+</script>
+
+<script>
+function MarcarBloqueVentaMuerta(){
+
+	var mensaje = "";
+	
+	mensaje = mensaje + "<p>¿Cuantos animales desea dar de baja? Pertenecientes a un mismo número de documento. Si se trata de documentos diferentes, realizar este procedimiento dos veces.</p>";
+	mensaje = mensaje + "<td><input id='NAnimales'></td>";
+	mensaje = mensaje + "</br>";
+	mensaje = mensaje + "<p>¿Muerte o Venta?</p>";	
+	mensaje = mensaje + "<td>Sexo:</td>";
+	mensaje = mensaje + "<td><select type='number' id='TipoBaja'>" +
+						"<option value='Muertas' selected>Muerte</option>" +
+						"<option value='Ventas'>Venta</option></select></td>";
+	
+	bootbox.confirm({
+		title:"IMPORTAR ARCHIVO", 
+		message: mensaje,
+		onEscape: true,
+		buttons: {
+	        confirm: {
+	            label: 'DAR DE BAJA',
+	            className: 'btn-success'
+	        }
+	    },
+	    callback: function (result) {
+	        if (result) {
+	        	var TipoBaja = document.getElementById("TipoBaja").value;
+            	var NAnimales = document.getElementById("NAnimales").value
+            	
+            	sessionStorage.setItem('TipoBaja', TipoBaja);
+				sessionStorage.setItem('NAnimalesBaja', NAnimales);
+				var url = "./BajaBloque.html";
+			    window.location.href = url;
+    
+            } else {
+                
+            }
+	    }
+	});
+}
+</script>
+
+<script>
+function AltaBloque(){
+
+	var mensaje = "";
+	
+	mensaje = mensaje + "<p>¿Cuantos animales desea dar de baja? Pertenecientes a un mismo número de documento. Si se trata de documentos diferentes, realizar este procedimiento dos veces.</p>";
+	mensaje = mensaje + "<td><input id='NAnimales'></td>";
+	mensaje = mensaje + "</br>";
+	
+	bootbox.confirm({
+		title:"IMPORTAR ARCHIVO", 
+		message: mensaje,
+		onEscape: true,
+		buttons: {
+	        confirm: {
+	            label: 'DAR DE BAJA',
+	            className: 'btn-success'
+	        }
+	    },
+	    callback: function (result) {
+	        if (result) {
+            	var NAnimales = document.getElementById("NAnimales").value
+            	
+				sessionStorage.setItem('NAnimalesBaja', NAnimales);
+				var url = "./AltaBloque.html";
+			    window.location.href = url;
+    
+            } else {
+                
+            }
+	    }
+	});
+}
 </script>

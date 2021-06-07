@@ -253,12 +253,16 @@ public class OperationsExportacionesPDFController {
 				break;
 			}
 		}
-		// Campo Balance en la hoja anterior
-		contents.beginText();
-		contents.newLineAtOffset(305, 442);
-		contents.setFont(font, 12);
-		contents.showText(""+balance_hoja_anterior+"");
-		contents.endText();
+		
+		if(balance_hoja_anterior != null) {
+			// Campo Balance en la hoja anterior
+			contents.beginText();
+			contents.newLineAtOffset(305, 442);
+			contents.setFont(font, 12);
+			contents.showText(""+balance_hoja_anterior+"");
+			contents.endText();
+		}
+		
 		
 		for (int i = doc; i < total; i++) {
 
@@ -352,17 +356,17 @@ public class OperationsExportacionesPDFController {
 		return result;
 	}
 
-	@RequestMapping(value = "/exportacionAltasyBajasDescarga", method = RequestMethod.GET)
+	@RequestMapping(value = "/exportacionAltasyBajasDescarga/{i}", method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity<byte[]> ExportacionAltasyBajasDescarga(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+			HttpServletResponse response, @PathVariable int i) throws ServletException, IOException {
 		System.out.println("INICIO descarga altas y bajas de animales");
 
 		ResponseEntity<byte[]> result = null;
 		HttpHeaders header = new HttpHeaders();
 		header.setContentType(new MediaType("application", "x-download"));
 		String date = new SimpleDateFormat().format(new Date());
-		header.set("Content-Disposition", "attachment; filename=Altas_Bajas_" + date + ".pdf");
+		header.set("Content-Disposition", "attachment; filename=Altas_Bajas_" + i + ".pdf");
 
 		// Recoger los bytes del archivo
 		File file = new File("./src/main/resources/static/HojaAltasYBajas2.pdf");
@@ -780,17 +784,17 @@ public class OperationsExportacionesPDFController {
 		return result;
 	}
 
-	@RequestMapping(value = "/exportacionRegistroLecheDescarga", method = RequestMethod.GET)
+	@RequestMapping(value = "/exportacionRegistroLecheDescarga/{i}", method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity<byte[]> ExportacionRegistrosLecheDescarga(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+			HttpServletResponse response, @PathVariable int i) throws ServletException, IOException {
 		System.out.println("INICIO descarga registros de leche");
 
 		ResponseEntity<byte[]> result = null;
 		HttpHeaders header = new HttpHeaders();
 		header.setContentType(new MediaType("application", "x-download"));
 		String date = new SimpleDateFormat().format(new Date());
-		header.set("Content-Disposition", "attachment; filename=Registros_Leche_" + date + ".pdf");
+		header.set("Content-Disposition", "attachment; filename=Registros_Leche_" + i + ".pdf");
 
 		// Recoger los bytes del archivo
 		File file = new File("./src/main/resources/static/HojaRegistrosLeche2.pdf");
@@ -1152,17 +1156,17 @@ public class OperationsExportacionesPDFController {
 		return result;
 	}
 
-	@RequestMapping(value = "/ExportacionAlimentosSuministradosDescarga", method = RequestMethod.GET)
+	@RequestMapping(value = "/ExportacionAlimentosSuministradosDescarga/{i}", method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity<byte[]> ExportacionAlimentosSuministradosDescarga(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+			HttpServletResponse response, @PathVariable int i) throws ServletException, IOException {
 		System.out.println("INICIO descarga registros de leche");
 
 		ResponseEntity<byte[]> result = null;
 		HttpHeaders header = new HttpHeaders();
 		header.setContentType(new MediaType("application", "x-download"));
 		String date = new SimpleDateFormat().format(new Date());
-		header.set("Content-Disposition", "attachment; filename=Alimentos_Suministrados_" + date + ".pdf");
+		header.set("Content-Disposition", "attachment; filename=Alimentos_Suministrados_" + i + ".pdf");
 
 		// Recoger los bytes del archivo
 		File file = new File("./src/main/resources/static/HojaAlimentosSuministrados2.pdf");
@@ -1513,17 +1517,17 @@ public class OperationsExportacionesPDFController {
 		return result;
 	}
 
-	@RequestMapping(value = "/ExportacionPiensosMedicamentososDescarga", method = RequestMethod.GET)
+	@RequestMapping(value = "/ExportacionPiensosMedicamentososDescarga/{i}", method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity<byte[]> ExportacionPiensosMedicamentososDescarga(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+			HttpServletResponse response, @PathVariable int i) throws ServletException, IOException {
 		System.out.println("INICIO descarga registros de leche");
 
 		ResponseEntity<byte[]> result = null;
 		HttpHeaders header = new HttpHeaders();
 		header.setContentType(new MediaType("application", "x-download"));
 		String date = new SimpleDateFormat().format(new Date());
-		header.set("Content-Disposition", "attachment; filename=Piensos_Medicamentosos_" + date + ".pdf");
+		header.set("Content-Disposition", "attachment; filename=Piensos_Medicamentosos_" + i + ".pdf");
 
 		// Recoger los bytes del archivo
 		File file = new File("./src/main/resources/static/HojaPiensosMedicamentosos2.pdf");
@@ -1874,17 +1878,17 @@ public class OperationsExportacionesPDFController {
 		return result;
 	}
 
-	@RequestMapping(value = "/ExportacionMedicamentosDescarga", method = RequestMethod.GET)
+	@RequestMapping(value = "/ExportacionMedicamentosDescarga/{i}", method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity<byte[]> ExportacionMedicamentosDescarga(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+			HttpServletResponse response, @PathVariable int i) throws ServletException, IOException {
 		System.out.println("INICIO descarga registros de medicamentos");
 
 		ResponseEntity<byte[]> result = null;
 		HttpHeaders header = new HttpHeaders();
 		header.setContentType(new MediaType("application", "x-download"));
 		String date = new SimpleDateFormat().format(new Date());
-		header.set("Content-Disposition", "attachment; filename=Medicamentos_" + date + ".pdf");
+		header.set("Content-Disposition", "attachment; filename=Medicamentos_" + i + ".pdf");
 
 		// Recoger los bytes del archivo
 		File file = new File("./src/main/resources/static/HojaMedicamentos2.pdf");
@@ -2239,17 +2243,17 @@ public class OperationsExportacionesPDFController {
 		return result;
 	}
 
-	@RequestMapping(value = "/exportacionEnfermedadesDescarga", method = RequestMethod.GET)
+	@RequestMapping(value = "/exportacionEnfermedadesDescarga/{i}", method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity<byte[]> ExportacionEnfermedadesDescarga(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+			HttpServletResponse response, @PathVariable int i) throws ServletException, IOException {
 		System.out.println("INICIO descarga enfermedades");
 
 		ResponseEntity<byte[]> result = null;
 		HttpHeaders header = new HttpHeaders();
 		header.setContentType(new MediaType("application", "x-download"));
 		String date = new SimpleDateFormat().format(new Date());
-		header.set("Content-Disposition", "attachment; filename=Enfermedades_" + date + ".pdf");
+		header.set("Content-Disposition", "attachment; filename=Enfermedades_" + i + ".pdf");
 
 		// Recoger los bytes del archivo
 		File file = new File("./src/main/resources/static/HojaEnfermedades2.pdf");
@@ -2621,17 +2625,17 @@ public class OperationsExportacionesPDFController {
 		return result;
 	}
 
-	@RequestMapping(value = "/exportacionPastosDescarga", method = RequestMethod.GET)
+	@RequestMapping(value = "/exportacionPastosDescarga/{i}", method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity<byte[]> ExportacionPastosDescarga(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+			HttpServletResponse response, @PathVariable int i) throws ServletException, IOException {
 		System.out.println("INICIO descarga pastos");
 
 		ResponseEntity<byte[]> result = null;
 		HttpHeaders header = new HttpHeaders();
 		header.setContentType(new MediaType("application", "x-download"));
 		String date = new SimpleDateFormat().format(new Date());
-		header.set("Content-Disposition", "attachment; filename=Pastos_" + date + ".pdf");
+		header.set("Content-Disposition", "attachment; filename=Pastos_" + i + ".pdf");
 
 		// Recoger los bytes del archivo
 		File file = new File("./src/main/resources/static/HojaPastos2.pdf");
@@ -2979,17 +2983,17 @@ public class OperationsExportacionesPDFController {
 		return result;
 	}
 
-	@RequestMapping(value = "/exportacionInspeccionesDescarga", method = RequestMethod.GET)
+	@RequestMapping(value = "/exportacionInspeccionesDescarga/{i}", method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity<byte[]> ExportacioninspeccionesDescarga(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+			HttpServletResponse response, @PathVariable int i) throws ServletException, IOException {
 		System.out.println("INICIO descarga inspecciones");
 
 		ResponseEntity<byte[]> result = null;
 		HttpHeaders header = new HttpHeaders();
 		header.setContentType(new MediaType("application", "x-download"));
 		String date = new SimpleDateFormat().format(new Date());
-		header.set("Content-Disposition", "attachment; filename=Inspecciones_" + date + ".pdf");
+		header.set("Content-Disposition", "attachment; filename=Inspecciones_" + i + ".pdf");
 
 		// Recoger los bytes del archivo
 		File file = new File("./src/main/resources/static/HojaInspecciones2.pdf");
@@ -3345,17 +3349,17 @@ public class OperationsExportacionesPDFController {
 		return result;
 	}
 
-	@RequestMapping(value = "/exportacionIncidenciasDescarga", method = RequestMethod.GET)
+	@RequestMapping(value = "/exportacionIncidenciasDescarga/{i}", method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity<byte[]> ExportacionIncidenciasDescarga(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+			HttpServletResponse response, @PathVariable int i) throws ServletException, IOException {
 		System.out.println("INICIO descarga incidencias");
 
 		ResponseEntity<byte[]> result = null;
 		HttpHeaders header = new HttpHeaders();
 		header.setContentType(new MediaType("application", "x-download"));
 		String date = new SimpleDateFormat().format(new Date());
-		header.set("Content-Disposition", "attachment; filename=Incidencias_" + date + ".pdf");
+		header.set("Content-Disposition", "attachment; filename=Incidencias_" + i + ".pdf");
 
 		// Recoger los bytes del archivo
 		File file = new File("./src/main/resources/static/HojaIncidencias2.pdf");

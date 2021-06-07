@@ -24,6 +24,25 @@ public class Animales {
 	public String RefGuiaCria;
 	public Integer NumAnimalesCria;
 	
+	public Integer limite;
+	public Integer total;
+	
+	public Integer getTotal() {
+		return total;
+	}
+
+	public void setTotal(Integer total) {
+		this.total = total;
+	}
+
+	public Integer getLimite() {
+		return limite;
+	}
+
+	public void setLimite(Integer limite) {
+		this.limite = limite;
+	}
+
 	public String getNumIdentificacion() {
 		return NumIdentificacion;
 	}

@@ -1,0 +1,697 @@
+<!doctype html>
+<html lang="en">
+<head>
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Bootstrap CSS -->
+<!--
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <script type="text/javascript" src="../js/jquery-1.11.0.min.js"></script>
+    -->
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
+	crossorigin="anonymous">
+
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="../js/bootbox.min.js"></script>
+
+<title>Animales</title>
+</head>
+<body>
+
+	<div id="NoMovil" style="display: none;">
+		<div
+			style="width: 150px; float: left; position: absolute; top: 50px; bottom: 0; background-color: #212529;">
+			<nav class="navbar navbar-dark bg-dark">
+				<ul class="navbar-nav">
+					<li class="nav-item"><a class="nav-link active"
+						style="padding-left: 10px; background-color: #e3e4e5; width: 150px; color: black"
+						href="./Animales.html"><b>ANIMALES</b></a></li>
+					<li class="nav-item"><a class="nav-link active"
+						style="padding-left: 10px; width: 150px;"
+						href="./Crias.html">Venta crías</a></li>
+					<li class="nav-item"><a class="nav-link active"
+						style="padding-left: 10px; width: 150px;"
+						href="./Leche.html">Leche</a></li>
+					<li class="nav-item"><a class="nav-link active"
+						style="padding-left: 10px; width: 150px;"
+						href="./AlimentosSuministrados.html">Alimentos Suministrados</a></li>
+					<li class="nav-item"><a class="nav-link active"
+						style="padding-left: 10px; width: 150px;"
+						href="./PiensosMedicamentosos.html">Piensos Medicamentosos</a></li>
+					<li class="nav-item"><a class="nav-link active"
+						style="padding-left: 10px; width: 150px;"
+						href="./Medicamentos.html">Medicamentos</a></li>
+					<li class="nav-item"><a class="nav-link active"
+						style="padding-left: 10px; width: 150px;"
+						href="./Enfermedades.html">Enfermedades</a></li>
+					<li class="nav-item"><a class="nav-link active"
+						style="padding-left: 10px; width: 150px;"
+						href="./Pastos.html">Pastos</a></li>
+					<li class="nav-item"><a class="nav-link active"
+						style="padding-left: 10px; width: 150px;"
+						href="./Inspecciones.html">Inspecciones</a></li>
+					<li class="nav-item"><a class="nav-link active"
+						style="padding-left: 10px; width: 150px;"
+						href="./Incidencias.html">Incidencias</a></li>
+					<li class="nav-item"><a class="nav-link active"
+						style="padding-left: 10px; width: 150px;"
+						href="./Exportaciones.html">Exportaciones</a></li>
+				</ul>
+			</nav>
+		</div>
+
+		<div>
+		<nav class="navbar navbar-dark bg-dark justify-content-end">
+			<div class="container-fluid" style="float:left;">
+				<a class="navbar-brand" href="./Inicio.html"><img src="./icono.png" width="10%" height="10%" style="display:inline; text-align:center;"></a>
+			
+				<div class="dropdown">
+					<a class="nav-link dropdown-toggle" href="#"
+						id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown"
+						aria-expanded="false"> <b><script>document.write(sessionStorage.getItem("usuario_activo"));</script></b>
+					</a>
+					<ul class="dropdown-menu dropdown-menu-end"
+						aria-labelledby="navbarDropdownMenuLink">
+						<li><a class="dropdown-item" onclick="VerPerfil()">Ver
+								Perfil</a></li>
+						<li><a class="dropdown-item" onclick="CerrarSesion()">Cerrar
+								Sesión</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</div>
+	
+		<h1 style="text-align: center;">BAJA EN BLOQUE - <script>document.write(sessionStorage.getItem("TipoBaja"));</script></h1>
+
+	
+
+		<div id="card"></div>
+
+		<nav aria-label="Page navigation example">
+			<ul class="pagination justify-content-center" id="paginacion">
+				<!-- 
+		    <li class="page-item"><a class="page-link" href="#">1</a></li>
+		    <li class="page-item"><a class="page-link" href="#">2</a></li>
+		    <li class="page-item"><a class="page-link" href="#">3</a></li>
+		     -->
+			</ul>
+		</nav>
+	</div>
+
+	<div id="Movil" style="display: none;">
+		<div
+			style="width: 60px; float: left; position: fixed; top: 0px; bottom: 0; background-color: #212529; padding-top:50px">
+			<nav class="navbar navbar-dark bg-dark">
+				<ul class="navbar-nav">
+					<li class="nav-item">
+						<a class="nav-link active" style="padding-left: 10px; background-color: #e3e4e5; width: 60px; color: black" href="./Animales.html">
+							<img src="./ovejaN.png" width="20" height="20" style="display: inline;">
+							<img src="./cabraN.png" width="20" height="20"style="display: inline;">
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link active" style="padding-left: 10px;" href="./Crias.html"> 
+							<img src="./camion.png" width="30" height="30" style="display: inline;">
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link active" style="padding-left: 10px;" href="./Leche.html"> 
+							<img src="./leche.png" width="30" height="30" style="display: inline;">
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link active" style="padding-left: 10px;" href="./AlimentosSuministrados.html"> 
+							<img src="./silo.png" width="30" height="30" style="display: inline;">
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link active" style="padding-left: 10px;" href="./PiensosMedicamentosos.html">
+							<img src="./silo.png" width="25" height="25" style="display: inline;">
+							<img src="./pildora.png" width="17" height="17" style="display: inline;">
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link active" style="padding-left: 10px;" href="./Medicamentos.html">
+							<img src="./medicamentos.png" width="25" height="25" style="display: inline;">
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link active" style="padding-left: 10px;" href="./Enfermedades.html">
+							<img src="./virus.png" width="30" height="30" style="display: inline;">
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link active" style="padding-left: 10px;" href="./Pastos.html">
+							<img src="./pastos.png" width="30" height="30" style="display: inline;">
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link active" style="padding-left: 10px;" href="./Inspecciones.html">
+							<img src="./inspecciones.png" width="30" height="30" style="display: inline;">
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link active" style="padding-left: 10px;" href="./Incidencias.html">
+							<img src="./incidencias.png" width="30" height="30" style="display: inline;">
+						</a>
+					</li>
+					<li class="nav-item">
+						 <a class="nav-link active" style="padding-left: 10px;" href="./Exportaciones.html"> 
+							<img src="./exportaciones.png" width="30" height="30" style="display: inline;">
+						</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+
+		<div>
+		<nav class="navbar navbar-dark bg-dark justify-content-end">
+			<div class="container-fluid" style="float:left;">
+				<a class="navbar-brand" href="./Inicio.html" style="width:50%"><img src="./icono.png" width="40%" height="40%" style="display:inline; text-align:center;"></a>
+			
+				<div class="dropdown">
+					<a class="nav-link dropdown-toggle" href="#"
+						id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown"
+						aria-expanded="false"> <b><script>document.write(sessionStorage.getItem("usuario_activo"));</script></b>
+					</a>
+					<ul class="dropdown-menu dropdown-menu-end"
+						aria-labelledby="navbarDropdownMenuLink">
+						<li><a class="dropdown-item" onclick="VerPerfil()">Ver
+								Perfil</a></li>
+						<li><a class="dropdown-item" onclick="CerrarSesion()">Cerrar
+								Sesión</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</div>
+
+		<h1 style="text-align: center;margin-left: 60px">ANIMALES</h1>
+
+		<nav class="navbar navbar-dark bg-dark" style="margin-left: 65px;">
+			<div class="container-fluid">
+				<button class="navbar-toggler" type="button"
+					data-bs-toggle="collapse"
+					data-bs-target="#navbarToggleExternalContent"
+					aria-controls="navbarToggleExternalContent" aria-expanded="false"
+					aria-label="Toggle navigation">
+					<span><img src="./desplegable.png" width="10" height="10"></span>
+				</button>
+			</div>
+		</nav>
+		<div class="collapse" id="navbarToggleExternalContent"
+			style="margin-left: 65px; height: 10px;">
+			<div style="background-color: #A9D0F5">
+				<div class="card">
+					<div class="card-body" style="background-color: #A9D0F5">
+						<table>
+							<tr>
+								<div>
+										<label style="float: left;">Año de nacimiento:</label> <select
+											class="form-select" aria-label="Default select example"
+											id="FiltroAnoNacMovil" style="width: 30%; float: left;">
+											<option selected>-----</option>
+											<option value="2021">2021</option>
+											<option value="2022">2022</option>
+											<option value="2023">2023</option>
+										</select>
+									</div> <br> <br>
+
+									<button type="button" class="btn btn-outline-light"
+										onClick="BuscarFiltro2()">Buscar</button>
+										
+									<hr>
+									<div>
+										<label style="margin-left: 1%; float: left;">Buscar
+											por referencia:</label> <input type="number" class="form-control"
+											style="width: 50%;" id="FiltroNumRefMovil">
+									</div>
+
+									<button type="button" class="btn btn-outline-light"
+										onClick="BuscarFiltro3()">Buscar</button>
+
+									<hr>
+									
+									<div class="form-check">
+										<input class="form-check-input" type="checkbox" value=""
+											id="CheckMuertasMovil" style="float: left;"> <label
+											class="form-check-label" for="flexCheckIndeterminate">Ovejas
+											muertas</label>
+									</div>
+
+									<div class="form-check">
+										<input class="form-check-input" type="checkbox" value=""
+											id="CheckVendidasMovil"> <label class="form-check-label"
+											for="flexCheckIndeterminate">Ovejas vendidas</label>
+									</div>
+
+									<div>
+										<label style="float: left;">Año:</label> <select
+											name="FiltroAnoMVMovil" class="form-select"
+											aria-label="Default select example" id="FiltroAnoMVMovil"
+											style="width: 27%; float: left;">
+											<option selected>-----</option>
+											<option value="2021">2021</option>
+											<option value="2022">2022</option>
+											<option value="2023">2023</option>
+										</select>
+									</div>
+
+									
+									
+									<button type="button" class="btn btn-outline-light"
+										onClick="BuscarFiltro4()">Buscar</button>
+										
+									<hr>
+
+									<div class="form-check">
+										<img src="./anadir.png" title="Añadir animal" height="25"
+											size="25" id="" style="float: left; cursor: pointer;"
+											onClick="AnadirAnimal()"> <label style="float: left;">&nbsp;
+											Añadir animal</label>
+									</div>
+									<div class="form-check">
+										<img src="./excel.png" title="Sin crotal" height="25"
+											size="25" id="" style="float: left; cursor: pointer;"
+											onClick="DescargarSinCrotal()"> <label
+											style="float: left;">&nbsp; Descargar sin crotal</label>
+									</div>
+									<div class="form-check">
+										<img src="./excel.png" title="Sin bolo" height="25" size="25"
+											id="" style="float: left; cursor: pointer;"
+											onClick="DescargarSinBolo()"> <label
+											style="float: left;">&nbsp; Descargar sin bolo</label>
+									</div>
+
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		<br>
+
+		<div id="cardMovil"></div>
+
+		<nav aria-label="Page navigation example">
+			<ul class="pagination justify-content-center" id="paginacionMovil" style="margin-left:60px">
+				<!-- 
+		    <li class="page-item"><a class="page-link" href="#">1</a></li>
+		    <li class="page-item"><a class="page-link" href="#">2</a></li>
+		    <li class="page-item"><a class="page-link" href="#">3</a></li>
+		     -->
+			</ul>
+		</nav>
+
+
+	</div>
+	<!-- Optional JavaScript; choose one of the two! -->
+
+	<!-- Option 1: Bootstrap Bundle with Popper -->
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+		crossorigin="anonymous"></script>
+
+	<!-- Option 2: Separate Popper and Bootstrap JS -->
+	<!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js" integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>
+    -->
+</body>
+</html>
+
+<script>
+$(function() {
+
+	var usuario = sessionStorage.getItem("usuario_activo");
+	
+	if(usuario == null){
+		sessionStorage.clear();
+		var url = "./IniciarSesion.html";
+	    window.location.href = url;
+	}else{
+	
+  		//Comprobar si es telefono u ordenador
+	
+	    try{ 
+	        document.createEvent("TouchEvent"); 
+	        document.getElementById('Movil').style.display='block';
+	        sessionStorage.setItem('Movil', "true");
+	        var parar;
+	        parar = 1;
+	        return true; 
+	    }
+	    catch(e){ 
+	    	document.getElementById('NoMovil').style.display='block';
+	    	sessionStorage.setItem('Movil', "false");
+	        return false;
+	    }
+	}
+  
+});
+</script>
+
+<script>
+function CerrarSesion(){
+	sessionStorage.clear();
+	var url = "./IniciarSesion.html";
+    window.location.href = url;
+}
+</script>
+
+<script>
+function VerPerfil(){
+	//Primero hay que sacar los datos de base de datos de el usuario que se encuentra conectado
+	var usuario = sessionStorage.getItem("usuario_activo");
+	
+	var usuarioDatos= {
+		'usuario' : usuario,
+	};
+
+	var usuarioLoginJSON = JSON.stringify(usuarioDatos);
+
+	var url = './sacardatos';
+
+	$.ajax({
+		type : 'post',
+		url : url,
+		contentType : 'application/json',
+		dataType : 'json',
+		data : usuarioLoginJSON,
+		success : function(data, textStatus, jqXHR) {
+			//Guardar las variables globales para mostrarlas en los input de Ver Perfil
+			sessionStorage.setItem('Nombre', data.Nombre);
+			sessionStorage.setItem('PApellido', data.PApellido);
+			sessionStorage.setItem('SApellido', data.SApellido);
+			sessionStorage.setItem('DNINIF', data.DNINIF);
+			sessionStorage.setItem('CElectronico', data.CElectronico);
+			sessionStorage.setItem('NumExplotacion', data.NumExplotacion);
+			
+			//Luego redirigir a la página
+			var url = "./VerPerfil.html";
+		    window.location.href = url;
+		},
+		error : function(jqXHR, exception) {
+			// mostrarPantallaError(url, jqXHR);
+		},
+		statuscode : {
+			404 : function() {
+				//mostrarPantallaError(url);
+			}
+		}
+	});
+	
+	
+}
+</script>
+
+<script>
+$(function() {
+	
+	var i, j;
+	var NAnimales = sessionStorage.getItem("NAnimalesBaja");
+	var TipoBaja = sessionStorage.getItem("TipoBaja");
+	
+	txt = document.getElementById("card");
+	var doc = "";
+	
+	doc = doc + '<h3 style="margin-left: 155px;">RECUERDA, es necesario rellenar todos los campos "Numero Identificacion"</h3>';
+	
+	doc = doc + '<table style="margin-left: 155px;width: 500px; a" class="table">';
+	doc = doc + '<thead>';
+	    doc = doc + '<tr style="width: 100%">';
+	      doc = doc + '<th scope="col" style="width: 500px;">#</th>';
+	      doc = doc + '<th scope="col" style="width: 500px;">Numero Identificacion</th>';
+	    doc = doc + '</tr>';
+  	doc = doc + '</thead>';
+  	
+	for(j=0; j<NAnimales; j++){
+		doc = doc + '<tr style="width: 100%">';
+			doc = doc + '<th scope="row">'+(j+1)+'</th>';
+			doc = doc + '<td style="width: 500px;"><input id="NumIdentificacion'+j+'p"></td>';
+		doc = doc + '</tr>';
+	}
+	
+	doc = doc + '</table>';
+	
+	//Si es una venta poner un input de Destino
+	doc = doc + '<table style="margin-left: 155px;">';
+		doc = doc + '<tr>';
+			doc = doc + '<td>';
+				doc = doc + '<label style="align:center; margin-left: 155px">Numero de Documento:</label>';
+				doc = doc + '<input type="text" style="align:center; margin-left: 155px; width: 200px" class="form-control" aria-label="Text input with segmented dropdown button" id="NDocumento">';
+			doc = doc + '</td>';
+				
+			doc = doc + '<td>';
+				doc = doc + '<label style="align:center; margin-left: 155px">Fecha Baja:</label>';
+				doc = doc + '<input type="date" style="align:center; margin-left: 155px; width: 200px" class="form-control" aria-label="Text input with segmented dropdown button" id="FechaBaja">';
+			doc = doc + '</td>';
+	
+			doc = doc + '<td>';
+				if(TipoBaja == "Ventas"){
+					doc = doc + '<label style="align:center; margin-left: 155px">Destino:</label>';
+				    doc = doc + '<input type="text" style="align:center; margin-left: 155px; width: 200px" class="form-control" aria-label="Text input with segmented dropdown button" id="Destino">';
+				}else{
+					doc = doc + '<label style="align:center; margin-left: 155px">Destino:</label>';
+				    doc = doc + '<input type="text" style="align:center; margin-left: 155px; width: 200px" class="form-control" aria-label="Text input with segmented dropdown button" id="Destino" disabled>';
+				}
+			doc = doc + '</td>';
+			
+			doc = doc + '<td>';
+				doc = doc + '<button type="button" class="btn btn-primary btn-sm" onClick="GuardarCambios()">Guardar Cambios</button>';
+			doc = doc + '</td>';
+		doc = doc + '</tr>';
+	doc = doc + '</table>';
+	
+	txt.innerHTML = doc;
+	
+	
+	
+
+});
+</script>
+
+<script>
+function GuardarCambios(){
+	var NDocumento = document.getElementById("NDocumento").value;
+	var FechaBaja = document.getElementById("FechaBaja").value;
+	var Destino = document.getElementById("Destino").value;
+	
+	var NAnimales = sessionStorage.getItem("NAnimalesBaja");
+	var TipoBaja = sessionStorage.getItem("TipoBaja");
+	
+	let NumIdentificaciones = new Array(NAnimales);
+	
+	var i;
+	for(i=0; i<NAnimales; i++){
+		var total = "NumIdentificacion" + i + "p";
+		if(document.getElementById(total).value == ""){
+			//No se hace nada, es necesario rellenar todos los identificativos
+			i = NAnimales;
+			NumIdentificaciones = []
+		}else{
+			NumIdentificaciones[i] = document.getElementById(total).value;
+		}
+	}
+	
+	if(NumIdentificaciones == []){
+	
+	}else{
+		if(NAnimales != ""){
+			if(FechaBaja != ""){
+				if(Destino != "" && TipoBaja == "Ventas"){
+					MarcarVendidas(NumIdentificaciones, FechaBaja, Destino, NAnimales, NDocumento);
+				}else if(TipoBaja == "Muertas"){
+					MarcarMuertas(NumIdentificaciones, FechaBaja, NAnimales, NDocumento);
+				}
+			}
+		}
+	}
+}
+</script>
+
+<script>
+function MarcarVendidas(NumIdentificaciones, FechaBaja, Destino, NAnimales, NDocumento){
+
+	var i;
+	
+	var recuento = 0;
+	
+	for(i=0; i<NAnimales; i++){
+		var numexplotacion = sessionStorage.getItem("NumeroExplotacion");
+	
+		var Num = '72408000' + NumIdentificaciones[i];
+		
+		var datosOvejaVenta= {
+			'NumIdentificacion' : Num,
+			'FechaVenta': FechaBaja,
+			'NDocumento': NDocumento,
+			'NumExplotacion': numexplotacion,
+			'ProcDestino' : Destino,
+			'limite' : i,
+			'total' : NAnimales,
+		};
+		
+	
+	
+		var datosOvejaVentaJSON = JSON.stringify(datosOvejaVenta);
+	
+		var url = './marcarventabloque';
+	
+		$.ajax({
+			type : 'post',
+			url : url,
+			contentType : 'application/json',
+			dataType : 'json',
+			data : datosOvejaVentaJSON,
+			success : function(data, textStatus, jqXHR) {
+				var resultado = data.QueryOk;
+				
+				
+				if(resultado == 'correcto'){
+				
+					recuento = recuento + 1;
+					
+					if(recuento == parseInt(NAnimales)){
+						bootbox.confirm({
+							title: 'BAJA EN BLOQUE', 
+							message: 'Se han dado de baja los animales indicados',
+							onEscape: true,
+							buttons: {
+						        confirm: {
+						            label: 'Aceptar',
+						            className: 'btn-success'
+						        }
+						    },
+						    callback: function (result) {
+						        var url = "./Animales.html";
+			    				window.location.href = url;
+						    }
+						});
+					}
+				}else{
+					bootbox.confirm({
+						title: 'BAJA EN BLOQUE', 
+						message: 'ERROR al marcar los animales como Ventas.',
+						onEscape: true,
+						buttons: {
+					        confirm: {
+					            label: 'Aceptar',
+					            className: 'btn-danger'
+					        }
+					    },
+					    callback: function (result) {
+					        
+					    }
+					});
+				}
+			},
+			error : function(jqXHR, exception) {
+				// mostrarPantallaError(url, jqXHR);
+			},
+			statuscode : {
+				404 : function() {
+					//mostrarPantallaError(url);
+				}
+			}
+		});
+	}
+	
+	
+}
+</script>
+
+<script>
+function MarcarMuertas(NumIdentificaciones, FechaBaja, NAnimales, NDocumento){
+
+	var i;
+	
+	var recuento = 0;
+	
+	for(i=0; i<NAnimales; i++){
+		var numexplotacion = sessionStorage.getItem("NumeroExplotacion");
+	
+		var Num = '72408000' + NumIdentificaciones[i];
+		
+		var datosOvejaVenta= {
+			'NumIdentificacion' : Num,
+			'FechaVenta': FechaBaja,
+			'NDocumento': NDocumento,
+			'NumExplotacion': numexplotacion,
+			'limite' : i,
+			'total' : NAnimales,
+		};
+
+		var datosOvejaVentaJSON = JSON.stringify(datosOvejaVenta);
+	
+		var url = './marcarmuertabloque';
+	
+		$.ajax({
+			type : 'post',
+			url : url,
+			contentType : 'application/json',
+			dataType : 'json',
+			data : datosOvejaVentaJSON,
+			success : function(data, textStatus, jqXHR) {
+				var resultado = data.QueryOk;
+				
+				
+				if(resultado == 'correcto'){
+				
+					recuento = recuento + 1;
+					
+					if(recuento == parseInt(NAnimales)){
+						bootbox.confirm({
+							title: 'BAJA EN BLOQUE', 
+							message: 'Se han dado de baja los animales indicados',
+							onEscape: true,
+							buttons: {
+						        confirm: {
+						            label: 'Aceptar',
+						            className: 'btn-success'
+						        }
+						    },
+						    callback: function (result) {
+						        var url = "./Animales.html";
+			    				window.location.href = url;
+						    }
+						});
+					}
+				}else{
+					bootbox.confirm({
+						title: 'BAJA EN BLOQUE', 
+						message: 'ERROR al marcar los animales como Muertas.',
+						onEscape: true,
+						buttons: {
+					        confirm: {
+					            label: 'Aceptar',
+					            className: 'btn-danger'
+					        }
+					    },
+					    callback: function (result) {
+					        
+					    }
+					});
+				}
+			},
+			error : function(jqXHR, exception) {
+				// mostrarPantallaError(url, jqXHR);
+			},
+			statuscode : {
+				404 : function() {
+					//mostrarPantallaError(url);
+				}
+			}
+		});
+	}
+	
+	
+}
+</script>
