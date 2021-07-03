@@ -77,20 +77,22 @@ public class OperationsIncidencias {
 							String dato2;
 							String dato3;
 							String dato4;
+							String dato5;
+							String dato6;
 							
 							dato1 = cont_act.getString("Fecha");
 							dato2 = cont_act.getString("Descripcion");
 							dato3 = cont_act.getString("NAnimales");
 							dato4 = cont_act.getString("CodIdentAnt");
-							dato3 = cont_act.getString("CodIdentNew");
-							dato4 = cont_act.getString("NDocumento");
+							dato5 = cont_act.getString("CodIdentNew");
+							dato6 = cont_act.getString("NDocumento");
 							
 							Fecha.add(dato1);
 							Descripcion.add(dato2);
 							NAnimales.add(dato3);
 							CodIdentAnt.add(dato4);
-							CodIdentNew.add(dato3);
-							NDocumento.add(dato4);
+							CodIdentNew.add(dato5);
+							NDocumento.add(dato6);
 						}
 
 						result.put("Fecha", Fecha);

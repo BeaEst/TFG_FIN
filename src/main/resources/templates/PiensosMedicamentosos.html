@@ -89,7 +89,7 @@
 		</nav>
 	</div>
 
-		<h1 style="text-align: center;">ALIMENTOS SUMINISTRADOS</h1>
+		<h1 style="text-align: center;">PIENSOS MEDICAMENTOSOS</h1>
 
 		<nav class="navbar navbar-dark bg-dark" style="margin-left: 155px">
 			<div class="container-fluid">
@@ -282,8 +282,8 @@
 									<div class="form-check">
 										<img src="./anadir.png" title="Añadir alimento" height="25"
 											size="25" id="" style="float: left; cursor: pointer;"
-											onClick="AnadirAlimentoSum()"> <label style="float: left;">&nbsp;
-											Añadir alimento</label>
+											onClick="AnadirPiensoMedicamentoso()"> <label style="float: left;">&nbsp;
+											Añadir pienso medicamentoso</label>
 									</div>
 
 							</tr>
@@ -793,7 +793,7 @@ function AnadirPiensoMedicamentoso(){
 	mensaje = mensaje + "</table>";
 	
 	bootbox.confirm({
-		title:"Nueva venta de leche", 
+		title:"Nuevo pienso medicamentoso", 
 		message: mensaje,
 		onEscape: true,
 		buttons: {

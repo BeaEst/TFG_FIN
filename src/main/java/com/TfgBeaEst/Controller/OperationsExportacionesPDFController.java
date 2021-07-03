@@ -2203,8 +2203,8 @@ public class OperationsExportacionesPDFController {
 
 				contents.beginText();
 				contents.newLineAtOffset(120, y);
-				contents.setFont(font, 12);
-				contents.showText("" + Diagnostico.get(i) + "");
+				contents.setFont(font, 9);
+				contents.showText("" + Diagnostico.get(i) + " / " + DocAsociado.get(i));
 				contents.endText();
 
 				contents.beginText();
@@ -2585,7 +2585,7 @@ public class OperationsExportacionesPDFController {
 			
 				contents.beginText();
 				contents.newLineAtOffset(50, y);
-				contents.setFont(font, 12);
+				contents.setFont(font, 9);
 				contents.showText("" + CodigoPasto.get(i) + "");
 				contents.endText();
 

@@ -435,8 +435,8 @@ $(function() {
   	
 	for(j=0; j<NAnimales; j++){
 		doc = doc + '<tr style="width: 100%">';
-			doc = doc + '<td style="width: 500px;"><input id="NumIdentificacion'+j+'"></td>';
-			doc = doc + '<td style="width: 500px;"><input id="AnoNacimiento'+j+'"></td>';
+			doc = doc + '<td style="width: 500px;">72408000<input id="NumIdentificacion'+j+'" maxlength="7"></td>';
+			doc = doc + '<td style="width: 500px;"><input type="number" id="AnoNacimiento'+j+'" maxlength="4" min="2000" max="2050" value="2000"></td>';
 			doc = doc + '<td style="width: 500px;"><select id="Sexo'+j+'">' +
 						'<option value="H" selected>Hembra</option>' +
 						'<option value="M">Macho</option></select></td>';
